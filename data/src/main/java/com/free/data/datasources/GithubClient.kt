@@ -26,6 +26,8 @@ class GithubClient {
         .readTimeout(READ_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS)
         .build()
 
+    private val json = Json { ignoreUnknownKeys = true }
+
     suspend fun users(params: FetchUsersInputParams): Result<List<UserModel>> {
         val request = Request.Builder()
             .url("${BASE_URL}users?since=${params.since}&per_page=${params.perPage}")
@@ -34,10 +36,11 @@ class GithubClient {
 
         return suspendCoroutine {
             client.newCall(request).enqueue(object : Callback {
+
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
                         val models =
-                            Json { ignoreUnknownKeys = true }.decodeFromString<List<UserModel>>(
+                            json.decodeFromString<List<UserModel>>(
                                 response.body?.string() ?: ""
                             )
                         it.resume(
