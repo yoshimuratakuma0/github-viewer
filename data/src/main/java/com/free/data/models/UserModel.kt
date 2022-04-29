@@ -13,13 +13,12 @@ data class UserModel(
     @SerialName("following_url") val followingUrl: String,
     @SerialName("organizations_url") val organizationsUrl: String
 ) {
-    fun toEntity(): User {
-        return User(
+    val entity
+        get(): User = User(
             username = username,
             avatarUrl = avatarUrl,
             followersUrl = followersUrl,
             followingUrl = followingUrl,
             organizationsUrl = organizationsUrl
         )
-    }
 }

@@ -18,7 +18,7 @@ class UsersRepositoryImpl @Inject constructor(
                 is Result.Success -> {
                     val models = result.data
                     val entities = models.map { model ->
-                        model.toEntity()
+                        model.entity
                     }
                     Result.Success(entities)
                 }
@@ -29,8 +29,17 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {
-        TODO("Not yet implemented")
+    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {
+        client.userDetail(params).let {result ->
+            return when (result) {
+                is Result.Success -> {
+                    Result.Success(result.data.entity)
+                }
+                is Result.Error -> {
+                    result
+                }
+            }
+        }
     }
 
 }

@@ -7,11 +7,11 @@ class UserDetail(
     avatarUrl: String,
     followersUrl: String,
     followingUrl: String,
-    organizationUrl: String,
+    organizationsUrl: String,
     company: String?,
     name: String?,
     followers: Int,
     following: Int,
     updatedAt: LocalDateTime,
     createdAt: LocalDateTime
-) : User(username, avatarUrl, followersUrl, followingUrl, organizationUrl)
+) : User(username, avatarUrl, followersUrl, followingUrl, organizationsUrl)

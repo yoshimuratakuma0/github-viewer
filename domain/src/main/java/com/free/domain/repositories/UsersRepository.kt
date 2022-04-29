@@ -8,5 +8,5 @@ import com.free.domain.usecases.GetUserDetailInputParams
 
 interface UsersRepository {
     suspend fun users(params: FetchUsersInputParams): Result<List<User>>
-    fun userDetail(params: GetUserDetailInputParams): Result<UserDetail>
+    suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail>
 }
