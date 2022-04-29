@@ -1,4 +1,4 @@
-package com.free.githubviewer.ui.theme
+package com.free.presentation.views.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
