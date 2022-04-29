@@ -5,5 +5,5 @@ open class User(
     val avatarUrl: String,
     val followersUrl: String,
     val followingUrl: String,
-    val organizationUrl: String
+    val organizationsUrl: String
 )

@@ -7,7 +7,7 @@ import com.free.domain.repositories.UsersRepository
 class GetUserDetailUseCase(
     private val repository: UsersRepository
 ) {
-    private fun execute(params: GetUserDetailInputParams): Result<UserDetail> {
+    fun execute(params: GetUserDetailInputParams): Result<UserDetail> {
         return repository.userDetail(params)
     }
 }

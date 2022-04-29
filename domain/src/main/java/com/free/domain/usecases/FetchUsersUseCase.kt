@@ -7,7 +7,7 @@ import com.free.domain.repositories.UsersRepository
 class FetchUsersUseCase(
     private val repository: UsersRepository
 ) {
-    private fun execute(params: FetchUsersInputParams): Result<List<User>> {
+    suspend fun execute(params: FetchUsersInputParams): Result<List<User>> {
         return repository.users(params)
     }
 }
@@ -16,4 +16,4 @@ class FetchUsersUseCase(
  * @param since: A user ID. Only return users with an ID greater than this ID.
  * @param perPage: Results per page (max 100)
  */
-class FetchUsersInputParams(since: Int, perPage: Int)
+class FetchUsersInputParams(val since: Int, val perPage: Int)
