@@ -7,8 +7,9 @@ import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
+import javax.inject.Inject
 
-class UsersRepositoryImpl(
+class UsersRepositoryImpl @Inject constructor(
     private val client: GithubClient
 ) : UsersRepository {
     override suspend fun users(params: FetchUsersInputParams): Result<List<User>> {
@@ -16,7 +17,7 @@ class UsersRepositoryImpl(
             return when (result) {
                 is Result.Success -> {
                     val models = result.data
-                    val entities = models.map {model ->
+                    val entities = models.map { model ->
                         model.toEntity()
                     }
                     Result.Success(entities)

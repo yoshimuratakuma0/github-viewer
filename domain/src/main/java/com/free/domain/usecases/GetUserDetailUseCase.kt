@@ -3,8 +3,9 @@ package com.free.domain.usecases
 import com.free.core.Result
 import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository
+import javax.inject.Inject
 
-class GetUserDetailUseCase(
+class GetUserDetailUseCase @Inject constructor(
     private val repository: UsersRepository
 ) {
     fun execute(params: GetUserDetailInputParams): Result<UserDetail> {
