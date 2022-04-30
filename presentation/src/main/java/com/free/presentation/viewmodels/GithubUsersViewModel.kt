@@ -18,7 +18,7 @@ class GithubUsersViewModel @Inject constructor(
     private val fetchUsersUseCase: FetchUsersUseCase
 ) : ViewModel() {
     companion object {
-        const val PER_PAGE = 20
+        const val PER_PAGE = 40
     }
 
     private val _users = MutableLiveData<List<User>>()
