@@ -3,45 +3,35 @@ package com.free.presentation.views
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.free.presentation.viewmodels.MainViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.free.presentation.viewmodels.GithubUserDetailViewModel
+import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.a()
         setContent {
+            val navController = rememberNavController()
             GithubViewerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                NavHost(navController = navController, startDestination = "screen1") {
+                    composable(route = "screen1") {
+                        val viewModel: GithubUsersViewModel = hiltViewModel()
+                        GithubUsersScreen(viewModel)
+                    }
+                    composable(route = "screen2") {
+                        val viewModel: GithubUserDetailViewModel = hiltViewModel()
+                        GithubUserDetailScreen(viewModel)
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GithubViewerTheme {
-        Greeting("Android")
     }
 }
