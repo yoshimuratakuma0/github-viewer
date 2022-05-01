@@ -23,8 +23,8 @@ class GithubUserDetailViewModel @AssistedInject constructor(
         fun create(username: String): GithubUserDetailViewModel
     }
 
-    private val _name = MutableLiveData<String>()
-    val name get() : LiveData<String> = _name
+    private val _userDetail = MutableLiveData<UserDetail>()
+    val userDetail get() : LiveData<UserDetail> = _userDetail
 
     init {
         viewModelScope.launch {
@@ -40,6 +40,6 @@ class GithubUserDetailViewModel @AssistedInject constructor(
     }
 
     private fun initState(userDetail: UserDetail) {
-        _name.value = userDetail.displayName
+        _userDetail.value = userDetail
     }
 }

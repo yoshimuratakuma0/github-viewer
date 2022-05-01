@@ -19,6 +19,8 @@ data class UserDetailModel(
     @SerialName("organizations_url") val organizationsUrl: String,
     val company: String?,
     val name: String?,
+    val email: String?,
+    val bio: String?,
     val followers: Int,
     val following: Int,
     @SerialName("updated_at") val updatedAt: String,
@@ -33,6 +35,8 @@ data class UserDetailModel(
             organizationsUrl = organizationsUrl,
             company = company,
             name = name,
+            email = email,
+            bio = bio,
             followers = followers,
             following = following,
             updatedAt = LocalDateTime.ofInstant(
