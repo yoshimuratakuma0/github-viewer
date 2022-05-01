@@ -10,12 +10,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.free.domain.entities.User
 import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.items.GithubUserItem
 
 @Composable
-fun GithubUsersScreen(viewModel: GithubUsersViewModel) {
+fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewModel) {
     val users: List<User> by viewModel.users.observeAsState(emptyList())
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -26,7 +27,10 @@ fun GithubUsersScreen(viewModel: GithubUsersViewModel) {
         items(users) { user ->
             GithubUserItem(
                 user = user,
-                iconRadius = 40
+                iconRadius = 40,
+                onClick = { username: String ->
+                    navController.navigate("github_user_detail_screen/${username}")
+                }
             )
         }
     }

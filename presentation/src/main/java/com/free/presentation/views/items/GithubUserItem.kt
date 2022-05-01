@@ -1,6 +1,7 @@
 package com.free.presentation.views.items
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -23,11 +24,16 @@ import com.free.presentation.R
 @Composable
 fun GithubUserItem(
     user: User,
-    iconRadius: Int = 32
+    iconRadius: Int = 32,
+    onClick: (String) -> Unit
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick.invoke(user.username)
+            }
     ) {
         Row(
             modifier = Modifier.padding(8.dp)

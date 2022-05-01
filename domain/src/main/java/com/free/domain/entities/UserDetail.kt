@@ -8,10 +8,13 @@ class UserDetail(
     followersUrl: String,
     followingUrl: String,
     organizationsUrl: String,
-    company: String?,
-    name: String?,
-    followers: Int,
-    following: Int,
-    updatedAt: LocalDateTime,
-    createdAt: LocalDateTime
-) : User(username, avatarUrl, followersUrl, followingUrl, organizationsUrl)
+    val company: String?,
+    val name: String?,
+    val followers: Int,
+    val following: Int,
+    val updatedAt: LocalDateTime,
+    val createdAt: LocalDateTime
+) : User(username, avatarUrl, followersUrl, followingUrl, organizationsUrl) {
+
+    val displayName get() : String = name ?: username
+}
