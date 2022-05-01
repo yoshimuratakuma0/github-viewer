@@ -3,11 +3,9 @@ package com.free.data.models
 import com.free.domain.entities.UserDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Serializable
 data class UserDetailModel(
@@ -39,13 +37,13 @@ data class UserDetailModel(
             bio = bio,
             followers = followers,
             following = following,
-            updatedAt = LocalDateTime.ofInstant(
-                Instant.from(DateTimeFormatter.ISO_INSTANT.parse(updatedAt)),
-                ZoneId.of(ZoneOffset.UTC.id)
+            updatedAt = LocalDateTime.parse(
+                updatedAt,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
             ),
-            createdAt = LocalDateTime.ofInstant(
-                Instant.from(DateTimeFormatter.ISO_INSTANT.parse(createdAt)),
-                ZoneId.of(ZoneOffset.UTC.id)
+            createdAt = LocalDateTime.parse(
+                createdAt,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
             ),
         )
 }

@@ -14,11 +14,9 @@ import kotlinx.serialization.json.Json
 import org.json.JSONException
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 @Suppress("BlockingMethodInNonBlockingContext")
@@ -53,18 +51,31 @@ class MockUsersRepositoryImpl
                 organizationsUrl = "https://api.github.com/users/mojombo/orgs",
                 name = "Tom Preston-Werner",
                 company = "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
-                email = null,
-                bio = null,
+                email = "sample.email@gmail.com",
+                bio = "bioのテスト。あああああああああああああああああ\naaaaaaaaaaaaaaaaa\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "bbbb\ncccc\ndddd\neeee\nffff\n" +
+                        "aaaa",
                 followers = 123456,
                 following = 1234567890,
-                updatedAt = LocalDateTime.ofInstant(
-                    Instant.from(DateTimeFormatter.ISO_INSTANT.parse("2022-04-03T23:40:06Z")),
-                    ZoneId.of(ZoneOffset.UTC.id)
+                updatedAt = LocalDateTime.parse(
+                    "2022-04-03T23:40:06Z",
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
                 ),
-                createdAt = LocalDateTime.ofInstant(
-                    Instant.from(DateTimeFormatter.ISO_INSTANT.parse("2007-10-20T05:24:19Z")),
-                    ZoneId.of(ZoneOffset.UTC.id)
-                )
+                createdAt = LocalDateTime.parse(
+                    "2007-10-20T05:24:19Z",
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
+                ),
             )
         )
     }

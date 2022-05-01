@@ -31,7 +31,7 @@ object DomainModule {
     fun usersRepository(
         @ApplicationContext context: Context,
         client: GithubClient
-    ): UsersRepository = if (BuildConfig.DEBUG) {
+    ): UsersRepository = if (!BuildConfig.DEBUG) {
         MockUsersRepositoryImpl(context)
     } else {
         UsersRepositoryImpl(client)

@@ -6,4 +6,6 @@
     <string name="about_email">email: %s</string>
     <string name="about_company">company: %s</string>
     <string name="about_bio">bio: %s</string>
+    <string name="about_updated_at">最終活動日: %s/%s/%s</string>
+    <string name="about_created_at">アカウント作成日: %s/%s/%s</string>
 </resources>

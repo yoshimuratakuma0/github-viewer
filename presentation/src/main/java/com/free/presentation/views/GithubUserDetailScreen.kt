@@ -2,6 +2,8 @@ package com.free.presentation.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,8 +28,12 @@ fun GithubUserDetailScreen(viewModel: GithubUserDetailViewModel) {
     val userDetail: UserDetail by viewModel.userDetail.observeAsState(
         UserDetail.empty()
     )
+
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.SpaceAround
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -66,27 +72,50 @@ fun GithubUserDetailScreen(viewModel: GithubUserDetailViewModel) {
                 )
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Column {
             Text(
                 text = stringResource(id = R.string.about_username).format(userDetail.displayName),
                 color = colorResource(id = R.color.default_font_color)
             )
-            if (userDetail.hasEmail)
+            if (userDetail.hasEmail) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(id = R.string.about_email).format(userDetail.email),
                     color = colorResource(id = R.color.default_font_color)
                 )
-            if (userDetail.hasCompany)
+            }
+            if (userDetail.hasCompany) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(id = R.string.about_company).format(userDetail.company),
                     color = colorResource(id = R.color.default_font_color)
                 )
-            if (userDetail.hasBio)
+            }
+            if (userDetail.hasBio) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(id = R.string.about_bio).format(userDetail.bio),
                     color = colorResource(id = R.color.default_font_color)
                 )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = R.string.about_updated_at).format(
+                    userDetail.updatedAt.year,
+                    userDetail.updatedAt.monthValue,
+                    userDetail.updatedAt.dayOfMonth
+                ),
+                color = colorResource(id = R.color.default_font_color)
+            )
+            Text(
+                text = stringResource(id = R.string.about_created_at).format(
+                    userDetail.createdAt.year,
+                    userDetail.createdAt.monthValue,
+                    userDetail.createdAt.dayOfMonth
+                ),
+                color = colorResource(id = R.color.default_font_color)
+            )
         }
     }
 }

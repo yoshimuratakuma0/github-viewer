@@ -1,6 +1,7 @@
 package com.free.domain.entities
 
 import java.time.LocalDateTime
+import java.util.*
 
 class UserDetail(
     username: String,
@@ -30,10 +31,10 @@ class UserDetail(
                 "",
                 "",
                 "",
-                "",
-                "",
-                "",
-                "",
+                null,
+                null,
+                null,
+                null,
                 0,
                 0,
                 LocalDateTime.MIN,
