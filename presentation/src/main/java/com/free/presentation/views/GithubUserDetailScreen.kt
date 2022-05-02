@@ -62,6 +62,11 @@ fun GithubUserDetailScreen(viewModel: GithubUserDetailViewModel) {
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(
+                    text = stringResource(id = R.string.about_id).format(userDetail.id),
+                    color = colorResource(id = R.color.default_font_color)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
                     text = stringResource(id = R.string.about_followers).format(userDetail.followers),
                     color = colorResource(id = R.color.default_font_color)
                 )

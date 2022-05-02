@@ -1,9 +1,9 @@
 package com.free.domain.entities
 
 import java.time.LocalDateTime
-import java.util.*
 
 class UserDetail(
+    id: Int,
     username: String,
     avatarUrl: String,
     followersUrl: String,
@@ -17,7 +17,7 @@ class UserDetail(
     val following: Int,
     val updatedAt: LocalDateTime,
     val createdAt: LocalDateTime
-) : User(username, avatarUrl, followersUrl, followingUrl, organizationsUrl) {
+) : User(id, username, avatarUrl, followersUrl, followingUrl, organizationsUrl) {
     val displayName get() : String = name ?: username
     val hasCompany get(): Boolean = company != null
     val hasEmail get(): Boolean = email != null
@@ -26,6 +26,7 @@ class UserDetail(
     companion object {
         fun empty(): UserDetail {
             return UserDetail(
+                0,
                 "",
                 "",
                 "",

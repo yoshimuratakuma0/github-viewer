@@ -10,10 +10,11 @@ import kotlinx.serialization.json.Json
 import okhttp3.*
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class GithubClient {
+class GithubApiImpl @Inject constructor() : GithubApi {
     companion object {
         /**
          * default value of timeout is 10 sec
@@ -30,9 +31,13 @@ class GithubClient {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    suspend fun users(params: FetchUsersInputParams): Result<List<UserModel>> {
+    override suspend fun users(params: FetchUsersInputParams): Result<ListingData> {
+        var url = "${BASE_URL}users?per_page=${params.perPage}"
+        if (params.since != null) {
+            url += "&since=${params.since}"
+        }
         val request = Request.Builder()
-            .url("${BASE_URL}users?since=${params.since}&per_page=${params.perPage}")
+            .url(url)
             .addHeader("Accept", "application/vnd.github.v3+json")
             .build()
 
@@ -46,7 +51,7 @@ class GithubClient {
                                 response.body?.string() ?: ""
                             )
                         it.resume(
-                            Result.Success(models)
+                            Result.Success(ListingData(models, params))
                         )
                     } else {
                         it.resume(
@@ -64,7 +69,7 @@ class GithubClient {
         }
     }
 
-    suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetailModel> {
+    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetailModel> {
         val request = Request.Builder()
             .url("${BASE_URL}users/${params.username}")
             .addHeader("Accept", "application/vnd.github.v3+json")

@@ -30,7 +30,9 @@ class GithubUserDetailViewModel @AssistedInject constructor(
         viewModelScope.launch {
             getUserDetailUseCase.execute(GetUserDetailInputParams(username)).let { result ->
                 when (result) {
-                    is Result.Error -> TODO()
+                    is Result.Error -> {
+                        result.exception.printStackTrace()
+                    }
                     is Result.Success -> {
                         initState(result.data)
                     }

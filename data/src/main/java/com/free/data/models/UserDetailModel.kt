@@ -26,6 +26,7 @@ data class UserDetailModel(
 ) {
     val entity
         get(): UserDetail = UserDetail(
+            id = id,
             username = username,
             avatarUrl = avatarUrl,
             followersUrl = followersUrl,

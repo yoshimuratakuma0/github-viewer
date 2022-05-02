@@ -1,49 +1,39 @@
-package com.free.data.repositories
+package com.free.data.datasources
 
 import android.content.Context
 import com.free.core.Result
+import com.free.data.models.UserDetailModel
 import com.free.data.models.UserModel
-import com.free.domain.entities.User
-import com.free.domain.entities.UserDetail
-import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.json.JSONException
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 import javax.inject.Inject
 
-@Suppress("BlockingMethodInNonBlockingContext")
-class MockUsersRepositoryImpl
-@Inject constructor(
+class MockGithubApi @Inject constructor(
     @ApplicationContext private val context: Context
-) : UsersRepository {
+) : GithubApi {
     private val json = Json { ignoreUnknownKeys = true }
 
-    override suspend fun users(params: FetchUsersInputParams): Result<List<User>> {
+    override suspend fun users(params: FetchUsersInputParams): Result<ListingData> {
         val assetManager = context.resources.assets
         val inputStream = assetManager.open("SampleUsersResponse.json")
         val bufferedReader = BufferedReader(InputStreamReader(inputStream))
         val jsonString = bufferedReader.readText()
-        return try {
-            val models = json.decodeFromString<List<UserModel>>(jsonString)
-            val entities = models.map { model -> model.entity }
-            Result.Success(entities)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-            Result.Error(e)
-        }
+        val models = json.decodeFromString<List<UserModel>>(jsonString)
+        val children = models.filter { it.id > params.since ?: 0 }.subList(0, params.perPage)
+        return Result.Success(
+            ListingData(children, params)
+        )
     }
 
-    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {
+    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetailModel> {
         return Result.Success(
-            UserDetail(
+            UserDetailModel(
+                id = 0,
                 username = "mojombo",
                 avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
                 followersUrl = "https://api.github.com/users/mojombo/followers",
@@ -68,14 +58,8 @@ class MockUsersRepositoryImpl
                         "aaaa",
                 followers = 123456,
                 following = 1234567890,
-                updatedAt = LocalDateTime.parse(
-                    "2022-04-03T23:40:06Z",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
-                ),
-                createdAt = LocalDateTime.parse(
-                    "2007-10-20T05:24:19Z",
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.JAPANESE)
-                ),
+                updatedAt = "2022-04-03T23:40:06Z",
+                createdAt = "2007-10-20T05:24:19Z"
             )
         )
     }
