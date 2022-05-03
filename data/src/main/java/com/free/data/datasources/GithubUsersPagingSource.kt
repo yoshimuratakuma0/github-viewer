@@ -29,7 +29,7 @@ class GithubUsersPagingSource(
                     is Result.Success -> {
                         LoadResult.Page(
                             data = result.data.children.map { model -> model.entity },
-                            prevKey = result.data.since,
+                            prevKey = result.data.params.since,
                             nextKey = result.data.children.lastOrNull()?.id
                         )
                     }

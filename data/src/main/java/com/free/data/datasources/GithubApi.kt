@@ -13,8 +13,7 @@ import retrofit2.http.Query
 
 class ListingData(
     val children: List<UserModel>,
-    val since: Int?,
-    val perPage: Int
+    val params: FetchUsersInputParams
 )
 
 interface GithubApi {

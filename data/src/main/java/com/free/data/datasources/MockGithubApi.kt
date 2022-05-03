@@ -30,7 +30,7 @@ class MockGithubApi @Inject constructor(
         // ストレージアクセスのラグ
         delay(2000)
         return Result.Success(
-            ListingData(children, params.since, params.perPage)
+            ListingData(children, params)
         )
     }
 
@@ -40,9 +40,6 @@ class MockGithubApi @Inject constructor(
                 id = 0,
                 username = "mojombo",
                 avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
-                followersUrl = "https://api.github.com/users/mojombo/followers",
-                followingUrl = "https://api.github.com/users/mojombo/following{/other_user}",
-                organizationsUrl = "https://api.github.com/users/mojombo/orgs",
                 name = "Tom Preston-Werner",
                 company = "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
                 email = "sample.email@gmail.com",

@@ -6,9 +6,6 @@ class UserDetail(
     id: Int,
     username: String,
     avatarUrl: String,
-    followersUrl: String,
-    followingUrl: String,
-    organizationsUrl: String,
     val company: String?,
     val name: String?,
     val email: String?,
@@ -17,30 +14,9 @@ class UserDetail(
     val following: Int,
     val updatedAt: LocalDateTime,
     val createdAt: LocalDateTime
-) : User(id, username, avatarUrl, followersUrl, followingUrl, organizationsUrl) {
+) : User(id, username, avatarUrl) {
     val displayName get() : String = name ?: username
     val hasCompany get(): Boolean = company != null
     val hasEmail get(): Boolean = email != null
     val hasBio get(): Boolean = bio != null
-
-    companion object {
-        fun empty(): UserDetail {
-            return UserDetail(
-                0,
-                "",
-                "",
-                "",
-                "",
-                "",
-                null,
-                null,
-                null,
-                null,
-                0,
-                0,
-                LocalDateTime.MIN,
-                LocalDateTime.MIN
-            )
-        }
-    }
 }

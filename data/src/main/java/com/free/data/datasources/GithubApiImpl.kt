@@ -30,8 +30,7 @@ class GithubApiImpl @Inject constructor() : GithubApi {
                     Result.Success(
                         ListingData(
                             response.body()!!,
-                            params.since,
-                            params.perPage
+                            params
                         )
                     )
                 }
