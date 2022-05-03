@@ -1,6 +1,7 @@
 package com.free.data.datasources
 
 import com.free.core.Result
+import com.free.core.exceptions.GithubApiException
 import com.free.data.models.UserDetailModel
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
@@ -22,24 +23,40 @@ class GithubApiImpl @Inject constructor() : GithubApi {
         .create(GithubService::class.java)
 
     override suspend fun users(params: FetchUsersInputParams): Result<ListingData> {
-        val response = service.users(params.since, params.perPage)
-        if (response.isSuccessful) {
-            return Result.Success(
-                ListingData(
-                    response.body()!!,
-                    params.since,
-                    params.perPage
-                )
-            )
+        return try {
+            val response = service.users(params.since, params.perPage)
+            when {
+                response.isSuccessful -> {
+                    Result.Success(
+                        ListingData(
+                            response.body()!!,
+                            params.since,
+                            params.perPage
+                        )
+                    )
+                }
+                else -> {
+                    Result.Error(GithubApiException.fromStatusCode(response.code()))
+                }
+            }
+        } catch (e: Exception) {
+            return Result.Error(e)
         }
-        throw Exception()
     }
 
     override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetailModel> {
-        val response = service.userDetail(params.username)
-        if (response.isSuccessful) {
-            return Result.Success(response.body()!!)
+        return try {
+            val response = service.userDetail(params.username)
+            when {
+                response.isSuccessful -> {
+                    Result.Success(response.body()!!)
+                }
+                else -> {
+                    Result.Error(GithubApiException.fromStatusCode(response.code()))
+                }
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
         }
-        throw Exception()
     }
 }
