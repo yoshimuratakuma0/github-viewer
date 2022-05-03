@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString("username")?.let { username ->
                             GithubUserDetailScreen(
+                                navController,
                                 viewModelFactory.create(username)
                             )
                         }

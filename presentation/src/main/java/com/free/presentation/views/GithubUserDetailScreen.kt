@@ -1,20 +1,21 @@
 package com.free.presentation.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
@@ -23,7 +24,10 @@ import com.free.presentation.R
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 
 @Composable
-fun GithubUserDetailScreen(viewModel: GithubUserDetailViewModel) {
+fun GithubUserDetailScreen(
+    navController: NavController,
+    viewModel: GithubUserDetailViewModel
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -31,6 +35,13 @@ fun GithubUserDetailScreen(viewModel: GithubUserDetailViewModel) {
                     Text(
                         text = stringResource(id = R.string.title_github_user_detail_screen)
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = null)
+                    }
                 }
             )
         },
