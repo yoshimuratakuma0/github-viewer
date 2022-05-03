@@ -1,7 +1,5 @@
 package com.free.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.core.Result
@@ -11,6 +9,8 @@ import com.free.domain.usecases.GetUserDetailUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class GithubUserDetailViewModel @AssistedInject constructor(
@@ -23,25 +23,28 @@ class GithubUserDetailViewModel @AssistedInject constructor(
         fun create(username: String): GithubUserDetailViewModel
     }
 
-    private val _userDetail = MutableLiveData<UserDetail>()
-    val userDetail get() : LiveData<UserDetail> = _userDetail
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+    val uiState get() : StateFlow<UiState> = _uiState
 
     init {
         viewModelScope.launch {
+            _uiState.value = UiState.Loading
             getUserDetailUseCase.execute(GetUserDetailInputParams(username)).let { result ->
                 when (result) {
                     is Result.Error -> {
                         result.exception.printStackTrace()
                     }
                     is Result.Success -> {
-                        initState(result.data)
+                        _uiState.value = UiState.Success(result.data)
                     }
                 }
             }
         }
     }
 
-    private fun initState(userDetail: UserDetail) {
-        _userDetail.value = userDetail
+    sealed class UiState {
+        object Idle : UiState()
+        object Loading : UiState()
+        class Success(val userDetail: UserDetail) : UiState()
     }
 }

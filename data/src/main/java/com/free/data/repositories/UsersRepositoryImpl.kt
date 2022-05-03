@@ -16,6 +16,9 @@ import javax.inject.Inject
 class UsersRepositoryImpl @Inject constructor(
     private val api: GithubApi
 ) : UsersRepository {
+    /**
+     * max value of pageSize and initialLoadSize is 100
+     */
     override fun users(): Flow<PagingData<User>> {
         return Pager(
             config = PagingConfig(

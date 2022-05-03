@@ -25,7 +25,7 @@ object DomainModule {
     fun githubApi(
         @ApplicationContext context: Context
     ): GithubApi =
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             MockGithubApi(context)
         } else {
             GithubApiImpl()
@@ -35,7 +35,6 @@ object DomainModule {
     @Singleton
     @UsersRepositoryAnnotation
     fun usersRepository(
-        @ApplicationContext context: Context,
         api: GithubApi
     ): UsersRepository = UsersRepositoryImpl(api)
 }

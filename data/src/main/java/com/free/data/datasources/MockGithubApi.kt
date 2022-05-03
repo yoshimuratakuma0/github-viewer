@@ -7,6 +7,7 @@ import com.free.data.models.UserModel
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
@@ -25,6 +26,9 @@ class MockGithubApi @Inject constructor(
         val jsonString = bufferedReader.readText()
         val models = json.decodeFromString<List<UserModel>>(jsonString)
         val children = models.filter { it.id > params.since ?: 0 }.subList(0, params.perPage)
+
+        // ストレージアクセスのラグ
+        delay(2000)
         return Result.Success(
             ListingData(children, params.since, params.perPage)
         )

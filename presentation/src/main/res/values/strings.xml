@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Github Viewer</string>
-    <string name="about_id">id: %s</string>
-    <string name="about_username">username: %s</string>
-    <string name="about_following">following: %s</string>
-    <string name="about_followers">followers: %s</string>
-    <string name="about_email">email: %s</string>
-    <string name="about_company">company: %s</string>
-    <string name="about_bio">bio: %s</string>
-    <string name="about_updated_at">最終活動日: %s/%s/%s</string>
-    <string name="about_created_at">アカウント作成日: %s/%s/%s</string>
+    <string name="about_id">ID: %s</string>
+    <string name="about_username">Username: %s</string>
+    <string name="about_following">Following: %s</string>
+    <string name="about_followers">Followers: %s</string>
+    <string name="about_email">Email: %s</string>
+    <string name="about_company">Company: %s</string>
+    <string name="about_bio">Bio: %s</string>
+    <string name="about_updated_at">Last activity date: %s/%s/%s</string>
+    <string name="about_created_at">Account creation date: %s/%s/%s</string>
+
+    <string name="title_github_users_screen">User list</string>
+    <string name="title_github_user_detail_screen">User detail</string>
 </resources>
