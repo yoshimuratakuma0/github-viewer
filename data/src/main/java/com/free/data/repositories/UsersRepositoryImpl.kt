@@ -19,8 +19,8 @@ class UsersRepositoryImpl @Inject constructor(
     override fun users(): Flow<PagingData<User>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 10,
-                initialLoadSize = 10
+                pageSize = 50,
+                initialLoadSize = 100
             )
         ) {
             GithubUsersPagingSource(api = api)

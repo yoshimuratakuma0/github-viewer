@@ -26,7 +26,7 @@ class MockGithubApi @Inject constructor(
         val models = json.decodeFromString<List<UserModel>>(jsonString)
         val children = models.filter { it.id > params.since ?: 0 }.subList(0, params.perPage)
         return Result.Success(
-            ListingData(children, params)
+            ListingData(children, params.since, params.perPage)
         )
     }
 
