@@ -29,7 +29,11 @@ fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewMo
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.title_github_users_screen)) }
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.title_github_users_screen)
+                    )
+                }
             )
         },
         content = {

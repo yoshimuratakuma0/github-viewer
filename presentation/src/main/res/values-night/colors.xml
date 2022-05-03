@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="default_font_color">#FFFFFF</color>
+    <color name="card_background">#FF444444</color>
 </resources>

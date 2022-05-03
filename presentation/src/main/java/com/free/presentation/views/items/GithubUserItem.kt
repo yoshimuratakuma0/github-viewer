@@ -27,7 +27,7 @@ fun GithubUserItem(
     onClick: (String) -> Unit
 ) {
     Card(
-        backgroundColor = MaterialTheme.colors.background,
+        backgroundColor = colorResource(id = R.color.card_background),
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
@@ -69,7 +69,7 @@ fun GithubUserItem(
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = user.username,
-                color = colorResource(id = R.color.default_font_color)
+                color = MaterialTheme.colors.onBackground
             )
         }
     }
