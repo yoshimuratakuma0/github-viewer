@@ -25,7 +25,7 @@ object DomainModule {
     fun githubApi(
         @ApplicationContext context: Context
     ): GithubApi =
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             MockGithubApi(context)
         } else {
             GithubApiImpl()
