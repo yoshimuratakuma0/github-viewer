@@ -34,8 +34,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Displays the Android dependencies of the project
-        run: ./gradlew androidDependencies
-
-      - name: Run Compile
-        run: ./gradlew assembleDebug
+      - name: Lint
+        run: ./gradlew lint
+      - name: Run Tests
+        run: ./gradlew test
