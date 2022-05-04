@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,9 +21,12 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
+import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.UserDetail
 import com.free.presentation.R
+import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
+import java.net.UnknownHostException
 
 @Composable
 fun GithubUserDetailScreen(
@@ -32,9 +37,7 @@ fun GithubUserDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(id = R.string.title_github_user_detail_screen)
-                    )
+                    Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -73,6 +76,19 @@ fun GithubUserDetail(uiState: GithubUserDetailViewModel.UiState) {
                 Spacer(modifier = Modifier.height(24.dp))
                 ProfileDetail(userDetail = userDetail)
             }
+        }
+        is GithubUserDetailViewModel.UiState.ErrorState -> {
+            val titleResId = when (uiState.exception) {
+                is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                is UnknownHostException -> R.string.error_title_network_error
+                else -> R.string.error_title_unknown
+            }
+            val bodyResId = when (uiState.exception) {
+                is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                is UnknownHostException -> R.string.error_network_error
+                else -> R.string.error_unknown
+            }
+            OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
         }
     }
 }

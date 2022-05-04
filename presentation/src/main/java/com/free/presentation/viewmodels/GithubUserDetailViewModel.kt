@@ -32,7 +32,7 @@ class GithubUserDetailViewModel @AssistedInject constructor(
             getUserDetailUseCase.execute(GetUserDetailInputParams(username)).let { result ->
                 when (result) {
                     is Result.Error -> {
-                        result.exception.printStackTrace()
+                        _uiState.value = UiState.ErrorState(result.exception)
                     }
                     is Result.Success -> {
                         _uiState.value = UiState.Success(result.data)
@@ -46,5 +46,6 @@ class GithubUserDetailViewModel @AssistedInject constructor(
         object Idle : UiState()
         object Loading : UiState()
         class Success(val userDetail: UserDetail) : UiState()
+        class ErrorState(val exception: Exception) : UiState()
     }
 }
