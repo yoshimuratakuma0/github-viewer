@@ -34,7 +34,7 @@ class UsersRepositoryImpl @Inject constructor(
         api.userDetail(params).let { result ->
             return when (result) {
                 is Result.Success -> {
-                    Result.Success(result.data.entity)
+                    Result.Success(result.data)
                 }
                 is Result.Error -> {
                     result

@@ -2,7 +2,7 @@ package com.free.data.datasources
 
 import com.free.core.Result
 import com.free.core.exceptions.GithubApiException
-import com.free.data.models.UserDetailModel
+import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -29,7 +29,7 @@ class GithubApiImpl @Inject constructor() : GithubApi {
                 response.isSuccessful -> {
                     Result.Success(
                         ListingData(
-                            response.body()!!,
+                            response.body()?.map { model -> model.entity } ?: emptyList(),
                             params
                         )
                     )
@@ -43,12 +43,12 @@ class GithubApiImpl @Inject constructor() : GithubApi {
         }
     }
 
-    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetailModel> {
+    override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {
         return try {
             val response = service.userDetail(params.username)
             when {
                 response.isSuccessful -> {
-                    Result.Success(response.body()!!)
+                    Result.Success(response.body()!!.entity)
                 }
                 else -> {
                     Result.Error(GithubApiException.fromStatusCode(response.code()))
