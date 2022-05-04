@@ -24,6 +24,7 @@ import coil.transform.RoundedCornersTransformation
 import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.UserDetail
 import com.free.presentation.R
+import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 import java.net.UnknownHostException
 
@@ -36,9 +37,7 @@ fun GithubUserDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(id = R.string.title_github_user_detail_screen)
-                    )
+                    Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -89,28 +88,7 @@ fun GithubUserDetail(uiState: GithubUserDetailViewModel.UiState) {
                 is UnknownHostException -> R.string.error_network_error
                 else -> R.string.error_unknown
             }
-            val isShowing = remember { mutableStateOf(true) }
-            if (isShowing.value) {
-                AlertDialog(
-                    onDismissRequest = { },
-                    title = {
-                        Text(stringResource(id = titleResId))
-                    },
-                    text = {
-                        Text(stringResource(id = bodyResId))
-                    },
-                    confirmButton = {
-                        TextButton(
-                            onClick = {
-                                isShowing.value = false
-                            }
-                        ) {
-                            Text(stringResource(id = R.string.ok))
-                        }
-                    },
-                    dismissButton = null
-                )
-            }
+            OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
         }
     }
 }
