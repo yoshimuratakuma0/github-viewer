@@ -12,7 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-@ExperimentalSerializationApi
+@OptIn(ExperimentalSerializationApi::class)
 class GithubApiImpl @Inject constructor() : GithubApi {
     private val format = Json { ignoreUnknownKeys = true }
 
