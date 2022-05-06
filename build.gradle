@@ -9,6 +9,8 @@ buildscript {
         mockk_version = "1.12.3"
         paging_version = "3.1.1"
         compose_paging_version = "1.0.0-alpha14"
+
+        coroutine_test = "1.6.1"
     }
     repositories {
         google()
