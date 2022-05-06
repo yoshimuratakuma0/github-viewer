@@ -28,7 +28,10 @@ import com.free.presentation.views.items.GithubUserItem
 import java.net.UnknownHostException
 
 @Composable
-fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewModel) {
+fun GithubUsersScreen(
+    viewModel: GithubUsersViewModel,
+    navController: NavController
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,7 +42,7 @@ fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewMo
         },
         content = {
             GithubUserList(viewModel.usersFlow.collectAsLazyPagingItems()) { username ->
-                navController.navigate("github_user_detail_screen/${username}")
+                navController.navigate("${ScreenRoutes.githubUserDetail}$username")
             }
         }
     )

@@ -36,6 +36,7 @@ class MockGithubApi @Inject constructor(
     }
 
     override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {
+        delay(1000)
         return Result.Success(
             UserDetailModel(
                 id = 0,

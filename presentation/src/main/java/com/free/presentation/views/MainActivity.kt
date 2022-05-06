@@ -1,6 +1,7 @@
 package com.free.presentation.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,6 +16,12 @@ import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
+object ScreenRoutes {
+    const val githubUsers = "github_users_screen/"
+    const val githubUserDetail = "github_user_detail_screen/"
+}
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -25,20 +32,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val navController = rememberNavController()
             GithubViewerTheme {
-                NavHost(navController = navController, startDestination = "github_users_screen") {
-                    composable(route = "github_users_screen") {
+                val userDetailKey = "username"
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = ScreenRoutes.githubUsers
+                ) {
+                    composable(route = ScreenRoutes.githubUsers) {
                         val viewModel: GithubUsersViewModel = hiltViewModel()
-                        GithubUsersScreen(navController, viewModel)
+                        GithubUsersScreen(viewModel, navController)
                     }
                     composable(
-                        route = "github_user_detail_screen/{username}",
+                        route = "${ScreenRoutes.githubUserDetail}{$userDetailKey}",
                         arguments = listOf(
-                            navArgument("username") { type = NavType.StringType }
+                            navArgument(userDetailKey) { type = NavType.StringType }
                         )
                     ) { backStackEntry ->
-                        backStackEntry.arguments?.getString("username")?.let { username ->
+                        backStackEntry.arguments?.getString(userDetailKey)?.let { username ->
                             GithubUserDetailScreen(
                                 navController,
                                 viewModelFactory.create(username)

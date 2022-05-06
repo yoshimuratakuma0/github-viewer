@@ -7,10 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,11 +18,13 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
+import com.free.core.Result
 import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.UserDetail
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
+import com.free.presentation.viewmodels.UserDetailUiState
 import java.net.UnknownHostException
 
 @Composable
@@ -33,6 +32,18 @@ fun GithubUserDetailScreen(
     navController: NavController,
     viewModel: GithubUserDetailViewModel
 ) {
+    val uiState by produceState(initialValue = UserDetailUiState(isLoading = true)) {
+        val detail = viewModel.userDetail()
+        value = when (detail) {
+            is Result.Success -> {
+                UserDetailUiState(userDetail = detail.data)
+            }
+            is Result.Error -> {
+                UserDetailUiState(exception = detail.exception)
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -49,47 +60,41 @@ fun GithubUserDetailScreen(
             )
         },
         content = {
-            GithubUserDetail(
-                uiState = viewModel.uiState.collectAsState().value
-            )
+            when {
+                uiState.userDetail != null -> {
+                    GithubUserDetail(
+                        userDetail = uiState.userDetail!!
+                    )
+                }
+                uiState.exception != null -> {
+                    val titleResId = when (uiState.exception) {
+                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                        is UnknownHostException -> R.string.error_title_network_error
+                        else -> R.string.error_title_unknown
+                    }
+                    val bodyResId = when (uiState.exception) {
+                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                        is UnknownHostException -> R.string.error_network_error
+                        else -> R.string.error_unknown
+                    }
+                    OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
+                }
+            }
         }
     )
 }
 
 @Composable
-fun GithubUserDetail(uiState: GithubUserDetailViewModel.UiState) {
-    when (uiState) {
-        is GithubUserDetailViewModel.UiState.Idle -> {
-        }
-        is GithubUserDetailViewModel.UiState.Loading -> {
-            // loadingが早いためProgressIndicatorを表示しない
-        }
-        is GithubUserDetailViewModel.UiState.Success -> {
-            val userDetail = uiState.userDetail
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.SpaceAround
-            ) {
-                ProfileAbstract(userDetail = userDetail)
-                Spacer(modifier = Modifier.height(24.dp))
-                ProfileDetail(userDetail = userDetail)
-            }
-        }
-        is GithubUserDetailViewModel.UiState.ErrorState -> {
-            val titleResId = when (uiState.exception) {
-                is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
-                is UnknownHostException -> R.string.error_title_network_error
-                else -> R.string.error_title_unknown
-            }
-            val bodyResId = when (uiState.exception) {
-                is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
-                is UnknownHostException -> R.string.error_network_error
-                else -> R.string.error_unknown
-            }
-            OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
-        }
+fun GithubUserDetail(userDetail: UserDetail) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceAround
+    ) {
+        ProfileAbstract(userDetail = userDetail)
+        Spacer(modifier = Modifier.height(24.dp))
+        ProfileDetail(userDetail = userDetail)
     }
 }
 
