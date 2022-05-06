@@ -1,6 +1,7 @@
 package com.free.presentation.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = ScreenRoutes.githubUsers) {
                         val viewModel: GithubUsersViewModel = hiltViewModel()
-                        GithubUsersScreen(navController, viewModel)
+                        GithubUsersScreen(viewModel, navController)
                     }
                     composable(
                         route = "${ScreenRoutes.githubUserDetail}{$userDetailKey}",
