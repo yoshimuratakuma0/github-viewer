@@ -2,6 +2,7 @@ package com.free.data.datasources
 
 import com.free.core.Result
 import com.free.core.exceptions.GithubApiException
+import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams

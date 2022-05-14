@@ -1,9 +1,12 @@
-package com.free.data.datasources
+package com.free.presentation
 
 import androidx.paging.PagingSource
 import com.free.core.Result
+import com.free.domain.entities.ListingData
 import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
+import com.free.domain.usecases.FetchUsersUseCase
+import com.free.presentation.views.GithubUsersPagingSource
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,10 +20,10 @@ class GithubUsersPagingSourceTest {
 
     @Test
     fun pagingFailure() = runTest {
-        val mockApi = mockk<GithubApi> {
-            coEvery { users(any()) } returns Result.Error(UnknownHostException())
+        val mockUseCase = mockk<FetchUsersUseCase> {
+            coEvery { execute(any()) } returns Result.Error(UnknownHostException())
         }
-        val pagingSource = GithubUsersPagingSource(mockApi)
+        val pagingSource = GithubUsersPagingSource(mockUseCase)
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(0, 100, true)
         )
@@ -49,8 +52,8 @@ class GithubUsersPagingSourceTest {
             perPage = 2
         )
 
-        val mockApi = mockk<GithubApi> {
-            coEvery { users(any()) } returns Result.Success(
+        val mockApi = mockk<FetchUsersUseCase> {
+            coEvery { execute(any()) } returns Result.Success(
                 ListingData(
                     children = users,
                     params = params

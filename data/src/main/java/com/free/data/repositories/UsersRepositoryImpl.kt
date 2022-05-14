@@ -1,16 +1,12 @@
 package com.free.data.repositories
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.free.core.Result
 import com.free.data.datasources.GithubApi
-import com.free.data.datasources.GithubUsersPagingSource
-import com.free.domain.entities.User
+import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository
+import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
@@ -19,15 +15,17 @@ class UsersRepositoryImpl @Inject constructor(
     /**
      * max value of pageSize and initialLoadSize is 100
      */
-    override fun users(): Flow<PagingData<User>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 50,
-                initialLoadSize = 100
-            )
-        ) {
-            GithubUsersPagingSource(api = api)
-        }.flow
+    override suspend fun users(params: FetchUsersInputParams): Result<ListingData> {
+        api.users(params).let { result ->
+            return when (result) {
+                is Result.Success -> {
+                    Result.Success(result.data)
+                }
+                is Result.Error -> {
+                    result
+                }
+            }
+        }
     }
 
     override suspend fun userDetail(params: GetUserDetailInputParams): Result<UserDetail> {

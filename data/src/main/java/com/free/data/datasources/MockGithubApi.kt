@@ -4,6 +4,7 @@ import android.content.Context
 import com.free.core.Result
 import com.free.data.models.UserDetailModel
 import com.free.data.models.UserModel
+import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
