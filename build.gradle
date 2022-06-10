@@ -4,18 +4,18 @@ buildscript {
         compose_version = "1.1.1"
         kotlin_version = "1.6.10"
         junit_version = "4.13.2"
-        hilt_version = "2.41"
+        hilt_version = "2.42"
         nav_version = "2.4.2"
-        mockk_version = "1.12.3"
+        mockk_version = '1.12.4'
         paging_version = "3.1.1"
-        compose_paging_version = "1.0.0-alpha14"
+        compose_paging_version = '1.0.0-alpha15'
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
