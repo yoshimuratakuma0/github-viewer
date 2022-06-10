@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -73,4 +74,15 @@ fun GithubUserItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewGithubUserItem() {
+    val user = User(
+        id = 6,
+        avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
+        username = "ivey"
+    )
+    GithubUserItem(user = user, onClick = {})
 }
