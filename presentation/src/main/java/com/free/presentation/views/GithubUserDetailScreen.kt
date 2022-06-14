@@ -23,6 +23,7 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import com.free.core.Result
 import com.free.core.exceptions.GithubApiException
+import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
@@ -111,7 +112,7 @@ fun ProfileAbstract(userDetail: UserDetail) {
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(data = userDetail.avatarUrl)
+                    .data(data = userDetail.user.avatarUrl)
                     .apply(block = {
                         transformations(
                             with(LocalDensity.current) {
@@ -202,7 +203,11 @@ fun ProfileDetail(userDetail: UserDetail) {
 @Composable
 fun PreviewGithubUserDetail() {
     val userDetail = UserDetail(
-        id = 1,
+        user = User(
+            id = 1,
+            username = "preview name",
+            avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+        ),
         email = "sample@gmail.com",
         bio = "this is bio. \n\n\n\n\n長いbio\n\n\n\n\n\n\n\n\n長いbio",
         company = "preview company",
@@ -210,9 +215,7 @@ fun PreviewGithubUserDetail() {
         updatedAt = LocalDateTime.MAX,
         followers = 12345,
         following = 23456,
-        name = "preview name",
-        username = "preview username",
-        avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+        name = "preview name"
     )
     GithubUserDetail(userDetail = userDetail)
 }
