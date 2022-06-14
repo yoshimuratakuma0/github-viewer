@@ -18,4 +18,4 @@ class GetUserDetailUseCase @Inject constructor(
 /**
  * @param username: unique userID
  */
-class GetUserDetailInputParams(val username: String)
+data class GetUserDetailInputParams(val username: String)
