@@ -1,7 +1,7 @@
 package com.free.data.repositories
 
-import com.free.core.Result
 import com.free.data.datasources.GithubApi
+import com.free.domain.Result
 import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository

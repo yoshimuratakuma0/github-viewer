@@ -21,10 +21,10 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
-import com.free.core.Result
-import com.free.core.exceptions.GithubApiException
+import com.free.domain.Result
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
+import com.free.domain.exceptions.GithubApiException
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUserDetailViewModel

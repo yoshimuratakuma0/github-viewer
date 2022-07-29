@@ -1,9 +1,10 @@
 package com.free.data.datasources
 
-import com.free.core.Result
-import com.free.core.exceptions.GithubApiException
+
+import com.free.domain.Result
 import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
+import com.free.domain.exceptions.GithubApiException
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -12,6 +13,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import javax.inject.Inject
+
 
 @OptIn(ExperimentalSerializationApi::class)
 class GithubApiImpl @Inject constructor() : GithubApi {

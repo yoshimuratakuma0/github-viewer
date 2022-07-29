@@ -1,7 +1,7 @@
 package com.free.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.free.core.Result
+import com.free.domain.Result
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase

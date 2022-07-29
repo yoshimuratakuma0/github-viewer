@@ -19,8 +19,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.User
+import com.free.domain.exceptions.GithubApiException
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUsersViewModel

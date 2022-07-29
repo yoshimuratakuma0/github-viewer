@@ -1,7 +1,7 @@
 package com.free.presentation
 
 import androidx.paging.PagingSource
-import com.free.core.Result
+import com.free.domain.Result
 import com.free.domain.entities.ListingData
 import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
