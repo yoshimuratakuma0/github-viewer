@@ -4,9 +4,10 @@ import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
+import kotlinx.coroutines.flow.Flow
 
 
 interface UsersRepository {
     suspend fun users(params: FetchUsersInputParams): ListingData
-    suspend fun userDetail(params: GetUserDetailInputParams): UserDetail
+    fun userDetail(params: GetUserDetailInputParams): Flow<UserDetail>
 }

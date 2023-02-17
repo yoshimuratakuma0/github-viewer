@@ -25,6 +25,6 @@ object UseCaseModule {
         repository: UsersRepository,
         dispatcher: CoroutineDispatcher,
     ): GetUserDetailUseCase {
-        return GetUserDetailUseCase(repository, dispatcher)
+        return GetUserDetailUseCase(repository)
     }
 }

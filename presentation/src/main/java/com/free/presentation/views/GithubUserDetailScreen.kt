@@ -1,15 +1,31 @@
 package com.free.presentation.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,15 +37,11 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
-import com.free.domain.Result
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.domain.exceptions.FetchUsersException
 import com.free.presentation.R
-import com.free.presentation.utils.OkAlertDialog
+import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
-import com.free.presentation.viewmodels.UserDetailUiState
-import java.net.UnknownHostException
 import java.time.LocalDateTime
 
 @Composable
@@ -37,17 +49,7 @@ fun GithubUserDetailScreen(
     navController: NavController,
     viewModel: GithubUserDetailViewModel
 ) {
-    val uiState by produceState(initialValue = UserDetailUiState(isLoading = true)) {
-        val detail = viewModel.userDetail()
-        value = when (detail) {
-            is Result.Success -> {
-                UserDetailUiState(userDetail = detail.data)
-            }
-            is Result.Error -> {
-                UserDetailUiState(exception = detail.exception)
-            }
-        }
-    }
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -65,24 +67,20 @@ fun GithubUserDetailScreen(
             )
         },
         content = {
-            when {
-                uiState.userDetail != null -> {
+            when (uiState) {
+                is GithubUserDetailUiState.Success -> {
                     GithubUserDetail(
-                        userDetail = uiState.userDetail!!
+                        userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
                     )
                 }
-                uiState.exception != null -> {
-                    val titleResId = when (uiState.exception) {
-                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
-                        is UnknownHostException -> R.string.error_title_network_error
-                        else -> R.string.error_title_unknown
+
+                is GithubUserDetailUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
-                    val bodyResId = when (uiState.exception) {
-                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
-                        is UnknownHostException -> R.string.error_network_error
-                        else -> R.string.error_unknown
-                    }
-                    OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
                 }
             }
         }

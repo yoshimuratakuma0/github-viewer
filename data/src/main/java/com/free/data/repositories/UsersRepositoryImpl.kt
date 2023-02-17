@@ -8,6 +8,8 @@ import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
@@ -33,13 +35,15 @@ class UsersRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
-        val response = api.userDetail(
-            username = params.username,
-        )
-        if (!response.isSuccessful) {
-            throw FetchUsersException.from(response.code())
+    override fun userDetail(params: GetUserDetailInputParams): Flow<UserDetail> {
+        return flow {
+            val response = api.userDetail(
+                username = params.username,
+            )
+            if (!response.isSuccessful) {
+                throw FetchUsersException.from(response.code())
+            }
+            emit(response.body()!!.entity)
         }
-        return response.body()!!.entity
     }
 }
