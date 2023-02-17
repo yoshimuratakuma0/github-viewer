@@ -40,7 +40,7 @@ fun GithubUsersScreen(
             )
         },
         content = {
-            GithubUserList(
+            GithubUsersScreen(
                 lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
                 onClick = onClickUser,
             )
@@ -49,7 +49,10 @@ fun GithubUsersScreen(
 }
 
 @Composable
-fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: String) -> Unit)) {
+private fun GithubUsersScreen(
+    lazyPagingItems: LazyPagingItems<User>,
+    onClick: ((username: String) -> Unit)
+) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
@@ -67,7 +70,7 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
         }
         lazyPagingItems.apply {
             when {
-                loadState.refresh is LoadState.Loading -> {
+                loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading -> {
                     item {
                         Box(
                             modifier = Modifier.fillParentMaxSize(),
@@ -78,28 +81,8 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                     }
                 }
 
-                loadState.refresh is LoadState.Error -> {
+                loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
                     val error = (loadState.refresh as LoadState.Error).error
-                    val titleResId = when (error) {
-                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
-                        is UnknownHostException -> R.string.error_title_network_error
-                        else -> R.string.error_title_unknown
-                    }
-                    val bodyResId = when (error) {
-                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
-                        is UnknownHostException -> R.string.error_network_error
-                        else -> R.string.error_unknown
-                    }
-                    item {
-                        OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
-                    }
-                }
-
-                loadState.append is LoadState.Loading -> {
-                }
-
-                loadState.append is LoadState.Error -> {
-                    val error = (loadState.append as LoadState.Error).error
                     val titleResId = when (error) {
                         is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
