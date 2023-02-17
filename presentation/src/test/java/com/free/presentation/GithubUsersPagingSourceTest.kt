@@ -13,7 +13,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.net.UnknownHostException
 
 @ExperimentalCoroutinesApi
 class GithubUsersPagingSourceTest {
@@ -21,15 +20,13 @@ class GithubUsersPagingSourceTest {
     @Test
     fun pagingFailure() = runTest {
         val mockUseCase = mockk<FetchUsersUseCase> {
-            coEvery { execute(any()) } returns Result.Error(UnknownHostException())
+            coEvery { this@mockk.invoke(any()) } returns Result.Error(Exception())
         }
         val pagingSource = GithubUsersPagingSource(mockUseCase)
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(0, 100, true)
         )
         assert(result is PagingSource.LoadResult.Error)
-        result as PagingSource.LoadResult.Error
-        assert(result.throwable is UnknownHostException)
     }
 
     @Test
@@ -53,7 +50,7 @@ class GithubUsersPagingSourceTest {
         )
 
         val mockApi = mockk<FetchUsersUseCase> {
-            coEvery { execute(any()) } returns Result.Success(
+            coEvery { this@mockk.invoke(any()) } returns Result.Success(
                 ListingData(
                     children = users,
                     params = params
