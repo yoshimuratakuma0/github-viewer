@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
-import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,8 +33,11 @@ class MainActivity : ComponentActivity() {
                     startDestination = ScreenRoutes.githubUsers
                 ) {
                     composable(route = ScreenRoutes.githubUsers) {
-                        val viewModel: GithubUsersViewModel = hiltViewModel()
-                        GithubUsersScreen(viewModel, navController)
+                        GithubUsersScreen(
+                            hiltViewModel(),
+                        ) { username ->
+                            navController.navigate("${ScreenRoutes.githubUserDetail}$username")
+                        }
                     }
                     composable(
                         route = "${ScreenRoutes.githubUserDetail}{$KEY_USERNAME}",
@@ -45,9 +47,10 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
                             GithubUserDetailScreen(
-                                navController,
                                 hiltViewModel(),
-                            )
+                            ) {
+                                navController.popBackStack()
+                            }
                         }
                     }
                 }

@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
@@ -46,8 +45,8 @@ import java.time.LocalDateTime
 
 @Composable
 fun GithubUserDetailScreen(
-    navController: NavController,
-    viewModel: GithubUserDetailViewModel
+    viewModel: GithubUserDetailViewModel,
+    onBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -58,9 +57,7 @@ fun GithubUserDetailScreen(
                     Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
+                    IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
                 }

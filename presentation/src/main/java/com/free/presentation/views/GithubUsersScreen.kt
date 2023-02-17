@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -30,7 +29,7 @@ import java.net.UnknownHostException
 @Composable
 fun GithubUsersScreen(
     viewModel: GithubUsersViewModel,
-    navController: NavController
+    onClickUser: (username: String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -41,9 +40,10 @@ fun GithubUsersScreen(
             )
         },
         content = {
-            GithubUserList(viewModel.usersFlow.collectAsLazyPagingItems()) { username ->
-                navController.navigate("${ScreenRoutes.githubUserDetail}$username")
-            }
+            GithubUserList(
+                lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
+                onClick = onClickUser,
+            )
         }
     )
 }
@@ -77,6 +77,7 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                         }
                     }
                 }
+
                 loadState.refresh is LoadState.Error -> {
                     val error = (loadState.refresh as LoadState.Error).error
                     val titleResId = when (error) {
@@ -93,8 +94,10 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                         OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
                     }
                 }
+
                 loadState.append is LoadState.Loading -> {
                 }
+
                 loadState.append is LoadState.Error -> {
                     val error = (loadState.append as LoadState.Error).error
                     val titleResId = when (error) {
