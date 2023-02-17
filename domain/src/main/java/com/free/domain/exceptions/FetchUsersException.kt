@@ -1,5 +1,13 @@
 package com.free.domain.exceptions
 
-class FetchUsersException(
+sealed class FetchUsersException(
     message: String? = null
-) : Exception(message)
+) : Exception(message) {
+    object NotModified : FetchUsersException()
+    object Unauthenticated : FetchUsersException()
+    object Forbidden : FetchUsersException()
+    object ExceedLimit : FetchUsersException()
+    object Unknown : FetchUsersException()
+
+    companion object
+}

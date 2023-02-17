@@ -20,7 +20,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.free.domain.entities.User
-import com.free.domain.exceptions.GithubApiException
+import com.free.domain.exceptions.FetchUsersException
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUsersViewModel
@@ -80,12 +80,12 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                 loadState.refresh is LoadState.Error -> {
                     val error = (loadState.refresh as LoadState.Error).error
                     val titleResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
                         else -> R.string.error_title_unknown
                     }
                     val bodyResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
                         is UnknownHostException -> R.string.error_network_error
                         else -> R.string.error_unknown
                     }
@@ -98,12 +98,12 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                 loadState.append is LoadState.Error -> {
                     val error = (loadState.append as LoadState.Error).error
                     val titleResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
                         else -> R.string.error_title_unknown
                     }
                     val bodyResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
                         is UnknownHostException -> R.string.error_network_error
                         else -> R.string.error_unknown
                     }

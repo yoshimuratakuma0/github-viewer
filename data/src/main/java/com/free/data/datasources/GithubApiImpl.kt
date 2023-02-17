@@ -4,7 +4,8 @@ package com.free.data.datasources
 import com.free.domain.Result
 import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
-import com.free.domain.exceptions.GithubApiException
+import com.free.data.exceptions.from
+import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -38,7 +39,7 @@ class GithubApiImpl @Inject constructor() : GithubApi {
                     )
                 }
                 else -> {
-                    Result.Error(GithubApiException.fromStatusCode(response.code()))
+                    Result.Error(FetchUsersException.from(response.code()))
                 }
             }
         } catch (e: Exception) {
@@ -54,7 +55,7 @@ class GithubApiImpl @Inject constructor() : GithubApi {
                     Result.Success(response.body()!!.entity)
                 }
                 else -> {
-                    Result.Error(GithubApiException.fromStatusCode(response.code()))
+                    Result.Error(FetchUsersException.from(response.code()))
                 }
             }
         } catch (e: Exception) {

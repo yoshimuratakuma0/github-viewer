@@ -24,7 +24,7 @@ import coil.transform.RoundedCornersTransformation
 import com.free.domain.Result
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.domain.exceptions.GithubApiException
+import com.free.domain.exceptions.FetchUsersException
 import com.free.presentation.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
@@ -73,12 +73,12 @@ fun GithubUserDetailScreen(
                 }
                 uiState.exception != null -> {
                     val titleResId = when (uiState.exception) {
-                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
                         else -> R.string.error_title_unknown
                     }
                     val bodyResId = when (uiState.exception) {
-                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
                         is UnknownHostException -> R.string.error_network_error
                         else -> R.string.error_unknown
                     }

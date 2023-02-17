@@ -10,7 +10,7 @@ class FetchUsersUseCase(
 ) {
     suspend fun execute(params: FetchUsersInputParams): Result<ListingData> {
         require(params.perPage <= 100) {
-            return Result.Error(FetchUsersException())
+            return Result.Error(FetchUsersException.ExceedLimit)
         }
         return repository.users(params)
     }
