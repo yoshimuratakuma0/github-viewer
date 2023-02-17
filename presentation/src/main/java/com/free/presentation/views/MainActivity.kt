@@ -9,11 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.free.presentation.viewmodels.GithubUserDetailViewModel
+import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
 import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 object ScreenRoutes {
@@ -24,15 +23,11 @@ object ScreenRoutes {
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: GithubUserDetailViewModel.Factory
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             GithubViewerTheme {
-                val userDetailKey = "username"
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
@@ -43,15 +38,15 @@ class MainActivity : ComponentActivity() {
                         GithubUsersScreen(viewModel, navController)
                     }
                     composable(
-                        route = "${ScreenRoutes.githubUserDetail}{$userDetailKey}",
+                        route = "${ScreenRoutes.githubUserDetail}{$KEY_USERNAME}",
                         arguments = listOf(
-                            navArgument(userDetailKey) { type = NavType.StringType }
+                            navArgument(KEY_USERNAME) { type = NavType.StringType }
                         )
                     ) { backStackEntry ->
-                        backStackEntry.arguments?.getString(userDetailKey)?.let { username ->
+                        backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
                             GithubUserDetailScreen(
                                 navController,
-                                viewModelFactory.create(username)
+                                hiltViewModel(),
                             )
                         }
                     }
