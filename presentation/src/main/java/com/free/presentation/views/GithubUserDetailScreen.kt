@@ -31,17 +31,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
-import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import com.free.presentation.R
+import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
-import java.time.LocalDateTime
+import com.free.presentation.views.theme.GithubViewerTheme
 
 @Composable
 fun GithubUserDetailScreen(
@@ -66,7 +68,7 @@ fun GithubUserDetailScreen(
         content = {
             when (uiState) {
                 is GithubUserDetailUiState.Success -> {
-                    GithubUserDetail(
+                    GithubUserDetailScreen(
                         userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
                     )
                 }
@@ -85,7 +87,7 @@ fun GithubUserDetailScreen(
 }
 
 @Composable
-fun GithubUserDetail(userDetail: UserDetail) {
+private fun GithubUserDetailScreen(userDetail: UserDetail) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -195,22 +197,13 @@ fun ProfileDetail(userDetail: UserDetail) {
 }
 
 @Preview
+@Preview(device = Devices.AUTOMOTIVE_1024p)
 @Composable
-fun PreviewGithubUserDetail() {
-    val userDetail = UserDetail(
-        user = User(
-            id = 1,
-            username = "preview name",
-            avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
-        ),
-        email = "sample@gmail.com",
-        bio = "this is bio. \n\n\n\n\n長いbio\n\n\n\n\n\n\n\n\n長いbio",
-        company = "preview company",
-        createdAt = LocalDateTime.MIN,
-        updatedAt = LocalDateTime.MAX,
-        followers = 12345,
-        following = 23456,
-        name = "preview name"
-    )
-    GithubUserDetail(userDetail = userDetail)
+fun PreviewGithubUserDetail(
+    @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
+    userDetail: UserDetail,
+) {
+    GithubViewerTheme {
+        GithubUserDetailScreen(userDetail = userDetail)
+    }
 }
