@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GithubService {
+interface GithubApi {
     companion object {
         const val BASE_URL = "https://api.github.com/"
     }

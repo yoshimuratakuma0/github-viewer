@@ -7,17 +7,24 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 @InstallIn(SingletonComponent::class)
 @Module
 object UseCaseModule {
     @Provides
-    fun provideFetchUsersUseCase(repository: UsersRepository): FetchUsersUseCase {
-        return FetchUsersUseCase(repository)
+    fun provideFetchUsersUseCase(
+        repository: UsersRepository,
+        dispatcher: CoroutineDispatcher,
+    ): FetchUsersUseCase {
+        return FetchUsersUseCase(repository, dispatcher)
     }
 
     @Provides
-    fun provideGetUserDetailUseCase(repository: UsersRepository): GetUserDetailUseCase {
-        return GetUserDetailUseCase(repository)
+    fun provideGetUserDetailUseCase(
+        repository: UsersRepository,
+        dispatcher: CoroutineDispatcher,
+    ): GetUserDetailUseCase {
+        return GetUserDetailUseCase(repository, dispatcher)
     }
 }

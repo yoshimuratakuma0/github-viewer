@@ -26,5 +26,5 @@ class GithubUserDetailViewModel @AssistedInject constructor(
     }
 
     suspend fun userDetail(): Result<UserDetail> =
-        getUserDetailUseCase.execute(GetUserDetailInputParams(username))
+        getUserDetailUseCase(GetUserDetailInputParams(username))
 }

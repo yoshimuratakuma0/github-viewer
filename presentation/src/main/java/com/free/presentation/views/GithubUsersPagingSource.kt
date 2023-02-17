@@ -19,7 +19,7 @@ class GithubUsersPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
         return try {
-            fetchUsersUseCase.execute(
+            fetchUsersUseCase(
                 FetchUsersInputParams(
                     since = params.key,
                     perPage = params.loadSize

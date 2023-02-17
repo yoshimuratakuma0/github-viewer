@@ -1,17 +1,14 @@
 package com.free.domain.usecases
 
-import com.free.domain.Result
 import com.free.domain.entities.ListingData
-import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
+import kotlinx.coroutines.CoroutineDispatcher
 
 class FetchUsersUseCase(
-    private val repository: UsersRepository
-) {
-    suspend fun execute(params: FetchUsersInputParams): Result<ListingData> {
-        require(params.perPage <= 100) {
-            return Result.Error(FetchUsersException.ExceedLimit)
-        }
+    private val repository: UsersRepository,
+    ioDispatcher: CoroutineDispatcher,
+) : CoroutineUseCase<FetchUsersInputParams, ListingData>(ioDispatcher) {
+    override suspend fun execute(params: FetchUsersInputParams): ListingData {
         return repository.users(params)
     }
 }
