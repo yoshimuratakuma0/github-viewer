@@ -17,9 +17,6 @@ class UsersRepositoryImpl @Inject constructor(
      * max value of pageSize and initialLoadSize is 100
      */
     override suspend fun users(params: FetchUsersInputParams): ListingData {
-        require(params.perPage <= 100) {
-            throw FetchUsersException.ExceedLimit
-        }
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
