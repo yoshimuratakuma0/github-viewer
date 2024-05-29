@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
@@ -17,10 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.free.domain.entities.User
 import com.free.domain.exceptions.FetchUsersException
-import com.free.presentation.R
+import com.free.githubviewer.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.items.GithubUserItem
@@ -40,10 +40,12 @@ fun GithubUsersScreen(
             )
         },
         content = {
-            GithubUsersScreen(
-                lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
-                onClick = onClickUser,
-            )
+            Box(modifier = Modifier.padding(it)) {
+                GithubUsersScreen(
+                    lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
+                    onClick = onClickUser,
+                )
+            }
         }
     )
 }
@@ -59,8 +61,8 @@ private fun GithubUsersScreen(
             .fillMaxSize(),
         contentPadding = PaddingValues(8.dp)
     ) {
-        items(lazyPagingItems) { user ->
-            user?.let {
+        items(lazyPagingItems.itemCount) { index ->
+            lazyPagingItems[index]?.let {
                 GithubUserItem(
                     user = it,
                     iconRadius = 40,

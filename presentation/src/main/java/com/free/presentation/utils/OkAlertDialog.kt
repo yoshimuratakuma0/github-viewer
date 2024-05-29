@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import com.free.presentation.R
+import com.free.githubviewer.R
 
 @Composable
 fun OkAlertDialog(titleResId: Int, bodyResId: Int) {

@@ -22,7 +22,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,7 +39,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.UserDetail
-import com.free.presentation.R
+import com.free.githubviewer.R
 import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
@@ -60,25 +60,27 @@ fun GithubUserDetailScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
                 }
             )
         },
         content = {
-            when (uiState) {
-                is GithubUserDetailUiState.Success -> {
-                    GithubUserDetailScreen(
-                        userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
-                    )
-                }
+            Box(modifier = Modifier.padding(it)) {
+                when (uiState) {
+                    is GithubUserDetailUiState.Success -> {
+                        GithubUserDetailScreen(
+                            userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
+                        )
+                    }
 
-                is GithubUserDetailUiState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+                    is GithubUserDetailUiState.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                 }
             }
@@ -92,7 +94,7 @@ private fun GithubUserDetailScreen(userDetail: UserDetail) {
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceAround
+        verticalArrangement = Arrangement.SpaceAround,
     ) {
         ProfileAbstract(userDetail = userDetail)
         Spacer(modifier = Modifier.height(24.dp))
