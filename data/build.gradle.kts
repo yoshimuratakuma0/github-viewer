@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
-    id("org.jetbrains.kotlin.plugin.serialization")
+    alias(libs.plugins.free.serialization)
 }
 
 android {
@@ -39,7 +39,6 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit)

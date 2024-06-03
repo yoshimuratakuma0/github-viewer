@@ -38,5 +38,9 @@ gradlePlugin {
             id = "free.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("serialization") {
+            id = "free.serialization"
+            implementationClass = "AndroidSerializationConventionPlugin"
+        }
     }
 }
