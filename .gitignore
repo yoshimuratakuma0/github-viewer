@@ -12,6 +12,7 @@
 /.idea/deploymentTargetSelector.xml
 /.idea/migrations.xml
 .idea/codeStyles
+build
 
 .DS_Store
 /build

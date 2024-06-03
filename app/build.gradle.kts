@@ -1,7 +1,6 @@
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.free.android.application)
     id("com.google.dagger.hilt.android")
-    id("kotlin-android")
     id("com.google.devtools.ksp")
 }
 
