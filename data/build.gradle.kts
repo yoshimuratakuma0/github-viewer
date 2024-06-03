@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.free.android.library)
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.free.hilt)
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -36,8 +35,6 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.retrofit)

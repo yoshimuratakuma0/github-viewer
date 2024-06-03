@@ -63,3 +63,4 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndro
 # Defined in this project
 free-android-application = { id = "free.android.application", version = "unspecified" }
 free-android-library = { id = "free.android.library", version = "unspecified" }
+free-hilt = { id = "free.hilt", version = "unspecified" }

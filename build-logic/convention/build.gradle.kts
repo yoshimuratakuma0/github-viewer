@@ -34,5 +34,9 @@ gradlePlugin {
             id = "free.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("hilt") {
+            id = "free.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
