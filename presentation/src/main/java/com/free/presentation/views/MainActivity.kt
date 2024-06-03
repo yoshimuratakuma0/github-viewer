@@ -9,40 +9,48 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.free.presentation.viewmodels.GithubUserDetailViewModel
-import com.free.presentation.viewmodels.GithubUsersViewModel
+import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+
+
+object ScreenRoutes {
+    const val githubUsers = "github_users_screen/"
+    const val githubUserDetail = "github_user_detail_screen/"
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: GithubUserDetailViewModel.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val navController = rememberNavController()
             GithubViewerTheme {
-                NavHost(navController = navController, startDestination = "github_users_screen") {
-                    composable(route = "github_users_screen") {
-                        val viewModel: GithubUsersViewModel = hiltViewModel()
-                        GithubUsersScreen(navController, viewModel)
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = ScreenRoutes.githubUsers
+                ) {
+                    composable(route = ScreenRoutes.githubUsers) {
+                        GithubUsersScreen(
+                            hiltViewModel(),
+                        ) { username ->
+                            navController.navigate("${ScreenRoutes.githubUserDetail}$username")
+                        }
                     }
                     composable(
-                        route = "github_user_detail_screen/{username}",
+                        route = "${ScreenRoutes.githubUserDetail}{$KEY_USERNAME}",
                         arguments = listOf(
-                            navArgument("username") { type = NavType.StringType }
+                            navArgument(KEY_USERNAME) { type = NavType.StringType }
                         )
                     ) { backStackEntry ->
-                        backStackEntry.arguments?.getString("username")?.let { username ->
+                        backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
                             GithubUserDetailScreen(
-                                navController,
-                                viewModelFactory.create(username)
-                            )
+                                hiltViewModel(),
+                            ) {
+                                navController.popBackStack()
+                            }
                         }
                     }
                 }

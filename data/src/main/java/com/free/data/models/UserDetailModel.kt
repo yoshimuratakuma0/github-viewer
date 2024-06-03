@@ -1,5 +1,6 @@
 package com.free.data.models
 
+import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,9 +24,11 @@ data class UserDetailModel(
 ) {
     val entity
         get(): UserDetail = UserDetail(
-            id = id,
-            username = username,
-            avatarUrl = avatarUrl,
+            user = User(
+                id = id,
+                username = username,
+                avatarUrl = avatarUrl
+            ),
             company = company,
             name = name,
             email = email,

@@ -1,38 +1,57 @@
 package com.free.presentation.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
-import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.UserDetail
-import com.free.presentation.R
-import com.free.presentation.utils.OkAlertDialog
+import com.free.githubviewer.R
+import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
-import java.net.UnknownHostException
+import com.free.presentation.views.theme.GithubViewerTheme
 
 @Composable
 fun GithubUserDetailScreen(
-    navController: NavController,
-    viewModel: GithubUserDetailViewModel
+    viewModel: GithubUserDetailViewModel,
+    onBack: () -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,56 +59,46 @@ fun GithubUserDetailScreen(
                     Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null)
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     }
                 }
             )
         },
         content = {
-            GithubUserDetail(
-                uiState = viewModel.uiState.collectAsState().value
-            )
+            Box(modifier = Modifier.padding(it)) {
+                when (uiState) {
+                    is GithubUserDetailUiState.Success -> {
+                        GithubUserDetailScreen(
+                            userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
+                        )
+                    }
+
+                    is GithubUserDetailUiState.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+                }
+            }
         }
     )
 }
 
 @Composable
-fun GithubUserDetail(uiState: GithubUserDetailViewModel.UiState) {
-    when (uiState) {
-        is GithubUserDetailViewModel.UiState.Idle -> {
-        }
-        is GithubUserDetailViewModel.UiState.Loading -> {
-            // loadingが早いためProgressIndicatorを表示しない
-        }
-        is GithubUserDetailViewModel.UiState.Success -> {
-            val userDetail = uiState.userDetail
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.SpaceAround
-            ) {
-                ProfileAbstract(userDetail = userDetail)
-                Spacer(modifier = Modifier.height(24.dp))
-                ProfileDetail(userDetail = userDetail)
-            }
-        }
-        is GithubUserDetailViewModel.UiState.ErrorState -> {
-            val titleResId = when (uiState.exception) {
-                is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
-                is UnknownHostException -> R.string.error_title_network_error
-                else -> R.string.error_title_unknown
-            }
-            val bodyResId = when (uiState.exception) {
-                is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
-                is UnknownHostException -> R.string.error_network_error
-                else -> R.string.error_unknown
-            }
-            OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
-        }
+private fun GithubUserDetailScreen(userDetail: UserDetail) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceAround,
+    ) {
+        ProfileAbstract(userDetail = userDetail)
+        Spacer(modifier = Modifier.height(24.dp))
+        ProfileDetail(userDetail = userDetail)
     }
 }
 
@@ -102,7 +111,7 @@ fun ProfileAbstract(userDetail: UserDetail) {
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(data = userDetail.avatarUrl)
+                    .data(data = userDetail.user.avatarUrl)
                     .apply(block = {
                         transformations(
                             with(LocalDensity.current) {
@@ -186,5 +195,17 @@ fun ProfileDetail(userDetail: UserDetail) {
             ),
             color = MaterialTheme.colors.onBackground
         )
+    }
+}
+
+@Preview
+@Preview(device = Devices.AUTOMOTIVE_1024p)
+@Composable
+fun PreviewGithubUserDetail(
+    @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
+    userDetail: UserDetail,
+) {
+    GithubViewerTheme {
+        GithubUserDetailScreen(userDetail = userDetail)
     }
 }

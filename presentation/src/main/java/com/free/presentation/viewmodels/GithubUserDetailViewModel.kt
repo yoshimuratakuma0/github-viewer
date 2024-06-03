@@ -1,51 +1,42 @@
 package com.free.presentation.viewmodels
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.free.core.Result
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.MutableStateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class GithubUserDetailViewModel @AssistedInject constructor(
-    @Assisted private val username: String,
-    private val getUserDetailUseCase: GetUserDetailUseCase
+
+sealed interface GithubUserDetailUiState {
+    object Loading : GithubUserDetailUiState
+    data class Success(val userDetail: UserDetail) : GithubUserDetailUiState
+}
+
+@HiltViewModel
+class GithubUserDetailViewModel @Inject constructor(
+    getUserDetailUseCase: GetUserDetailUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    @AssistedFactory
-    interface Factory {
-        fun create(username: String): GithubUserDetailViewModel
+    companion object {
+        const val KEY_USERNAME = "username"
     }
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
-    val uiState get() : StateFlow<UiState> = _uiState
+    private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
 
-    init {
-        viewModelScope.launch {
-            _uiState.value = UiState.Loading
-            getUserDetailUseCase.execute(GetUserDetailInputParams(username)).let { result ->
-                when (result) {
-                    is Result.Error -> {
-                        _uiState.value = UiState.ErrorState(result.exception)
-                    }
-                    is Result.Success -> {
-                        _uiState.value = UiState.Success(result.data)
-                    }
-                }
-            }
-        }
-    }
-
-    sealed class UiState {
-        object Idle : UiState()
-        object Loading : UiState()
-        class Success(val userDetail: UserDetail) : UiState()
-        class ErrorState(val exception: Exception) : UiState()
-    }
+    val uiState: StateFlow<GithubUserDetailUiState> =
+        getUserDetailUseCase(GetUserDetailInputParams(username))
+            .map(GithubUserDetailUiState::Success)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = GithubUserDetailUiState.Loading,
+            )
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
@@ -14,21 +15,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
-import com.free.core.exceptions.GithubApiException
 import com.free.domain.entities.User
-import com.free.presentation.R
+import com.free.domain.exceptions.FetchUsersException
+import com.free.githubviewer.R
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.items.GithubUserItem
 import java.net.UnknownHostException
 
 @Composable
-fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewModel) {
+fun GithubUsersScreen(
+    viewModel: GithubUsersViewModel,
+    onClickUser: (username: String) -> Unit,
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -38,23 +40,29 @@ fun GithubUsersScreen(navController: NavController, viewModel: GithubUsersViewMo
             )
         },
         content = {
-            GithubUserList(viewModel.usersFlow.collectAsLazyPagingItems()) { username ->
-                navController.navigate("github_user_detail_screen/${username}")
+            Box(modifier = Modifier.padding(it)) {
+                GithubUsersScreen(
+                    lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
+                    onClick = onClickUser,
+                )
             }
         }
     )
 }
 
 @Composable
-fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: String) -> Unit)) {
+private fun GithubUsersScreen(
+    lazyPagingItems: LazyPagingItems<User>,
+    onClick: ((username: String) -> Unit)
+) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(8.dp)
     ) {
-        items(lazyPagingItems) { user ->
-            user?.let {
+        items(lazyPagingItems.itemCount) { index ->
+            lazyPagingItems[index]?.let {
                 GithubUserItem(
                     user = it,
                     iconRadius = 40,
@@ -64,7 +72,7 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
         }
         lazyPagingItems.apply {
             when {
-                loadState.refresh is LoadState.Loading -> {
+                loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading -> {
                     item {
                         Box(
                             modifier = Modifier.fillParentMaxSize(),
@@ -74,33 +82,16 @@ fun GithubUserList(lazyPagingItems: LazyPagingItems<User>, onClick: ((username: 
                         }
                     }
                 }
-                loadState.refresh is LoadState.Error -> {
+
+                loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
                     val error = (loadState.refresh as LoadState.Error).error
                     val titleResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
                         else -> R.string.error_title_unknown
                     }
                     val bodyResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
-                        is UnknownHostException -> R.string.error_network_error
-                        else -> R.string.error_unknown
-                    }
-                    item {
-                        OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
-                    }
-                }
-                loadState.append is LoadState.Loading -> {
-                }
-                loadState.append is LoadState.Error -> {
-                    val error = (loadState.append as LoadState.Error).error
-                    val titleResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_title_exceed_api_limit
-                        is UnknownHostException -> R.string.error_title_network_error
-                        else -> R.string.error_title_unknown
-                    }
-                    val bodyResId = when (error) {
-                        is GithubApiException.ForbiddenException -> R.string.error_exceed_api_limit
+                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
                         is UnknownHostException -> R.string.error_network_error
                         else -> R.string.error_unknown
                     }

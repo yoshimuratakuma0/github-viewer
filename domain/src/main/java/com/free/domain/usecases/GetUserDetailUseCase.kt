@@ -1,16 +1,13 @@
 package com.free.domain.usecases
 
-import com.free.core.Result
-import com.free.domain.di.UsersRepositoryAnnotation
 import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
-class GetUserDetailUseCase @Inject constructor(
-    @UsersRepositoryAnnotation
+class GetUserDetailUseCase(
     private val repository: UsersRepository
 ) {
-    suspend fun execute(params: GetUserDetailInputParams): Result<UserDetail> {
+    operator fun invoke(params: GetUserDetailInputParams): Flow<UserDetail> {
         return repository.userDetail(params)
     }
 }
@@ -18,4 +15,4 @@ class GetUserDetailUseCase @Inject constructor(
 /**
  * @param username: unique userID
  */
-class GetUserDetailInputParams(val username: String)
+data class GetUserDetailInputParams(val username: String)

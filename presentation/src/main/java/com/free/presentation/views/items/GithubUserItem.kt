@@ -2,7 +2,14 @@ package com.free.presentation.views.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -13,12 +20,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.User
-import com.free.presentation.R
+import com.free.githubviewer.R
 
 @Composable
 fun GithubUserItem(
@@ -73,4 +81,15 @@ fun GithubUserItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewGithubUserItem() {
+    val user = User(
+        id = 6,
+        avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
+        username = "ivey"
+    )
+    GithubUserItem(user = user, onClick = {})
 }
