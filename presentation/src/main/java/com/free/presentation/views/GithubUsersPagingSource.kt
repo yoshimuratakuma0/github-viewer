@@ -2,10 +2,10 @@ package com.free.presentation.views
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.free.domain.Result
 import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
+import com.free.domain.usecases.Result
 import java.io.IOException
 
 class GithubUsersPagingSource(

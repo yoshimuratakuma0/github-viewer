@@ -1,6 +1,5 @@
 package domain.usecases
 
-import com.free.domain.Result
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchUsersInputParams

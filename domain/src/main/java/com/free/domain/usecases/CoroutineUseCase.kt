@@ -1,6 +1,5 @@
 package com.free.domain.usecases
 
-import com.free.domain.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package com.free.domain
+package com.free.domain.usecases
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()
