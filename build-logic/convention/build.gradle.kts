@@ -30,5 +30,9 @@ gradlePlugin {
             id = "free.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidLibrary") {
+            id = "free.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
     }
 }

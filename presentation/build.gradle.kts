@@ -1,8 +1,7 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.free.android.library)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
