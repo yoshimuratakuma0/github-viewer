@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -26,10 +27,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     buildFeatures {
