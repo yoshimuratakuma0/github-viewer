@@ -5,6 +5,7 @@ import com.free.domain.entities.ListingData
 import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
+import com.free.domain.usecases.Result
 import com.free.presentation.views.GithubUsersPagingSource
 import io.mockk.coEvery
 import io.mockk.mockk

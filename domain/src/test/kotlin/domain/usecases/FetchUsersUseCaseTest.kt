@@ -4,6 +4,7 @@ import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
+import com.free.domain.usecases.Result
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
