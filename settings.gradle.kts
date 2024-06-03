@@ -12,8 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Github Viewer"
-include ':app'
-include ':data'
-include ':presentation'
-include ':domain'
+include(":app")
+include(":data")
+include(":presentation")
+include(":domain")
