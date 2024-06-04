@@ -34,13 +34,17 @@ gradlePlugin {
             id = "free.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
-        register("hilt") {
+        register("androidHilt") {
             id = "free.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
         register("serialization") {
             id = "free.serialization"
             implementationClass = "AndroidSerializationConventionPlugin"
+        }
+        register("androidCompose") {
+            id = "free.compose"
+            implementationClass = "AndroidComposeConventionPlugin"
         }
     }
 }
