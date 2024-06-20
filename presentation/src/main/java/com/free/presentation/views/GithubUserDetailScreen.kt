@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -53,6 +55,9 @@ fun GithubUserDetailScreen(
 
     GithubUserDetailStatelessScreen(
         uiState = uiState,
+        onRetry = {
+            viewModel.fetchUserDetail()
+        },
         onBack = onBack,
     )
 }
@@ -60,6 +65,7 @@ fun GithubUserDetailScreen(
 @Composable
 private fun GithubUserDetailStatelessScreen(
     uiState: GithubUserDetailUiState,
+    onRetry: () -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
@@ -75,21 +81,33 @@ private fun GithubUserDetailStatelessScreen(
                 }
             )
         },
-        content = {
-            Box(modifier = Modifier.padding(it)) {
-                when (uiState) {
-                    is GithubUserDetailUiState.Success -> {
-                        GithubUserDetailScreen(
-                            userDetail = (uiState).userDetail
-                        )
-                    }
+        content = { contentPadding ->
+            when (uiState) {
+                is GithubUserDetailUiState.Success -> {
+                    GithubUserDetailScreen(
+                        userDetail = uiState.userDetail,
+                        contentPaddingValues = contentPadding,
+                    )
+                }
 
-                    is GithubUserDetailUiState.Loading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            CircularProgressIndicator()
+                is GithubUserDetailUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is GithubUserDetailUiState.Error -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(text = stringResource(id = R.string.error_unexpected))
+                        Button(onClick = onRetry) {
+                            Text(text = stringResource(id = R.string.retry))
                         }
                     }
                 }
@@ -99,21 +117,24 @@ private fun GithubUserDetailStatelessScreen(
 }
 
 @Composable
-private fun GithubUserDetailScreen(userDetail: UserDetail) {
+private fun GithubUserDetailScreen(
+    userDetail: UserDetail,
+    contentPaddingValues: PaddingValues,
+) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(contentPaddingValues),
         verticalArrangement = Arrangement.SpaceAround,
     ) {
-        ProfileAbstract(userDetail = userDetail)
+        ProfileSummary(userDetail = userDetail)
         Spacer(modifier = Modifier.height(24.dp))
         ProfileDetail(userDetail = userDetail)
     }
 }
 
 @Composable
-fun ProfileAbstract(userDetail: UserDetail) {
+private fun ProfileSummary(userDetail: UserDetail) {
     val iconRadius = 64
     Row(
         modifier = Modifier.fillMaxWidth()
@@ -161,7 +182,7 @@ fun ProfileAbstract(userDetail: UserDetail) {
 }
 
 @Composable
-fun ProfileDetail(userDetail: UserDetail) {
+private fun ProfileDetail(userDetail: UserDetail) {
     Column {
         Text(
             text = stringResource(id = R.string.about_username).format(userDetail.displayName),
@@ -215,6 +236,10 @@ fun PreviewGithubUserDetail(
     uiState: GithubUserDetailUiState,
 ) {
     GithubViewerTheme {
-        GithubUserDetailStatelessScreen(uiState = uiState, onBack = {})
+        GithubUserDetailStatelessScreen(
+            uiState = uiState,
+            onRetry = {},
+            onBack = {},
+        )
     }
 }

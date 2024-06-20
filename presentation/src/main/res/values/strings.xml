@@ -2,6 +2,7 @@
     <string name="app_name">Github Viewer</string>
 
     <string name="ok">OK</string>
+    <string name="retry">RETRY</string>
 
     <string name="about_id">ID: %s</string>
     <string name="about_username">Username: %s</string>
@@ -20,6 +21,6 @@
     <string name="error_exceed_api_limit">You may exceed API limits. Please try after a while.</string>
     <string name="error_title_network_error">Network Error</string>
     <string name="error_network_error">Please check your internet connection.</string>
-    <string name="error_title_unknown">Unknown Error</string>
-    <string name="error_unknown">Unknown error.</string>
+    <string name="error_title_unexpected">An unexpected error</string>
+    <string name="error_unexpected">An unexpected error occurred.</string>
 </resources>

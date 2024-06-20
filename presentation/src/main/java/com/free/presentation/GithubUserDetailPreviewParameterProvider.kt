@@ -9,6 +9,8 @@ import java.time.LocalDateTime
 class GithubUserDetailPreviewParameterProvider : PreviewParameterProvider<GithubUserDetailUiState> {
     override val values: Sequence<GithubUserDetailUiState>
         get() = sequenceOf(
+            GithubUserDetailUiState.Error(Exception()),
+            GithubUserDetailUiState.Loading,
             GithubUserDetailUiState.Success(
                 UserDetail(
                     user = User(

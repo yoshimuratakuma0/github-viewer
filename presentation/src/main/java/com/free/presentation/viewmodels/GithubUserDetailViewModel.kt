@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 sealed interface GithubUserDetailUiState {
     data object Loading : GithubUserDetailUiState
+    data class Error(val exception: Exception) : GithubUserDetailUiState
     data class Success(val userDetail: UserDetail) : GithubUserDetailUiState
 }
 
@@ -37,10 +38,15 @@ class GithubUserDetailViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        fetchUserDetail()
+    }
+
+    fun fetchUserDetail() {
         viewModelScope.launch(Dispatchers.IO) {
+            _uiState.value = GithubUserDetailUiState.Loading
             when (val result = getUserDetailUseCase(GetUserDetailInputParams(username))) {
                 is Result.Error -> {
-                    // TODO error handling
+                    _uiState.value = GithubUserDetailUiState.Error(result.exception)
                 }
 
                 is Result.Success -> {

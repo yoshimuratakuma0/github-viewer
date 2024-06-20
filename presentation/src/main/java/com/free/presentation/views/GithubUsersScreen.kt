@@ -88,12 +88,12 @@ private fun GithubUsersScreen(
                     val titleResId = when (error) {
                         is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                         is UnknownHostException -> R.string.error_title_network_error
-                        else -> R.string.error_title_unknown
+                        else -> R.string.error_title_unexpected
                     }
                     val bodyResId = when (error) {
                         is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
                         is UnknownHostException -> R.string.error_network_error
-                        else -> R.string.error_unknown
+                        else -> R.string.error_unexpected
                     }
                     item {
                         OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
