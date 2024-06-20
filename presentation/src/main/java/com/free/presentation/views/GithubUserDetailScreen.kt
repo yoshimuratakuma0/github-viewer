@@ -31,8 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -40,7 +38,8 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
-import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.previews.NightModePreviewAnnotation
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
@@ -52,6 +51,17 @@ fun GithubUserDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    GithubUserDetailStatelessScreen(
+        uiState = uiState,
+        onBack = onBack,
+    )
+}
+
+@Composable
+private fun GithubUserDetailStatelessScreen(
+    uiState: GithubUserDetailUiState,
+    onBack: () -> Unit,
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -70,7 +80,7 @@ fun GithubUserDetailScreen(
                 when (uiState) {
                     is GithubUserDetailUiState.Success -> {
                         GithubUserDetailScreen(
-                            userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
+                            userDetail = (uiState).userDetail
                         )
                     }
 
@@ -198,14 +208,13 @@ fun ProfileDetail(userDetail: UserDetail) {
     }
 }
 
-@Preview
-@Preview(device = Devices.AUTOMOTIVE_1024p)
+@NightModePreviewAnnotation
 @Composable
 fun PreviewGithubUserDetail(
     @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
-    userDetail: UserDetail,
+    uiState: GithubUserDetailUiState,
 ) {
     GithubViewerTheme {
-        GithubUserDetailScreen(userDetail = userDetail)
+        GithubUserDetailStatelessScreen(uiState = uiState, onBack = {})
     }
 }

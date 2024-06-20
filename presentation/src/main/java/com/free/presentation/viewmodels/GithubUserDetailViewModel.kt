@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 sealed interface GithubUserDetailUiState {
-    object Loading : GithubUserDetailUiState
+    data object Loading : GithubUserDetailUiState
     data class Success(val userDetail: UserDetail) : GithubUserDetailUiState
 }
 
