@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase
+import com.free.domain.usecases.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -21,7 +22,7 @@ sealed interface GithubUserDetailUiState {
 
 @HiltViewModel
 class GithubUserDetailViewModel @Inject constructor(
-    getUserDetailUseCase: GetUserDetailUseCase,
+    private val getUserDetailUseCase: GetUserDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -31,12 +32,21 @@ class GithubUserDetailViewModel @Inject constructor(
 
     private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
 
-    val uiState: StateFlow<GithubUserDetailUiState> =
-        getUserDetailUseCase(GetUserDetailInputParams(username))
-            .map(GithubUserDetailUiState::Success)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = GithubUserDetailUiState.Loading,
-            )
+    private val _uiState =
+        MutableStateFlow<GithubUserDetailUiState>(GithubUserDetailUiState.Loading)
+    val uiState = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = getUserDetailUseCase(GetUserDetailInputParams(username))) {
+                is Result.Error -> {
+                    // TODO error handling
+                }
+
+                is Result.Success -> {
+                    _uiState.value = GithubUserDetailUiState.Success(result.data)
+                }
+            }
+        }
+    }
 }
