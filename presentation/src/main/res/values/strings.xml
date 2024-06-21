@@ -17,6 +17,9 @@
     <string name="title_github_users_screen">User list</string>
     <string name="title_github_user_detail_screen">User detail</string>
 
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+
     <string name="error_title_exceed_api_limit">Exceed API limits</string>
     <string name="error_exceed_api_limit">You may exceed API limits. Please try after a while.</string>
     <string name="error_title_network_error">Network Error</string>
