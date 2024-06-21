@@ -6,6 +6,8 @@ import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
+import com.free.domain.usecases.FetchFollowersInputParams
+import com.free.domain.usecases.FetchFollowingInputParams
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
 import javax.inject.Inject
@@ -16,7 +18,42 @@ class UsersRepositoryImpl @Inject constructor(
     /**
      * max value of pageSize and initialLoadSize is 100
      */
-    override suspend fun users(params: FetchUsersInputParams): ListingData {
+    override suspend fun users(params: FetchUsersInputParams): ListingData<FetchUsersInputParams> {
+        val response = api.users(
+            since = params.since,
+            perPage = params.perPage,
+        )
+        if (!response.isSuccessful) {
+            throw FetchUsersException.from(response.code())
+        }
+        val users = response.body()!!.map { dataModel ->
+            dataModel.entity
+        }
+        return ListingData(
+            children = users,
+            params = params,
+        )
+    }
+
+    override suspend fun following(params: FetchFollowingInputParams): ListingData<FetchFollowingInputParams> {
+        val response = api.following(
+            since = params.since,
+            perPage = params.perPage,
+            username = params.username,
+        )
+        if (!response.isSuccessful) {
+            throw FetchUsersException.from(response.code())
+        }
+        val users = response.body()!!.map { dataModel ->
+            dataModel.entity
+        }
+        return ListingData(
+            children = users,
+            params = params,
+        )
+    }
+
+    override suspend fun followers(params: FetchFollowersInputParams): ListingData<FetchFollowersInputParams> {
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
