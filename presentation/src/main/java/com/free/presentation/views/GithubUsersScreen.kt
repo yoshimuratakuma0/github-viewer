@@ -62,9 +62,9 @@ private fun GithubUsersScreen(
         contentPadding = PaddingValues(8.dp)
     ) {
         items(lazyPagingItems.itemCount) { index ->
-            lazyPagingItems[index]?.let {
+            lazyPagingItems[index]?.let { user ->
                 GithubUserItem(
-                    user = it,
+                    user = user,
                     iconRadius = 40,
                     onClick = onClick
                 )

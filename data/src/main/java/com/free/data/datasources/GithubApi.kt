@@ -25,4 +25,16 @@ interface GithubApi {
     suspend fun userDetail(
         @Path("username") username: String
     ): Response<UserDetailModel>
+
+    @Headers("Accept: application/vnd.github.v3+json")
+    @GET("users/{username}/followers")
+    suspend fun followers(
+        @Path("username") username: String
+    ): Response<UserDetailModel>
+
+    @Headers("Accept: application/vnd.github.v3+json")
+    @GET("following/{username}/following")
+    suspend fun following(
+        @Path("username") username: String
+    ): Response<UserDetailModel>
 }
