@@ -1,6 +1,5 @@
 package com.free.presentation.views
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,18 +28,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
 import com.free.presentation.GithubUserDetailPreviewParameterProvider
 import com.free.presentation.previews.NightModePreviewAnnotation
+import com.free.presentation.utils.AsyncRoundedImage
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
@@ -139,26 +133,7 @@ private fun ProfileSummary(userDetail: UserDetail) {
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
-                    .data(data = userDetail.user.avatarUrl)
-                    .apply(block = {
-                        transformations(
-                            with(LocalDensity.current) {
-                                RoundedCornersTransformation(
-                                    topLeft = iconRadius.dp.toPx(),
-                                    topRight = iconRadius.dp.toPx(),
-                                    bottomLeft = iconRadius.dp.toPx(),
-                                    bottomRight = iconRadius.dp.toPx(),
-                                )
-                            }
-                        )
-                    }).build()
-            ),
-            contentDescription = null,
-            modifier = Modifier.size((iconRadius * 2).dp)
-        )
+        AsyncRoundedImage(iconRadius = iconRadius, url = userDetail.user.avatarUrl)
         Spacer(modifier = Modifier.width(16.dp))
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
