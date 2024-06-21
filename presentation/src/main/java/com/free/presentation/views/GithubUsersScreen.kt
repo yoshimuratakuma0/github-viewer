@@ -31,6 +31,17 @@ fun GithubUsersScreen(
     viewModel: GithubUsersViewModel,
     onClickUser: (username: String) -> Unit,
 ) {
+    GithubUsersStatelessScreen(
+        lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
+        onClick = onClickUser,
+    )
+}
+
+@Composable
+private fun GithubUsersStatelessScreen(
+    lazyPagingItems: LazyPagingItems<User>,
+    onClick: ((username: String) -> Unit)
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -41,64 +52,53 @@ fun GithubUsersScreen(
         },
         content = {
             Box(modifier = Modifier.padding(it)) {
-                GithubUsersScreen(
-                    lazyPagingItems = viewModel.usersFlow.collectAsLazyPagingItems(),
-                    onClick = onClickUser,
-                )
-            }
-        }
-    )
-}
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    items(lazyPagingItems.itemCount) { index ->
+                        lazyPagingItems[index]?.let { user ->
+                            GithubUserItem(
+                                user = user,
+                                onClick = onClick
+                            )
+                        }
+                    }
+                    lazyPagingItems.apply {
+                        when {
+                            loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading -> {
+                                item {
+                                    Box(
+                                        modifier = Modifier.fillParentMaxSize(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        CircularProgressIndicator()
+                                    }
+                                }
+                            }
 
-@Composable
-private fun GithubUsersScreen(
-    lazyPagingItems: LazyPagingItems<User>,
-    onClick: ((username: String) -> Unit)
-) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(8.dp)
-    ) {
-        items(lazyPagingItems.itemCount) { index ->
-            lazyPagingItems[index]?.let { user ->
-                GithubUserItem(
-                    user = user,
-                    onClick = onClick
-                )
-            }
-        }
-        lazyPagingItems.apply {
-            when {
-                loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading -> {
-                    item {
-                        Box(
-                            modifier = Modifier.fillParentMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
+                            loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
+                                val error = (loadState.refresh as LoadState.Error).error
+                                val titleResId = when (error) {
+                                    is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
+                                    is UnknownHostException -> R.string.error_title_network_error
+                                    else -> R.string.error_title_unexpected
+                                }
+                                val bodyResId = when (error) {
+                                    is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
+                                    is UnknownHostException -> R.string.error_network_error
+                                    else -> R.string.error_unexpected
+                                }
+                                item {
+                                    OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
+                                }
+                            }
                         }
                     }
                 }
-
-                loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
-                    val error = (loadState.refresh as LoadState.Error).error
-                    val titleResId = when (error) {
-                        is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
-                        is UnknownHostException -> R.string.error_title_network_error
-                        else -> R.string.error_title_unexpected
-                    }
-                    val bodyResId = when (error) {
-                        is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
-                        is UnknownHostException -> R.string.error_network_error
-                        else -> R.string.error_unexpected
-                    }
-                    item {
-                        OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
-                    }
-                }
             }
         }
-    }
+    )
 }
