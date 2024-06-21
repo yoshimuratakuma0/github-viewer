@@ -65,7 +65,6 @@ private fun GithubUsersScreen(
             lazyPagingItems[index]?.let { user ->
                 GithubUserItem(
                     user = user,
-                    iconRadius = 40,
                     onClick = onClick
                 )
             }

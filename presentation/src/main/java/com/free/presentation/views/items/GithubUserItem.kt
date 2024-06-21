@@ -1,16 +1,25 @@
 package com.free.presentation.views.items
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -23,7 +32,6 @@ import com.free.presentation.utils.AsyncRoundedImage
 @Composable
 fun GithubUserItem(
     user: User,
-    iconRadius: Int = 32,
     onClick: (String) -> Unit
 ) {
     Card(
@@ -35,9 +43,26 @@ fun GithubUserItem(
             }
     ) {
         Row(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(8.dp)
+                .height(IntrinsicSize.Min),
         ) {
-            AsyncRoundedImage(iconRadius = iconRadius, url = user.avatarUrl)
+            val iconRadius = remember {
+                mutableIntStateOf(0)
+            }
+            val density = LocalDensity.current.density
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1.0f)
+                    .onGloballyPositioned { coordinates ->
+                        iconRadius.intValue = (coordinates.size.height / density).toInt()
+                    },
+                content = {
+                    AsyncRoundedImage(iconRadius = iconRadius.intValue / 2, url = user.avatarUrl)
+                },
+            )
 
             Column {
                 Text(
