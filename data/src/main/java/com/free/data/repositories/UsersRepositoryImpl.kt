@@ -4,6 +4,7 @@ import com.free.data.datasources.GithubApi
 import com.free.data.exceptions.from
 import com.free.domain.entities.ListingData
 import com.free.domain.entities.UserDetail
+import com.free.domain.entities.UserListingData
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchFollowersInputParams
@@ -18,7 +19,7 @@ class UsersRepositoryImpl @Inject constructor(
     /**
      * max value of pageSize and initialLoadSize is 100
      */
-    override suspend fun users(params: FetchUsersInputParams): ListingData<FetchUsersInputParams> {
+    override suspend fun users(params: FetchUsersInputParams): UserListingData {
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
@@ -29,7 +30,7 @@ class UsersRepositoryImpl @Inject constructor(
         val users = response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return ListingData(
+        return UserListingData(
             children = users,
             params = params,
         )

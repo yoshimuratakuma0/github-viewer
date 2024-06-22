@@ -67,7 +67,7 @@ fun GithubUserItem(
             Column {
                 Text(
                     modifier = Modifier.padding(8.dp),
-                    text = user.username,
+                    text = "${user.id}: ${user.username}",
                     style = MaterialTheme.typography.h5,
                 )
                 Row {
