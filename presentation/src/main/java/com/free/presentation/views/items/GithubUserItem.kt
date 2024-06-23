@@ -32,7 +32,7 @@ import com.free.presentation.utils.AsyncRoundedImage
 @Composable
 fun GithubUserItem(
     user: User,
-    onClick: (String) -> Unit,
+    onClick: () -> Unit,
     onFollowing: () -> Unit,
     onFollowers: () -> Unit,
 ) {
@@ -41,7 +41,7 @@ fun GithubUserItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                onClick.invoke(user.username)
+                onClick()
             }
     ) {
         Row(
@@ -89,7 +89,7 @@ fun GithubUserItem(
                                 style = MaterialTheme.typography.body1,
                             )
                         },
-                        onClick = onFollowing,
+                        onClick = onFollowers,
                     )
                 }
             }
