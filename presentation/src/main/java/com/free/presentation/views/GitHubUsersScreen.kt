@@ -16,17 +16,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.free.domain.entities.User
 import com.free.githubviewer.R
+import com.free.presentation.GitHubUsersPreviewParameterProvider
+import com.free.presentation.previews.NightModePreviewAnnotation
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.utils.errorBodyBy
 import com.free.presentation.utils.errorTitleBy
 import com.free.presentation.viewmodels.GitHubUsersUiState
 import com.free.presentation.viewmodels.GithubUsersViewModel
 import com.free.presentation.views.items.GitHubUserList
+import com.free.presentation.views.theme.GithubViewerTheme
 
 @Composable
-fun GithubUsersScreen(
+fun GitHubUsersScreen(
     viewModel: GithubUsersViewModel,
     onClickUser: (username: String) -> Unit,
     onFollowing: (username: String) -> Unit,
@@ -102,4 +106,39 @@ private fun GithubUsersStatelessScreen(
             }
         }
     )
+}
+
+@NightModePreviewAnnotation
+@Composable
+private fun GitHubUsersStatelessScreenPreview(
+    @PreviewParameter(GitHubUsersPreviewParameterProvider::class)
+    uiState: GitHubUsersUiState,
+) {
+    GithubViewerTheme {
+        GithubUsersStatelessScreen(
+            listState = rememberLazyListState(),
+            uiState = uiState,
+            users = listOf(
+                User(
+                    id = 1,
+                    username = "preview name",
+                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                ),
+                User(
+                    id = 2,
+                    username = "preview name 2",
+                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                ),
+                User(
+                    id = 3,
+                    username = "preview name 3",
+                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                ),
+            ),
+            fetchMore = { /*TODO*/ },
+            onClick = {},
+            onFollowing = {},
+            onFollowers = {},
+        )
+    }
 }

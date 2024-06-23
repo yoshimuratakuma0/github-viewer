@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = ScreenRoutes.GITHUB_USERS
                 ) {
                     composable(route = ScreenRoutes.GITHUB_USERS) {
-                        GithubUsersScreen(
+                        GitHubUsersScreen(
                             hiltViewModel(),
                             onClickUser = { username ->
                                 navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
