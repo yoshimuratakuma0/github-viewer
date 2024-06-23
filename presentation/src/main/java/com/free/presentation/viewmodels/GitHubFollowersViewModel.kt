@@ -3,11 +3,11 @@ package com.free.presentation.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.free.domain.KEY_USERNAME
 import com.free.domain.entities.FollowersListingData
 import com.free.domain.usecases.FetchFollowersInputParams
 import com.free.domain.usecases.FetchFollowersUseCase
 import com.free.domain.usecases.Result
-import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

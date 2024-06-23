@@ -3,6 +3,7 @@ package com.free.presentation.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.free.domain.KEY_USERNAME
 import com.free.domain.entities.UserDetail
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase
@@ -26,11 +27,6 @@ class GithubUserDetailViewModel @Inject constructor(
     private val getUserDetailUseCase: GetUserDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-    companion object {
-        const val KEY_USERNAME = "username"
-    }
-
     private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
 
     private val _uiState =

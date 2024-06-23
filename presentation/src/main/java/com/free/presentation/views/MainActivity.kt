@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
+import com.free.domain.KEY_USERNAME
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
