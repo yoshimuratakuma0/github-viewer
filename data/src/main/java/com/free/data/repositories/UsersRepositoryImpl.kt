@@ -2,10 +2,8 @@ package com.free.data.repositories
 
 import com.free.data.datasources.GithubApi
 import com.free.data.exceptions.from
-import com.free.domain.entities.FollowersListingData
-import com.free.domain.entities.FollowingListingData
+import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.domain.entities.UserListingData
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import com.free.domain.usecases.FetchFollowersInputParams
@@ -20,7 +18,7 @@ class UsersRepositoryImpl @Inject constructor(
     /**
      * max value of pageSize and initialLoadSize is 100
      */
-    override suspend fun users(params: FetchUsersInputParams): UserListingData {
+    override suspend fun users(params: FetchUsersInputParams): List<User> {
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
@@ -28,16 +26,12 @@ class UsersRepositoryImpl @Inject constructor(
         if (!response.isSuccessful) {
             throw FetchUsersException.from(response.code())
         }
-        val users = response.body()!!.map { dataModel ->
+        return response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return UserListingData(
-            children = users,
-            params = params,
-        )
     }
 
-    override suspend fun following(params: FetchFollowingInputParams): FollowingListingData {
+    override suspend fun following(params: FetchFollowingInputParams): List<User> {
         val response = api.following(
             since = params.since,
             perPage = params.perPage,
@@ -46,16 +40,12 @@ class UsersRepositoryImpl @Inject constructor(
         if (!response.isSuccessful) {
             throw FetchUsersException.from(response.code())
         }
-        val users = response.body()!!.map { dataModel ->
+        return response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return FollowingListingData(
-            children = users,
-            params = params,
-        )
     }
 
-    override suspend fun followers(params: FetchFollowersInputParams): FollowersListingData {
+    override suspend fun followers(params: FetchFollowersInputParams): List<User> {
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
@@ -63,13 +53,9 @@ class UsersRepositoryImpl @Inject constructor(
         if (!response.isSuccessful) {
             throw FetchUsersException.from(response.code())
         }
-        val users = response.body()!!.map { dataModel ->
+        return response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return FollowersListingData(
-            children = users,
-            params = params,
-        )
     }
 
     override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {

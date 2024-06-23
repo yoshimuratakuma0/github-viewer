@@ -1,6 +1,6 @@
 package com.free.domain.usecases
 
-import com.free.domain.entities.FollowersListingData
+import com.free.domain.entities.User
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -8,8 +8,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 class FetchFollowersUseCase(
     private val repository: UsersRepository,
     ioDispatcher: CoroutineDispatcher,
-) : CoroutineUseCase<FetchFollowersInputParams, FollowersListingData>(ioDispatcher) {
-    override suspend fun execute(params: FetchFollowersInputParams): FollowersListingData {
+) : CoroutineUseCase<FetchFollowersInputParams, List<User>>(ioDispatcher) {
+    override suspend fun execute(params: FetchFollowersInputParams): List<User> {
         require(params.perPage <= 100) {
             throw FetchUsersException.ExceedLimit
         }

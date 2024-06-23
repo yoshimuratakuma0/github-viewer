@@ -2,7 +2,7 @@ package com.free.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.free.domain.entities.UserListingData
+import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
 import com.free.domain.usecases.Result
@@ -19,6 +19,11 @@ sealed interface GitHubUsersUiState {
     data class Error(val exception: Exception) : GitHubUsersUiState
     data object Loading : GitHubUsersUiState
 }
+
+class UserListingData(
+    val children: List<User>,
+    val params: FetchUsersInputParams,
+)
 
 @HiltViewModel
 class GithubUsersViewModel @Inject constructor(
@@ -67,12 +72,12 @@ class GithubUsersViewModel @Inject constructor(
                         // Don't add the same list.
                         // since param doesn't seem to work well.
                         // So, sometimes we get the same list even if since param is different
-                        if (currentListing?.children?.lastOrNull() == result.data.children.lastOrNull()) {
+                        if (currentListing?.children?.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
                         UserListingData(
-                            (currentListing?.children ?: emptyList()) + result.data.children,
-                            result.data.params,
+                            (currentListing?.children ?: emptyList()) + result.data,
+                            nextParams,
                         )
                     }
                 }

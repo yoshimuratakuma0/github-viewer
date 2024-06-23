@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.domain.KEY_USERNAME
-import com.free.domain.entities.FollowersListingData
+import com.free.domain.entities.User
 import com.free.domain.usecases.FetchFollowersInputParams
 import com.free.domain.usecases.FetchFollowersUseCase
 import com.free.domain.usecases.Result
@@ -22,6 +22,10 @@ sealed interface GitHubFollowersUiState {
     data object Loading : GitHubFollowersUiState
 }
 
+class FollowersListingData(
+    val children: List<User>,
+    val params: FetchFollowersInputParams,
+)
 
 @HiltViewModel
 class GitHubFollowersViewModel @Inject constructor(
@@ -74,12 +78,12 @@ class GitHubFollowersViewModel @Inject constructor(
                         // Don't add the same list.
                         // since param doesn't seem to work well.
                         // So, sometimes we get the same list even if since param is different
-                        if (currentListing?.children?.lastOrNull() == result.data.children.lastOrNull()) {
+                        if (currentListing?.children?.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
                         FollowersListingData(
-                            (currentListing?.children ?: emptyList()) + result.data.children,
-                            result.data.params,
+                            (currentListing?.children ?: emptyList()) + result.data,
+                            nextParams,
                         )
                     }
                 }
