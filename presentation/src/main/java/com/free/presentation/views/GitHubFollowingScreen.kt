@@ -21,13 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.free.domain.entities.User
-import com.free.domain.exceptions.FetchUsersException
 import com.free.githubviewer.R
 import com.free.presentation.utils.OkAlertDialog
+import com.free.presentation.utils.errorBodyBy
+import com.free.presentation.utils.errorTitleBy
 import com.free.presentation.viewmodels.GitHubFollowingUiState
 import com.free.presentation.viewmodels.GitHubFollowingViewModel
 import com.free.presentation.views.items.GitHubUserList
-import java.net.UnknownHostException
 
 @Composable
 fun GitHubFollowingScreen(
@@ -96,17 +96,9 @@ private fun GitHubFollowingScreenStatelessScreen(
                     }
 
                     is GitHubFollowingUiState.Error -> {
-                        val titleResId = when (uiState.exception) {
-                            is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
-                            is UnknownHostException -> R.string.error_title_network_error
-                            else -> R.string.error_title_unexpected
-                        }
-                        val bodyResId = when (uiState.exception) {
-                            is FetchUsersException.Forbidden -> R.string.error_exceed_api_limit
-                            is UnknownHostException -> R.string.error_network_error
-                            else -> R.string.error_unexpected
-                        }
-                        OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
+                        val title = errorTitleBy(exception = uiState.exception)
+                        val body = errorBodyBy(exception = uiState.exception)
+                        OkAlertDialog(title = title, body = body)
                     }
 
                     GitHubFollowingUiState.Loading -> {

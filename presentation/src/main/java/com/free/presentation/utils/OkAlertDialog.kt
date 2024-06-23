@@ -10,16 +10,16 @@ import androidx.compose.ui.res.stringResource
 import com.free.githubviewer.R
 
 @Composable
-fun OkAlertDialog(titleResId: Int, bodyResId: Int) {
+fun OkAlertDialog(title: String, body: String) {
     val isShowing = remember { mutableStateOf(true) }
     if (isShowing.value) {
         AlertDialog(
             onDismissRequest = { },
             title = {
-                Text(stringResource(id = titleResId))
+                Text(title)
             },
             text = {
-                Text(stringResource(id = bodyResId))
+                Text(body)
             },
             confirmButton = {
                 TextButton(
