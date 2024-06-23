@@ -35,7 +35,7 @@ interface GithubApi {
     ): Response<List<UserModel>>
 
     @Headers("Accept: application/vnd.github.v3+json")
-    @GET("following/{username}/following")
+    @GET("users/{username}/following")
     suspend fun following(
         @Path("username") username: String,
         @Query("since") since: Int?,

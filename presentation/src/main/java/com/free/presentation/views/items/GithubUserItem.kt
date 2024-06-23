@@ -32,7 +32,9 @@ import com.free.presentation.utils.AsyncRoundedImage
 @Composable
 fun GithubUserItem(
     user: User,
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    onFollowing: () -> Unit,
+    onFollowers: () -> Unit,
 ) {
     Card(
         backgroundColor = colorResource(id = R.color.card_background),
@@ -78,7 +80,7 @@ fun GithubUserItem(
                                 style = MaterialTheme.typography.body1,
                             )
                         },
-                        onClick = {},
+                        onClick = onFollowing,
                     )
                     TextButton(
                         content = {
@@ -87,7 +89,7 @@ fun GithubUserItem(
                                 style = MaterialTheme.typography.body1,
                             )
                         },
-                        onClick = {},
+                        onClick = onFollowing,
                     )
                 }
             }
@@ -104,5 +106,5 @@ fun PreviewGithubUserItem() {
         avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
         username = "ivey"
     )
-    GithubUserItem(user = user, onClick = {})
+    GithubUserItem(user = user, onClick = {}, onFollowing = {}, onFollowers = {})
 }

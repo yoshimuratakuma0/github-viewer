@@ -1,11 +1,13 @@
 package com.free.presentation.viewmodels
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.free.domain.entities.UserListingData
-import com.free.domain.usecases.FetchUsersInputParams
-import com.free.domain.usecases.FetchUsersUseCase
+import com.free.domain.entities.FollowingListingData
+import com.free.domain.usecases.FetchFollowingInputParams
+import com.free.domain.usecases.FetchFollowingUseCase
 import com.free.domain.usecases.Result
+import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,20 +16,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-sealed interface GitHubUsersUiState {
-    data object Success : GitHubUsersUiState
-    data class Error(val exception: Exception) : GitHubUsersUiState
-    data object Loading : GitHubUsersUiState
+sealed interface GitHubFollowingUiState {
+    data object Success : GitHubFollowingUiState
+    data class Error(val exception: Exception) : GitHubFollowingUiState
+    data object Loading : GitHubFollowingUiState
 }
 
+
 @HiltViewModel
-class GithubUsersViewModel @Inject constructor(
-    private val fetchUsersUseCase: FetchUsersUseCase,
+class GitHubFollowingViewModel @Inject constructor(
+    private val fetchFollowingUseCase: FetchFollowingUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<GitHubUsersUiState>(GitHubUsersUiState.Loading)
+    private val _uiState = MutableStateFlow<GitHubFollowingUiState>(GitHubFollowingUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    private val _listing = MutableStateFlow<UserListingData?>(null)
+    private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
+
+    private val _listing = MutableStateFlow<FollowingListingData?>(null)
     val listing = _listing.asStateFlow()
 
     init {
@@ -39,7 +45,8 @@ class GithubUsersViewModel @Inject constructor(
             _listing.update { currentListing ->
                 val nextParams = if (currentListing == null) {
                     // Initial fetch
-                    FetchUsersInputParams(
+                    FetchFollowingInputParams(
+                        username = username,
                         perPage = 50,
                         since = null,
                     )
@@ -55,14 +62,14 @@ class GithubUsersViewModel @Inject constructor(
                     nextParams
                 }
 
-                when (val result = fetchUsersUseCase(nextParams)) {
+                when (val result = fetchFollowingUseCase(nextParams)) {
                     is Result.Error -> {
-                        _uiState.value = GitHubUsersUiState.Error(result.exception)
+                        _uiState.value = GitHubFollowingUiState.Error(result.exception)
                         currentListing
                     }
 
                     is Result.Success -> {
-                        _uiState.value = GitHubUsersUiState.Success
+                        _uiState.value = GitHubFollowingUiState.Success
 
                         // Don't add the same list.
                         // since param doesn't seem to work well.
@@ -70,7 +77,7 @@ class GithubUsersViewModel @Inject constructor(
                         if (currentListing?.children?.lastOrNull() == result.data.children.lastOrNull()) {
                             return@update currentListing
                         }
-                        UserListingData(
+                        FollowingListingData(
                             (currentListing?.children ?: emptyList()) + result.data.children,
                             result.data.params,
                         )

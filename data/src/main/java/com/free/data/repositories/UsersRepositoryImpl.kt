@@ -2,7 +2,8 @@ package com.free.data.repositories
 
 import com.free.data.datasources.GithubApi
 import com.free.data.exceptions.from
-import com.free.domain.entities.ListingData
+import com.free.domain.entities.FollowersListingData
+import com.free.domain.entities.FollowingListingData
 import com.free.domain.entities.UserDetail
 import com.free.domain.entities.UserListingData
 import com.free.domain.exceptions.FetchUsersException
@@ -36,7 +37,7 @@ class UsersRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun following(params: FetchFollowingInputParams): ListingData<FetchFollowingInputParams> {
+    override suspend fun following(params: FetchFollowingInputParams): FollowingListingData {
         val response = api.following(
             since = params.since,
             perPage = params.perPage,
@@ -48,13 +49,13 @@ class UsersRepositoryImpl @Inject constructor(
         val users = response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return ListingData(
+        return FollowingListingData(
             children = users,
             params = params,
         )
     }
 
-    override suspend fun followers(params: FetchFollowersInputParams): ListingData<FetchFollowersInputParams> {
+    override suspend fun followers(params: FetchFollowersInputParams): FollowersListingData {
         val response = api.users(
             since = params.since,
             perPage = params.perPage,
@@ -65,7 +66,7 @@ class UsersRepositoryImpl @Inject constructor(
         val users = response.body()!!.map { dataModel ->
             dataModel.entity
         }
-        return ListingData(
+        return FollowersListingData(
             children = users,
             params = params,
         )

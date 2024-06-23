@@ -10,9 +10,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,23 +29,24 @@ import com.free.domain.entities.User
 import com.free.domain.exceptions.FetchUsersException
 import com.free.githubviewer.R
 import com.free.presentation.utils.OkAlertDialog
-import com.free.presentation.viewmodels.GitHubUsersUiState
-import com.free.presentation.viewmodels.GithubUsersViewModel
+import com.free.presentation.viewmodels.GitHubFollowingUiState
+import com.free.presentation.viewmodels.GitHubFollowingViewModel
 import com.free.presentation.views.items.GithubUserItem
 import java.net.UnknownHostException
 
 @Composable
-fun GithubUsersScreen(
-    viewModel: GithubUsersViewModel,
+fun GitHubFollowingScreen(
+    viewModel: GitHubFollowingViewModel,
     onClickUser: (username: String) -> Unit,
     onFollowing: (username: String) -> Unit,
     onFollowers: (username: String) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val listing by viewModel.listing.collectAsState()
     val listState = rememberLazyListState()
 
-    GithubUsersStatelessScreen(
+    GitHubFollowingScreenStatelessScreen(
         listState = listState,
         uiState = uiState,
         users = listing?.children ?: emptyList(),
@@ -49,31 +54,38 @@ fun GithubUsersScreen(
         onClick = onClickUser,
         onFollowing = onFollowing,
         onFollowers = onFollowers,
+        onBackPressed = onBackPressed,
     )
 }
 
 @Composable
-private fun GithubUsersStatelessScreen(
+private fun GitHubFollowingScreenStatelessScreen(
     listState: LazyListState,
-    uiState: GitHubUsersUiState,
+    uiState: GitHubFollowingUiState,
     users: List<User>,
     fetchMore: () -> Unit,
     onClick: ((username: String) -> Unit),
     onFollowing: (username: String) -> Unit,
     onFollowers: (username: String) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.title_github_users_screen))
+                    Text(text = stringResource(id = R.string.following))
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBackPressed) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    }
                 }
             )
         },
         content = {
             Box(modifier = Modifier.padding(it)) {
                 when (uiState) {
-                    is GitHubUsersUiState.Success -> {
+                    is GitHubFollowingUiState.Success -> {
                         if (!listState.canScrollForward) {
                             LaunchedEffect(key1 = users.size) {
                                 fetchMore()
@@ -96,13 +108,13 @@ private fun GithubUsersStatelessScreen(
                                     },
                                     onFollowers = {
                                         onFollowers(user.username)
-                                    }
+                                    },
                                 )
                             }
                         }
                     }
 
-                    is GitHubUsersUiState.Error -> {
+                    is GitHubFollowingUiState.Error -> {
                         val titleResId = when (uiState.exception) {
                             is FetchUsersException.Forbidden -> R.string.error_title_exceed_api_limit
                             is UnknownHostException -> R.string.error_title_network_error
@@ -116,7 +128,7 @@ private fun GithubUsersStatelessScreen(
                         OkAlertDialog(titleResId = titleResId, bodyResId = bodyResId)
                     }
 
-                    GitHubUsersUiState.Loading -> {
+                    GitHubFollowingUiState.Loading -> {
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
