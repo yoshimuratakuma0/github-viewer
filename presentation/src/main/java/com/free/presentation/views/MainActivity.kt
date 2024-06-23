@@ -86,6 +86,31 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+
+                    composable(
+                        route = "${ScreenRoutes.GITHUB_FOLLOWERS}{$KEY_USERNAME}",
+                        arguments = listOf(
+                            navArgument(KEY_USERNAME) { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
+                            GitHubFollowersScreen(
+                                hiltViewModel(),
+                                onClickUser = {
+                                    navController.popBackStack()
+                                },
+                                onFollowers = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
+                                },
+                                onFollowing = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
+                                },
+                                onBackPressed = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
