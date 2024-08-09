@@ -1,89 +1,105 @@
 package com.free.presentation.views.items
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.User
 import com.free.githubviewer.R
+import com.free.presentation.previews.NightModePreviewAnnotation
+import com.free.presentation.utils.AsyncRoundedImage
+
 
 @Composable
 fun GithubUserItem(
     user: User,
-    iconRadius: Int = 32,
-    onClick: (String) -> Unit
+    onClick: () -> Unit,
+    onFollowing: () -> Unit,
+    onFollowers: () -> Unit,
 ) {
     Card(
         backgroundColor = colorResource(id = R.color.card_background),
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
             .clickable {
-                onClick.invoke(user.username)
+                onClick()
             }
     ) {
         Row(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(8.dp)
+                .height(IntrinsicSize.Min),
         ) {
-            Box(
-                modifier = Modifier.size((2 * iconRadius).dp)
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.ic_account_circle),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = user.avatarUrl)
-                            .apply(block = {
-                                transformations(
-                                    with(LocalDensity.current) {
-                                        RoundedCornersTransformation(
-                                            topLeft = iconRadius.dp.toPx(),
-                                            topRight = iconRadius.dp.toPx(),
-                                            bottomLeft = iconRadius.dp.toPx(),
-                                            bottomRight = iconRadius.dp.toPx(),
-                                        )
-                                    }
-                                )
-                            }).build()
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
+            val iconRadius = remember {
+                mutableIntStateOf(0)
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = user.username,
-                color = MaterialTheme.colors.onBackground
+            val density = LocalDensity.current.density
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1.0f)
+                    .onGloballyPositioned { coordinates ->
+                        iconRadius.intValue = (coordinates.size.height / density).toInt()
+                    },
+                content = {
+                    AsyncRoundedImage(iconRadius = iconRadius.intValue / 2, url = user.avatarUrl)
+                },
             )
+
+            Column {
+                Text(
+                    modifier = Modifier.padding(8.dp),
+                    text = "${user.id}: ${user.username}",
+                    style = MaterialTheme.typography.h5,
+                )
+                Row {
+                    TextButton(
+                        content = {
+                            Text(
+                                text = stringResource(id = R.string.following),
+                                style = MaterialTheme.typography.body1,
+                            )
+                        },
+                        onClick = onFollowing,
+                    )
+                    TextButton(
+                        content = {
+                            Text(
+                                text = stringResource(id = R.string.followers),
+                                style = MaterialTheme.typography.body1,
+                            )
+                        },
+                        onClick = onFollowers,
+                    )
+                }
+            }
         }
     }
 }
 
-@Preview
+
+@NightModePreviewAnnotation
 @Composable
 fun PreviewGithubUserItem() {
     val user = User(
@@ -91,5 +107,5 @@ fun PreviewGithubUserItem() {
         avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
         username = "ivey"
     )
-    GithubUserItem(user = user, onClick = {})
+    GithubUserItem(user = user, onClick = {}, onFollowing = {}, onFollowers = {})
 }

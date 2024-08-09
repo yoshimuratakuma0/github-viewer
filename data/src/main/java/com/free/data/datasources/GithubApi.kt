@@ -25,4 +25,20 @@ interface GithubApi {
     suspend fun userDetail(
         @Path("username") username: String
     ): Response<UserDetailModel>
+
+    @Headers("Accept: application/vnd.github.v3+json")
+    @GET("users/{username}/followers")
+    suspend fun followers(
+        @Path("username") username: String,
+        @Query("since") since: Int?,
+        @Query("per_page") perPage: Int,
+    ): Response<List<UserModel>>
+
+    @Headers("Accept: application/vnd.github.v3+json")
+    @GET("users/{username}/following")
+    suspend fun following(
+        @Path("username") username: String,
+        @Query("since") since: Int?,
+        @Query("per_page") perPage: Int
+    ): Response<List<UserModel>>
 }

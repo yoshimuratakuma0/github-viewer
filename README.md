@@ -2,6 +2,11 @@
 
 Githubのユーザー一覧を取得したり、ユーザーの詳細を表示するアプリ
 
+# 環境構築
+
+API Limit の上限を上げたい場合は `secret.properties` をプロジェクトのルートに追加して、`GITHUB_TOKEN`
+を追加してください
+
 # 使用技術
 
 - Dagger Hilt
@@ -12,15 +17,16 @@ Githubのユーザー一覧を取得したり、ユーザーの詳細を表示�
 - Flow
 - StateFlow
 - Jetpack Compose
-- Paging3
 - MockK
 
 # モジュールの関連図
 
 ## 概要
 
-このアプリはCore, Domain, Data, Presentaion, Appの五つのモジュールに分けられていて、Appは残りの四つの全てのモジュールに依存していて、Domain, Data,
-Presentationの三つのモジュールはCoreモジュールに依存しています。 また、Domain, Data, Presentationの三つのモジュールの依存関係は Data ->
+このアプリはCore, Domain, Data, Presentaion, Appの五つのモジュールに分けられていて、Appは残りの四つの全てのモジュールに依存していて、Domain,
+Data,
+Presentationの三つのモジュールはCoreモジュールに依存しています。 また、Domain, Data,
+Presentationの三つのモジュールの依存関係は Data ->
 Domain <- Presentation となっています。
 
 ![modules](https://user-images.githubusercontent.com/88303689/166624713-7adeb862-7b73-4948-b4dd-c03424d1b380.png)

@@ -1,19 +1,24 @@
 package com.free.presentation.views
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -28,19 +33,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.transform.RoundedCornersTransformation
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
-import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.previews.NightModePreviewAnnotation
+import com.free.presentation.utils.AsyncRoundedImage
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 import com.free.presentation.views.theme.GithubViewerTheme
@@ -52,9 +52,28 @@ fun GithubUserDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    GithubUserDetailStatelessScreen(
+        uiState = uiState,
+        onRetry = {
+            viewModel.fetchUserDetail()
+        },
+        onBack = onBack,
+    )
+}
+
+@Composable
+private fun GithubUserDetailStatelessScreen(
+    uiState: GithubUserDetailUiState,
+    onRetry: () -> Unit,
+    onBack: () -> Unit,
+) {
     Scaffold(
         topBar = {
+            val topPadding = WindowInsets.systemBars.only(WindowInsetsSides.Top)
+                .asPaddingValues()
+                .calculateTopPadding()
             TopAppBar(
+                modifier = Modifier.padding(top = topPadding),
                 title = {
                     Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
@@ -65,21 +84,33 @@ fun GithubUserDetailScreen(
                 }
             )
         },
-        content = {
-            Box(modifier = Modifier.padding(it)) {
-                when (uiState) {
-                    is GithubUserDetailUiState.Success -> {
-                        GithubUserDetailScreen(
-                            userDetail = (uiState as GithubUserDetailUiState.Success).userDetail
-                        )
-                    }
+        content = { contentPadding ->
+            when (uiState) {
+                is GithubUserDetailUiState.Success -> {
+                    GithubUserDetailScreen(
+                        userDetail = uiState.userDetail,
+                        contentPaddingValues = contentPadding,
+                    )
+                }
 
-                    is GithubUserDetailUiState.Loading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            CircularProgressIndicator()
+                is GithubUserDetailUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is GithubUserDetailUiState.Error -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(text = stringResource(id = R.string.error_unexpected))
+                        Button(onClick = onRetry) {
+                            Text(text = stringResource(id = R.string.retry))
                         }
                     }
                 }
@@ -89,45 +120,29 @@ fun GithubUserDetailScreen(
 }
 
 @Composable
-private fun GithubUserDetailScreen(userDetail: UserDetail) {
+private fun GithubUserDetailScreen(
+    userDetail: UserDetail,
+    contentPaddingValues: PaddingValues,
+) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(contentPaddingValues),
         verticalArrangement = Arrangement.SpaceAround,
     ) {
-        ProfileAbstract(userDetail = userDetail)
+        ProfileSummary(userDetail = userDetail)
         Spacer(modifier = Modifier.height(24.dp))
         ProfileDetail(userDetail = userDetail)
     }
 }
 
 @Composable
-fun ProfileAbstract(userDetail: UserDetail) {
+private fun ProfileSummary(userDetail: UserDetail) {
     val iconRadius = 64
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
-                    .data(data = userDetail.user.avatarUrl)
-                    .apply(block = {
-                        transformations(
-                            with(LocalDensity.current) {
-                                RoundedCornersTransformation(
-                                    topLeft = iconRadius.dp.toPx(),
-                                    topRight = iconRadius.dp.toPx(),
-                                    bottomLeft = iconRadius.dp.toPx(),
-                                    bottomRight = iconRadius.dp.toPx(),
-                                )
-                            }
-                        )
-                    }).build()
-            ),
-            contentDescription = null,
-            modifier = Modifier.size((iconRadius * 2).dp)
-        )
+        AsyncRoundedImage(iconRadius = iconRadius, url = userDetail.user.avatarUrl)
         Spacer(modifier = Modifier.width(16.dp))
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
@@ -151,7 +166,7 @@ fun ProfileAbstract(userDetail: UserDetail) {
 }
 
 @Composable
-fun ProfileDetail(userDetail: UserDetail) {
+private fun ProfileDetail(userDetail: UserDetail) {
     Column {
         Text(
             text = stringResource(id = R.string.about_username).format(userDetail.displayName),
@@ -198,14 +213,17 @@ fun ProfileDetail(userDetail: UserDetail) {
     }
 }
 
-@Preview
-@Preview(device = Devices.AUTOMOTIVE_1024p)
+@NightModePreviewAnnotation
 @Composable
 fun PreviewGithubUserDetail(
     @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
-    userDetail: UserDetail,
+    uiState: GithubUserDetailUiState,
 ) {
     GithubViewerTheme {
-        GithubUserDetailScreen(userDetail = userDetail)
+        GithubUserDetailStatelessScreen(
+            uiState = uiState,
+            onRetry = {},
+            onBack = {},
+        )
     }
 }

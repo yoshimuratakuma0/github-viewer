@@ -3,26 +3,30 @@ package com.free.presentation.views
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.free.presentation.viewmodels.GithubUserDetailViewModel.Companion.KEY_USERNAME
+import com.free.domain.KEY_USERNAME
 import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
 object ScreenRoutes {
-    const val githubUsers = "github_users_screen/"
-    const val githubUserDetail = "github_user_detail_screen/"
+    const val GITHUB_USERS = "github_users_screen/"
+    const val GITHUB_USER_DETAIL = "github_user_detail_screen/"
+    const val GITHUB_FOLLOWING = "github_following/"
+    const val GITHUB_FOLLOWERS = "github_followers/"
 }
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -30,17 +34,24 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = ScreenRoutes.githubUsers
+                    startDestination = ScreenRoutes.GITHUB_USERS
                 ) {
-                    composable(route = ScreenRoutes.githubUsers) {
-                        GithubUsersScreen(
+                    composable(route = ScreenRoutes.GITHUB_USERS) {
+                        GitHubUsersScreen(
                             hiltViewModel(),
-                        ) { username ->
-                            navController.navigate("${ScreenRoutes.githubUserDetail}$username")
-                        }
+                            onClickUser = { username ->
+                                navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
+                            },
+                            onFollowers = { username ->
+                                navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
+                            },
+                            onFollowing = { username ->
+                                navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
+                            },
+                        )
                     }
                     composable(
-                        route = "${ScreenRoutes.githubUserDetail}{$KEY_USERNAME}",
+                        route = "${ScreenRoutes.GITHUB_USER_DETAIL}{$KEY_USERNAME}",
                         arguments = listOf(
                             navArgument(KEY_USERNAME) { type = NavType.StringType }
                         )
@@ -49,8 +60,57 @@ class MainActivity : ComponentActivity() {
                             GithubUserDetailScreen(
                                 hiltViewModel(),
                             ) {
-                                navController.popBackStack()
+                                navController.navigateUp()
                             }
+                        }
+                    }
+                    composable(
+                        route = "${ScreenRoutes.GITHUB_FOLLOWING}{$KEY_USERNAME}",
+                        arguments = listOf(
+                            navArgument(KEY_USERNAME) { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
+                            GitHubFollowingScreen(
+                                hiltViewModel(),
+                                onClickUser = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
+                                },
+                                onFollowers = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
+                                },
+                                onFollowing = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
+                                },
+                                onBackPressed = {
+                                    navController.navigateUp()
+                                }
+                            )
+                        }
+                    }
+
+                    composable(
+                        route = "${ScreenRoutes.GITHUB_FOLLOWERS}{$KEY_USERNAME}",
+                        arguments = listOf(
+                            navArgument(KEY_USERNAME) { type = NavType.StringType }
+                        )
+                    ) { backStackEntry ->
+                        backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
+                            GitHubFollowersScreen(
+                                hiltViewModel(),
+                                onClickUser = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
+                                },
+                                onFollowers = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
+                                },
+                                onFollowing = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
+                                },
+                                onBackPressed = {
+                                    navController.navigateUp()
+                                }
+                            )
                         }
                     }
                 }

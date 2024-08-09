@@ -36,6 +36,8 @@ android {
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
         }
     }
     kotlinOptions {
@@ -48,8 +50,6 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.material)
     implementation(libs.coil.compose)
-    implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.paging.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
