@@ -2,7 +2,6 @@ package com.free.data.di
 
 import com.free.data.datasources.AuthenticationInterceptor
 import com.free.data.datasources.GithubApi
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,6 +10,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

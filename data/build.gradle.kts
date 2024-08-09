@@ -56,7 +56,7 @@ android {
 dependencies {
     implementation(project(":domain"))
 
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.converter.kotlinx.serialization)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.core)
