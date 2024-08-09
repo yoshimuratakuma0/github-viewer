@@ -13,6 +13,7 @@ import com.free.domain.entities.User
 
 @Composable
 fun GitHubUserList(
+    contentPadding: PaddingValues,
     listState: LazyListState,
     users: List<User>,
     onClick: (String) -> Unit,
@@ -24,7 +25,7 @@ fun GitHubUserList(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxSize(),
-        contentPadding = PaddingValues(8.dp),
+        contentPadding = contentPadding,
     ) {
         items(users) { user ->
             GithubUserItem(

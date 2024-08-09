@@ -2,7 +2,6 @@ package com.free.presentation.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
@@ -77,46 +76,45 @@ private fun GitHubFollowingScreenStatelessScreen(
                 }
             )
         },
-        content = {
-            Box(modifier = Modifier.padding(it)) {
-                when (uiState) {
-                    is GitHubFollowingUiState.Success -> {
-                        if (!listState.canScrollForward) {
-                            LaunchedEffect(key1 = users.size) {
-                                fetchMore()
-                            }
-                        }
-                        GitHubUserList(
-                            listState = listState,
-                            users = users,
-                            onClick = onClick,
-                            onFollowers = onFollowers,
-                            onFollowing = onFollowing,
-                        )
-                    }
-
-                    is GitHubFollowingUiState.Error -> {
-                        val title = errorTitleBy(exception = uiState.exception)
-                        val body = errorBodyBy(exception = uiState.exception)
-                        OkAlertDialog(title = title, body = body)
-                    }
-
-                    GitHubFollowingUiState.Loading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
+        content = { padding ->
+            when (uiState) {
+                is GitHubFollowingUiState.Success -> {
+                    if (!listState.canScrollForward) {
+                        LaunchedEffect(key1 = users.size) {
+                            fetchMore()
                         }
                     }
+                    GitHubUserList(
+                        contentPadding = padding,
+                        listState = listState,
+                        users = users,
+                        onClick = onClick,
+                        onFollowers = onFollowers,
+                        onFollowing = onFollowing,
+                    )
+                }
 
-                    GitHubFollowingUiState.NoData -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(stringResource(R.string.no_data))
-                        }
+                is GitHubFollowingUiState.Error -> {
+                    val title = errorTitleBy(exception = uiState.exception)
+                    val body = errorBodyBy(exception = uiState.exception)
+                    OkAlertDialog(title = title, body = body)
+                }
+
+                GitHubFollowingUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                GitHubFollowingUiState.NoData -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(stringResource(R.string.no_data))
                     }
                 }
             }
