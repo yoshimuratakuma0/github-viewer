@@ -71,8 +71,8 @@ class MainActivity : ComponentActivity() {
                         backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
                             GitHubFollowingScreen(
                                 hiltViewModel(),
-                                onClickUser = {
-                                    navController.popBackStack()
+                                onClickUser = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
                                 },
                                 onFollowers = { username ->
                                     navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
@@ -96,8 +96,8 @@ class MainActivity : ComponentActivity() {
                         backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
                             GitHubFollowersScreen(
                                 hiltViewModel(),
-                                onClickUser = {
-                                    navController.popBackStack()
+                                onClickUser = { username ->
+                                    navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")
                                 },
                                 onFollowers = { username ->
                                     navController.navigate("${ScreenRoutes.GITHUB_FOLLOWERS}$username")
