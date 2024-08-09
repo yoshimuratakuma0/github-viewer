@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             GithubUserDetailScreen(
                                 hiltViewModel(),
                             ) {
-                                navController.popBackStack()
+                                navController.navigateUp()
                             }
                         }
                     }
@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
                                 },
                                 onBackPressed = {
-                                    navController.popBackStack()
+                                    navController.navigateUp()
                                 }
                             )
                         }
@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate("${ScreenRoutes.GITHUB_FOLLOWING}$username")
                                 },
                                 onBackPressed = {
-                                    navController.popBackStack()
+                                    navController.navigateUp()
                                 }
                             )
                         }
