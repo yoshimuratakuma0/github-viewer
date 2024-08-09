@@ -3,6 +3,7 @@
 
     <string name="ok">OK</string>
     <string name="retry">RETRY</string>
+    <string name="no_data">No data</string>
 
     <string name="about_id">ID: %s</string>
     <string name="about_username">Username: %s</string>

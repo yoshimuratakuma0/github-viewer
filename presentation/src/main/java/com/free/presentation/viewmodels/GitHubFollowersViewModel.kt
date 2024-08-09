@@ -20,6 +20,7 @@ sealed interface GitHubFollowersUiState {
     data object Success : GitHubFollowersUiState
     data class Error(val exception: Exception) : GitHubFollowersUiState
     data object Loading : GitHubFollowersUiState
+    data object NoData : GitHubFollowersUiState
 }
 
 class FollowersListingData(
@@ -73,16 +74,25 @@ class GitHubFollowersViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
-                        _uiState.value = GitHubFollowersUiState.Success
+                        val currentList = currentListing?.children
+                        // Initial fetch
+                        if (currentList == null) {
+                            if (result.data.isEmpty()) {
+                                _uiState.value = GitHubFollowersUiState.NoData
+                            } else {
+                                _uiState.value = GitHubFollowersUiState.Success
+                            }
+                            return@update FollowersListingData(result.data, nextParams)
+                        }
 
                         // Don't add the same list.
                         // since param doesn't seem to work well.
                         // So, sometimes we get the same list even if since param is different
-                        if (currentListing?.children?.lastOrNull() == result.data.lastOrNull()) {
+                        if (currentList.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
                         FollowersListingData(
-                            (currentListing?.children ?: emptyList()) + result.data,
+                            currentList + result.data,
                             nextParams,
                         )
                     }

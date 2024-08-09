@@ -102,6 +102,15 @@ private fun GithubUsersStatelessScreen(
                             CircularProgressIndicator()
                         }
                     }
+
+                    GitHubUsersUiState.NoData -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(stringResource(R.string.no_data))
+                        }
+                    }
                 }
             }
         }

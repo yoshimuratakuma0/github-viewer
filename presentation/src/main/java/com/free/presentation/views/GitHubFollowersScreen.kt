@@ -110,6 +110,15 @@ private fun GitHubFollowersScreenStatelessScreen(
                             CircularProgressIndicator()
                         }
                     }
+
+                    GitHubFollowersUiState.NoData -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(stringResource(R.string.no_data))
+                        }
+                    }
                 }
             }
         }

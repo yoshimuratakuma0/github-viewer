@@ -17,6 +17,7 @@ import javax.inject.Inject
 sealed interface GitHubUsersUiState {
     data object Success : GitHubUsersUiState
     data class Error(val exception: Exception) : GitHubUsersUiState
+    data object NoData : GitHubUsersUiState
     data object Loading : GitHubUsersUiState
 }
 
@@ -67,16 +68,25 @@ class GithubUsersViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
-                        _uiState.value = GitHubUsersUiState.Success
+                        val currentList = currentListing?.children
+                        // Initial fetch
+                        if (currentList == null) {
+                            if (result.data.isEmpty()) {
+                                _uiState.value = GitHubUsersUiState.NoData
+                            } else {
+                                _uiState.value = GitHubUsersUiState.Success
+                            }
+                            return@update UserListingData(result.data, nextParams)
+                        }
 
                         // Don't add the same list.
                         // since param doesn't seem to work well.
                         // So, sometimes we get the same list even if since param is different
-                        if (currentListing?.children?.lastOrNull() == result.data.lastOrNull()) {
+                        if (currentList.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
                         UserListingData(
-                            (currentListing?.children ?: emptyList()) + result.data,
+                            currentList + result.data,
                             nextParams,
                         )
                     }
