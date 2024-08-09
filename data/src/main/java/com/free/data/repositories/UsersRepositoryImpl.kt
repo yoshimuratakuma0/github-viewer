@@ -46,9 +46,10 @@ class UsersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun followers(params: FetchFollowersInputParams): List<User> {
-        val response = api.users(
+        val response = api.followers(
             since = params.since,
             perPage = params.perPage,
+            username = params.username,
         )
         if (!response.isSuccessful) {
             throw FetchUsersException.from(response.code())
