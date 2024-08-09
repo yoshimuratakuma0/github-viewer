@@ -1,7 +1,13 @@
 package com.free.presentation.views
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
@@ -62,7 +68,11 @@ private fun GithubUsersStatelessScreen(
 ) {
     Scaffold(
         topBar = {
+            val topPadding = WindowInsets.systemBars.only(WindowInsetsSides.Top)
+                .asPaddingValues()
+                .calculateTopPadding()
             TopAppBar(
+                modifier = Modifier.padding(top = topPadding),
                 title = {
                     Text(text = stringResource(id = R.string.title_github_users_screen))
                 }
