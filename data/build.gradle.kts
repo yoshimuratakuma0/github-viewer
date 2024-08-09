@@ -1,17 +1,37 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
     alias(libs.plugins.free.serialization)
 }
 
+val propertiesFile = rootProject.file("secret.properties")
+val properties = Properties()
+try {
+    properties.load(FileInputStream(propertiesFile))
+} catch (e: Exception) {
+    e.printStackTrace()
+}
+
 android {
     namespace = "com.free.githubviewer"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         minSdk = 26
         targetSdk = 34
 
+        buildConfigField(
+            "String",
+            "GITHUB_TOKEN",
+            (properties["GITHUB_TOKEN"] as? String) ?: "\"\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

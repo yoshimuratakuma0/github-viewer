@@ -2,6 +2,11 @@
 
 Githubのユーザー一覧を取得したり、ユーザーの詳細を表示するアプリ
 
+# 環境構築
+
+API Limit の上限を上げたい場合は `secret.properties` をプロジェクトのルートに追加して、`GITHUB_TOKEN`
+を追加してください
+
 # 使用技術
 
 - Dagger Hilt
