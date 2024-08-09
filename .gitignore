@@ -11,7 +11,8 @@
 /.idea/androidTestResultsUserPreferences.xml
 /.idea/deploymentTargetSelector.xml
 /.idea/migrations.xml
-.idea/codeStyles
+.idea/other.xml
+.idea/inspectionProfiles/*
 build
 
 .DS_Store
