@@ -128,19 +128,26 @@ private fun GithubUserDetailScreen(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .padding(contentPaddingValues),
-        verticalArrangement = Arrangement.SpaceAround,
     ) {
-        ProfileSummary(userDetail = userDetail)
-        Spacer(modifier = Modifier.height(24.dp))
-        ProfileDetail(userDetail = userDetail)
+        ProfileSummary(
+            modifier = Modifier.padding(8.dp),
+            userDetail = userDetail,
+        )
+        ProfileDetail(
+            modifier = Modifier.padding(8.dp),
+            userDetail = userDetail,
+        )
     }
 }
 
 @Composable
-private fun ProfileSummary(userDetail: UserDetail) {
+private fun ProfileSummary(
+    modifier: Modifier = Modifier,
+    userDetail: UserDetail,
+) {
     val iconRadius = 64
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         AsyncRoundedImage(iconRadius = iconRadius, url = userDetail.user.avatarUrl)
         Spacer(modifier = Modifier.width(16.dp))
@@ -166,34 +173,36 @@ private fun ProfileSummary(userDetail: UserDetail) {
 }
 
 @Composable
-private fun ProfileDetail(userDetail: UserDetail) {
-    Column {
+private fun ProfileDetail(
+    modifier: Modifier = Modifier,
+    userDetail: UserDetail
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         Text(
             text = stringResource(id = R.string.about_username).format(userDetail.displayName),
             color = MaterialTheme.colors.onBackground
         )
         if (userDetail.hasEmail) {
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_email).format(userDetail.email),
                 color = MaterialTheme.colors.onBackground
             )
         }
         if (userDetail.hasCompany) {
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_company).format(userDetail.company),
                 color = MaterialTheme.colors.onBackground
             )
         }
         if (userDetail.hasBio) {
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_bio).format(userDetail.bio),
                 color = MaterialTheme.colors.onBackground
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(id = R.string.about_updated_at).format(
                 userDetail.updatedAt.year,
