@@ -48,24 +48,13 @@ class GitHubFollowingViewModel @Inject constructor(
     fun fetchMore() = synchronized(this) {
         viewModelScope.launch {
             _listing.update { currentListing ->
-                val nextParams = if (currentListing == null) {
-                    // Initial fetch
-                    FetchFollowingInputParams(
-                        username = username,
-                        perPage = 50,
-                        since = null,
-                    )
-                } else {
-                    // Fetch more
-                    val nextParams = currentListing.params.copy(
-                        since = currentListing.children.lastOrNull()?.id
-                    )
-                    // Don't send the same request
-                    if (nextParams == currentListing.params) {
-                        return@update currentListing
-                    }
-                    nextParams
-                }
+                val nextParams = currentListing?.params?.copy(
+                    since = currentListing.children.lastOrNull()?.id
+                ) ?: FetchFollowingInputParams(
+                    username = username,
+                    perPage = 50,
+                    since = null,
+                )
 
                 when (val result = fetchFollowingUseCase(nextParams)) {
                     is Result.Error -> {
