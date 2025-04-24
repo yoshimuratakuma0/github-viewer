@@ -26,3 +26,5 @@ local.properties
 secret.properties
 
 .kotlin/errors
+.kotlin/sessions
+build-logic/.kotlin/errors/
