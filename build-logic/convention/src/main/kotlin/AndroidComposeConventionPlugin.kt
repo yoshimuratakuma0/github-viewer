@@ -14,7 +14,7 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 "implementation"(libs.findLibrary("androidx.hilt.navigation.compose").get())
-                "implementation"(libs.findLibrary("androidx.material").get())
+                "implementation"(libs.findLibrary("androidx.compose.material3").get())
                 "implementation"(libs.findLibrary("androidx.navigation.compose").get())
                 "debugImplementation"(libs.findLibrary("androidx.ui.tooling").get())
 

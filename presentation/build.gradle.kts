@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace = "com.free.githubviewer"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,7 +48,6 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(libs.core.ktx)
-    implementation(libs.material)
     implementation(libs.coil.compose)
 
     testImplementation(libs.junit)

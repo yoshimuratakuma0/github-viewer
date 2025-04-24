@@ -18,16 +18,17 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,6 +62,7 @@ fun GithubUserDetailScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun GithubUserDetailStatelessScreen(
     uiState: GithubUserDetailUiState,
@@ -149,17 +151,17 @@ private fun ProfileSummary(userDetail: UserDetail) {
         ) {
             Text(
                 text = stringResource(id = R.string.about_id).format(userDetail.id),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_followers).format(userDetail.followers),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_following).format(userDetail.following),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }
@@ -170,27 +172,27 @@ private fun ProfileDetail(userDetail: UserDetail) {
     Column {
         Text(
             text = stringResource(id = R.string.about_username).format(userDetail.displayName),
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colorScheme.onBackground
         )
         if (userDetail.hasEmail) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_email).format(userDetail.email),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
         if (userDetail.hasCompany) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_company).format(userDetail.company),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
         if (userDetail.hasBio) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_bio).format(userDetail.bio),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -200,7 +202,7 @@ private fun ProfileDetail(userDetail: UserDetail) {
                 userDetail.updatedAt.monthValue,
                 userDetail.updatedAt.dayOfMonth
             ),
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             text = stringResource(id = R.string.about_created_at).format(
@@ -208,7 +210,7 @@ private fun ProfileDetail(userDetail: UserDetail) {
                 userDetail.createdAt.monthValue,
                 userDetail.createdAt.dayOfMonth
             ),
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
