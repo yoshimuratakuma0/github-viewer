@@ -1,7 +1,13 @@
 [versions]
 coilCompose = "2.6.0"
+core = "1.6.1"
 coreKtx = "1.16.0"
+
 espressoCore = "3.6.1"
+hiltAndroidTesting = "2.51.1"
+robolectric = "4.14.1"
+
+dagger = "2.56.1"
 hiltAndroid = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
@@ -17,6 +23,7 @@ retrofit = "2.11.0"
 ui = "1.8.0"
 androidGradlePlugin = "8.8.2"
 ksp = "2.1.10-1.0.31"
+uiTestManifest = "1.2.0"
 
 [libraries]
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -25,15 +32,25 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "ui" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "ui" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "ui" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "ui" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+
+hilt = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroidTesting" }
+
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

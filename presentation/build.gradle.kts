@@ -39,6 +39,12 @@ android {
     kotlinOptions {
         jvmTarget = "21"
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -47,8 +53,15 @@ dependencies {
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.espresso.core)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.core)
+    testImplementation(project(":data"))
+    testImplementation(project(":app"))
+
+    androidTestImplementation(libs.espresso.core)
 }

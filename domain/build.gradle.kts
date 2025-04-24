@@ -9,6 +9,7 @@ java {
 }
 
 dependencies {
+    implementation(libs.hilt)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

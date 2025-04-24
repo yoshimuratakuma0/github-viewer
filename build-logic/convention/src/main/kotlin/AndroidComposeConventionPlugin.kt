@@ -20,6 +20,7 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("androidx.compose.ui").get())
                 "debugImplementation"(libs.findLibrary("androidx.compose.ui.tooling").get())
                 "debugImplementation"(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+                "debugImplementation"(libs.findLibrary("androidx.compose.ui.test.manifest").get())
 
                 "testImplementation"(libs.findLibrary("androidx.compose.ui.test.junit4").get())
             }
