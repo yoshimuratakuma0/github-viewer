@@ -48,12 +48,10 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(libs.core.ktx)
-    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
