@@ -24,3 +24,5 @@ build
 local.properties
 
 secret.properties
+
+.kotlin/errors
