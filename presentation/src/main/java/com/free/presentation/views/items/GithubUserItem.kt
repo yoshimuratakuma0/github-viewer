@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -37,7 +38,10 @@ fun GithubUserItem(
     onFollowers: () -> Unit,
 ) {
     Card(
-        backgroundColor = colorResource(id = R.color.card_background),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.card_background),
+            contentColor = colorResource(id = R.color.card_background),
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -71,14 +75,14 @@ fun GithubUserItem(
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = "${user.id}: ${user.username}",
-                    style = MaterialTheme.typography.h5,
+                    style = MaterialTheme.typography.headlineSmall,
                 )
                 Row {
                     TextButton(
                         content = {
                             Text(
                                 text = stringResource(id = R.string.following),
-                                style = MaterialTheme.typography.body1,
+                                style = MaterialTheme.typography.bodySmall,
                             )
                         },
                         onClick = onFollowing,
@@ -87,7 +91,7 @@ fun GithubUserItem(
                         content = {
                             Text(
                                 text = stringResource(id = R.string.followers),
-                                style = MaterialTheme.typography.body1,
+                                style = MaterialTheme.typography.bodySmall,
                             )
                         },
                         onClick = onFollowers,

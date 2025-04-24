@@ -17,7 +17,7 @@ try {
 
 android {
     namespace = "com.free.githubviewer"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         buildConfig = true
@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
 
         buildConfigField(
             "String",
