@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
     alias(libs.plugins.free.compose)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -62,6 +63,10 @@ dependencies {
     testImplementation(libs.androidx.core)
     testImplementation(project(":data"))
     testImplementation(project(":app"))
+
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.rule)
 
     androidTestImplementation(libs.espresso.core)
 }
