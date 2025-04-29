@@ -50,6 +50,6 @@ class GitHubUsersScreenScreenshotTest {
 
         composeRule
             .onRoot()
-            .captureRoboImage("build/screenshots/github_users_screen.png")
+            .captureRoboImage()
     }
 }
