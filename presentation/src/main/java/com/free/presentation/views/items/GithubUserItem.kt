@@ -75,7 +75,9 @@ fun GithubUserItem(
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = "${user.id}: ${user.username}",
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        color = MaterialTheme.colorScheme.onSurface,
+                    ),
                 )
                 Row {
                     TextButton(

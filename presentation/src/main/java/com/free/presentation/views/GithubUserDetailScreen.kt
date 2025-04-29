@@ -71,11 +71,7 @@ private fun GithubUserDetailStatelessScreen(
 ) {
     Scaffold(
         topBar = {
-            val topPadding = WindowInsets.systemBars.only(WindowInsetsSides.Top)
-                .asPaddingValues()
-                .calculateTopPadding()
             TopAppBar(
-                modifier = Modifier.padding(top = topPadding),
                 title = {
                     Text(text = stringResource(id = R.string.title_github_user_detail_screen))
                 },
