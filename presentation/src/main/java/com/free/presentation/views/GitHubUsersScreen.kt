@@ -59,7 +59,7 @@ fun GitHubUsersScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun GithubUsersStatelessScreen(
+fun GithubUsersStatelessScreen(
     listState: LazyListState,
     uiState: GitHubUsersUiState,
     users: List<User>,
