@@ -16,9 +16,13 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("androidx.hilt.navigation.compose").get())
                 "implementation"(libs.findLibrary("androidx.compose.material3").get())
                 "implementation"(libs.findLibrary("androidx.navigation.compose").get())
-                "debugImplementation"(libs.findLibrary("androidx.ui.tooling").get())
+                "implementation"(libs.findLibrary("coil.compose").get())
+                "implementation"(libs.findLibrary("androidx.compose.ui").get())
+                "debugImplementation"(libs.findLibrary("androidx.compose.ui.tooling").get())
+                "debugImplementation"(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+                "debugImplementation"(libs.findLibrary("androidx.compose.ui.test.manifest").get())
 
-                "testImplementation"(libs.findLibrary("androidx.ui.test.junit4").get())
+                "testImplementation"(libs.findLibrary("androidx.compose.ui.test.junit4").get())
             }
         }
     }

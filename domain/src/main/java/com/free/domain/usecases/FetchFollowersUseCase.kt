@@ -4,8 +4,9 @@ import com.free.domain.entities.User
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
-class FetchFollowersUseCase(
+class FetchFollowersUseCase @Inject constructor(
     private val repository: UsersRepository,
     ioDispatcher: CoroutineDispatcher,
 ) : CoroutineUseCase<FetchFollowersInputParams, List<User>>(ioDispatcher) {

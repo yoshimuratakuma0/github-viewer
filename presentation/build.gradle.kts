@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
     alias(libs.plugins.free.compose)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -29,10 +30,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -43,18 +40,33 @@ android {
     kotlinOptions {
         jvmTarget = "21"
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
     implementation(project(":domain"))
     implementation(libs.core.ktx)
-    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.espresso.core)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.core)
+    testImplementation(project(":data"))
+    testImplementation(project(":app"))
+
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.rule)
+
+    androidTestImplementation(libs.espresso.core)
 }
