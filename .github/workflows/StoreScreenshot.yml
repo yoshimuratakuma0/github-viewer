@@ -5,10 +5,13 @@ on:
     branches:
       - main
       - develop
+    paths-ignore:
+      - docs/**
+      - README.md
 
 jobs:
   store-screenshot-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 20
 
     permissions:
