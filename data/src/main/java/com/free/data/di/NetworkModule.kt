@@ -25,15 +25,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        interceptor: AuthenticationInterceptor,
-    ): OkHttpClient {
-        return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
-    }
-
-
-    @Provides
-    @Singleton
     fun provideGithubApi(
         okHttpClient: OkHttpClient,
     ): GithubApi {
