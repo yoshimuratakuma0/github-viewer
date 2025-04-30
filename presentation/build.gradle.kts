@@ -65,6 +65,7 @@ dependencies {
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
     testImplementation(libs.roborazzi.rule)
+    testImplementation(libs.mock.okhttp)
 
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.mockk)
