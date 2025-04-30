@@ -43,23 +43,12 @@ class GithubUsersViewModel @Inject constructor(
     fun fetchMore() = synchronized(this) {
         viewModelScope.launch {
             _listing.update { currentListing ->
-                val nextParams = if (currentListing == null) {
-                    // Initial fetch
-                    FetchUsersInputParams(
-                        perPage = 50,
-                        since = null,
-                    )
-                } else {
-                    // Fetch more
-                    val nextParams = currentListing.params.copy(
-                        since = currentListing.children.lastOrNull()?.id
-                    )
-                    // Don't send the same request
-                    if (nextParams == currentListing.params) {
-                        return@update currentListing
-                    }
-                    nextParams
-                }
+                val nextParams = currentListing?.params?.copy(
+                    since = currentListing.children.lastOrNull()?.id
+                ) ?: FetchUsersInputParams(
+                    perPage = 50,
+                    since = null,
+                )
 
                 when (val result = fetchUsersUseCase(nextParams)) {
                     is Result.Error -> {

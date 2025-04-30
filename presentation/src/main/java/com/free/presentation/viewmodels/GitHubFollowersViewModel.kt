@@ -48,24 +48,13 @@ class GitHubFollowersViewModel @Inject constructor(
     fun fetchMore() = synchronized(this) {
         viewModelScope.launch {
             _listing.update { currentListing ->
-                val nextParams = if (currentListing == null) {
-                    // Initial fetch
-                    FetchFollowersInputParams(
-                        username = username,
-                        perPage = 50,
-                        since = null,
-                    )
-                } else {
-                    // Fetch more
-                    val nextParams = currentListing.params.copy(
-                        since = currentListing.children.lastOrNull()?.id
-                    )
-                    // Don't send the same request
-                    if (nextParams == currentListing.params) {
-                        return@update currentListing
-                    }
-                    nextParams
-                }
+                val nextParams = currentListing?.params?.copy(
+                    since = currentListing.children.lastOrNull()?.id
+                ) ?: FetchFollowersInputParams(
+                    username = username,
+                    perPage = 50,
+                    since = null,
+                )
 
                 when (val result = fetchFollowersUseCase(nextParams)) {
                     is Result.Error -> {
