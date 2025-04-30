@@ -3,7 +3,7 @@ package com.free.presentation.views
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
-import com.free.data.di.RepositoryModule
+import com.free.data.di.UrlModule
 import com.github.takahirom.roborazzi.captureRoboImage
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -21,7 +21,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @HiltAndroidTest
-@UninstallModules(RepositoryModule::class)
+@UninstallModules(UrlModule::class)
 @Config(
     application = HiltTestApplication::class,
 )

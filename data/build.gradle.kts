@@ -61,9 +61,13 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.kotlinx.coroutines.core)
 
+    testImplementation(project(":data"))
+
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mock.okhttp)
+    testImplementation(libs.kotlinx.coroutines.test)
+
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
 }

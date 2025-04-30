@@ -25,15 +25,32 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGithubApi(
+    fun provideOkHttpClient(
+        interceptor: AuthenticationInterceptor,
+    ): OkHttpClient {
+        return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(
         okHttpClient: OkHttpClient,
-    ): GithubApi {
+        @BaseUrl baseUrl: String,
+    ): Retrofit {
         val format = Json { ignoreUnknownKeys = true }
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(GithubApi.BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(format.asConverterFactory("application/json".toMediaType()))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGithubApi(
+        retrofit: Retrofit,
+    ): GithubApi {
+        return retrofit
             .create(GithubApi::class.java)
     }
 }

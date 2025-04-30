@@ -9,9 +9,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubApi {
-    companion object {
-        const val BASE_URL = "https://api.github.com/"
-    }
 
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("users")
