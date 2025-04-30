@@ -53,9 +53,7 @@ dependencies {
     implementation(libs.core.ktx)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
     testImplementation(libs.mockk)
-    androidTestImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
 
     testImplementation(libs.espresso.core)
@@ -67,6 +65,9 @@ dependencies {
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
     testImplementation(libs.roborazzi.rule)
+    testImplementation(libs.mock.okhttp)
 
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.espresso.core)
 }

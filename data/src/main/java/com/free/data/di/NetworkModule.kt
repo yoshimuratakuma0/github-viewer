@@ -31,18 +31,26 @@ object NetworkModule {
         return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
     }
 
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        @BaseUrl baseUrl: String,
+    ): Retrofit {
+        val format = Json { ignoreUnknownKeys = true }
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(baseUrl)
+            .addConverterFactory(format.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
 
     @Provides
     @Singleton
     fun provideGithubApi(
-        okHttpClient: OkHttpClient,
+        retrofit: Retrofit,
     ): GithubApi {
-        val format = Json { ignoreUnknownKeys = true }
-        return Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl(GithubApi.BASE_URL)
-            .addConverterFactory(format.asConverterFactory("application/json".toMediaType()))
-            .build()
+        return retrofit
             .create(GithubApi::class.java)
     }
 }
