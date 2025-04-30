@@ -7,6 +7,7 @@ import com.free.domain.usecases.FetchFollowersInputParams
 import com.free.domain.usecases.FetchFollowingInputParams
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class FakeUsersRepository @Inject constructor() : UsersRepository {
@@ -14,18 +15,18 @@ class FakeUsersRepository @Inject constructor() : UsersRepository {
         return listOf(
             User(
                 id = 1,
-                username = "preview name",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                username = "preview name 1",
+                avatarUrl = "https://localhost/u/1?v=4"
             ),
             User(
                 id = 2,
                 username = "preview name 2",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                avatarUrl = "https://localhost/u/1?v=4"
             ),
             User(
                 id = 3,
                 username = "preview name 3",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                avatarUrl = "https://localhost/u/1?v=4"
             ),
         )
     }
@@ -39,6 +40,20 @@ class FakeUsersRepository @Inject constructor() : UsersRepository {
     }
 
     override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
-        TODO("Not yet implemented")
+        return UserDetail(
+            user = User(
+                id = 1,
+                username = "preview name",
+                avatarUrl = "https://localhost/u/1?v=4"
+            ),
+            email = "sample@gmail.com",
+            bio = "this is bio. \n\n\n\n\n長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio\n\n\n\n\n\n\n\n\n長いbio",
+            company = "preview company",
+            createdAt = LocalDateTime.MIN,
+            updatedAt = LocalDateTime.MAX,
+            followers = 12345,
+            following = 23456,
+            name = "preview name"
+        )
     }
 }

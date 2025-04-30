@@ -26,7 +26,7 @@ import org.robolectric.annotation.GraphicsMode
     application = HiltTestApplication::class,
 )
 @RunWith(RobolectricTestRunner::class)
-class FirstRobolectricEspressoTest {
+class GitHubUsersActivityTest {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
@@ -39,7 +39,7 @@ class FirstRobolectricEspressoTest {
     @Test
     fun test_user_list() {
         Robolectric.buildActivity(MainActivity::class.java)
-        val activityScenario = launch(MainActivity::class.java)
+        launch(MainActivity::class.java)
         onView(isRoot())
             .captureRoboImage()
     }
