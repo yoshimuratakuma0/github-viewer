@@ -22,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.design_system.components.AsyncRoundedImage
 import com.free.domain.entities.User
 import com.free.githubviewer.R
 import com.free.presentation.previews.NightModePreviewAnnotation
-import com.free.presentation.utils.AsyncRoundedImage
 
 
 @Composable
@@ -67,7 +68,11 @@ fun GithubUserItem(
                         iconRadius.intValue = (coordinates.size.height / density).toInt()
                     },
                 content = {
-                    AsyncRoundedImage(iconRadius = iconRadius.intValue / 2, url = user.avatarUrl)
+                    AsyncRoundedImage(
+                        size = iconRadius.intValue.dp,
+                        url = user.avatarUrl,
+                        placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
+                    )
                 },
             )
 

@@ -11,6 +11,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":design-system"))
     implementation(libs.core.ktx)
 
     testImplementation(libs.junit)

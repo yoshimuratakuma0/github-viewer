@@ -1,11 +1,11 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.compose)
     alias(libs.plugins.free.roborazzi)
 }
 
 android {
-    namespace = "com.free.githubviewer.design_system"
+    namespace = "com.free.design_system"
 }
 
 dependencies {
