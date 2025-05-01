@@ -14,7 +14,7 @@ import org.robolectric.annotation.GraphicsMode
 
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-class GitHubUsersScreenScreenshotTest {
+class GitHubUsersScreenshotTest {
     @get:Rule
     val composeRule = createComposeRule()
 

@@ -64,7 +64,7 @@ fun GithubUserDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun GithubUserDetailStatelessScreen(
+fun GithubUserDetailStatelessScreen(
     uiState: GithubUserDetailUiState,
     onRetry: () -> Unit,
     onBack: () -> Unit,
