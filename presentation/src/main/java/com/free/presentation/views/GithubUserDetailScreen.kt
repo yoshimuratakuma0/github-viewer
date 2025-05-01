@@ -6,29 +6,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -154,17 +149,14 @@ private fun ProfileSummary(
         ) {
             Text(
                 text = stringResource(id = R.string.about_id).format(userDetail.id),
-                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_followers).format(userDetail.followers),
-                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.about_following).format(userDetail.following),
-                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }
@@ -181,24 +173,20 @@ private fun ProfileDetail(
     ) {
         Text(
             text = stringResource(id = R.string.about_username).format(userDetail.displayName),
-            color = MaterialTheme.colorScheme.onBackground
         )
         if (userDetail.hasEmail) {
             Text(
                 text = stringResource(id = R.string.about_email).format(userDetail.email),
-                color = MaterialTheme.colorScheme.onBackground
-            )
+                )
         }
         if (userDetail.hasCompany) {
             Text(
                 text = stringResource(id = R.string.about_company).format(userDetail.company),
-                color = MaterialTheme.colorScheme.onBackground
-            )
+             )
         }
         if (userDetail.hasBio) {
             Text(
                 text = stringResource(id = R.string.about_bio).format(userDetail.bio),
-                color = MaterialTheme.colorScheme.onBackground
             )
         }
         Text(
@@ -207,7 +195,6 @@ private fun ProfileDetail(
                 userDetail.updatedAt.monthValue,
                 userDetail.updatedAt.dayOfMonth
             ),
-            color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             text = stringResource(id = R.string.about_created_at).format(
@@ -215,8 +202,7 @@ private fun ProfileDetail(
                 userDetail.createdAt.monthValue,
                 userDetail.createdAt.dayOfMonth
             ),
-            color = MaterialTheme.colorScheme.onBackground
-        )
+       )
     }
 }
 
