@@ -51,5 +51,9 @@ gradlePlugin {
             id = "free.compose"
             implementationClass = "AndroidComposeConventionPlugin"
         }
+        register("roborazzi") {
+            id = "free.roborazzi"
+            implementationClass = "RoborazziConventionPlugin"
+        }
     }
 }
