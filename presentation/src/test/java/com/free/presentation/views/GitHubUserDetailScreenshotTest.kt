@@ -5,6 +5,7 @@ import androidx.compose.ui.test.onRoot
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import com.free.presentation.viewmodels.GithubUserDetailUiState
+import com.free.presentation.views.theme.GithubViewerTheme
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -22,27 +23,29 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_success() {
         composeRule.setContent {
-            GithubUserDetailStatelessScreen(
-                uiState = GithubUserDetailUiState.Success(
-                    userDetail = UserDetail(
-                        user = User(
-                            id = 1,
-                            username = "preview name",
-                            avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
-                        ),
-                        email = null,
-                        bio = "短いbio",
-                        company = null,
-                        createdAt = LocalDateTime.MIN,
-                        updatedAt = LocalDateTime.MAX,
-                        followers = 1,
-                        following = 1,
-                        name = null,
-                    )
-                ),
-                onRetry = {},
-                onBack = {},
-            )
+            GithubViewerTheme {
+                GithubUserDetailStatelessScreen(
+                    uiState = GithubUserDetailUiState.Success(
+                        userDetail = UserDetail(
+                            user = User(
+                                id = 1,
+                                username = "preview name",
+                                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                            ),
+                            email = null,
+                            bio = "短いbio",
+                            company = null,
+                            createdAt = LocalDateTime.MIN,
+                            updatedAt = LocalDateTime.MAX,
+                            followers = 1,
+                            following = 1,
+                            name = null,
+                        )
+                    ),
+                    onRetry = {},
+                    onBack = {},
+                )
+            }
         }
 
         composeRule
@@ -53,11 +56,13 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_loading() {
         composeRule.setContent {
-            GithubUserDetailStatelessScreen(
-                uiState = GithubUserDetailUiState.Loading,
-                onRetry = {},
-                onBack = {},
-            )
+            GithubViewerTheme {
+                GithubUserDetailStatelessScreen(
+                    uiState = GithubUserDetailUiState.Loading,
+                    onRetry = {},
+                    onBack = {},
+                )
+            }
         }
 
         composeRule
@@ -68,11 +73,13 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_error() {
         composeRule.setContent {
-            GithubUserDetailStatelessScreen(
-                uiState = GithubUserDetailUiState.Error(Exception()),
-                onRetry = {},
-                onBack = {},
-            )
+            GithubViewerTheme {
+                GithubUserDetailStatelessScreen(
+                    uiState = GithubUserDetailUiState.Error(Exception()),
+                    onRetry = {},
+                    onBack = {},
+                )
+            }
         }
 
         composeRule
