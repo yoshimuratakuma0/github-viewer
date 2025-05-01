@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.free.android.library)
     alias(libs.plugins.free.hilt)
     alias(libs.plugins.free.compose)
-    alias(libs.plugins.roborazzi)
+    alias(libs.plugins.free.roborazzi)
 }
 
 android {
@@ -23,9 +23,6 @@ dependencies {
     testImplementation(project(":data"))
     testImplementation(project(":app"))
 
-    testImplementation(libs.roborazzi)
-    testImplementation(libs.roborazzi.compose)
-    testImplementation(libs.roborazzi.rule)
     testImplementation(libs.mock.okhttp)
 
     androidTestImplementation(libs.ext.junit)

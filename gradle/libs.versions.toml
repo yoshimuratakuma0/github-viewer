@@ -83,3 +83,4 @@ free-android-library = { id = "free.android.library", version = "unspecified" }
 free-hilt = { id = "free.hilt", version = "unspecified" }
 free-serialization = { id = "free.serialization", version = "unspecified" }
 free-compose = { id = "free.compose", version = "unspecified" }
+free-roborazzi = { id = "free.roborazzi", version = "unspecified" }
