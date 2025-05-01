@@ -7,9 +7,9 @@ plugins {
     alias(libs.plugins.free.serialization)
 }
 
-val propertiesFile = rootProject.file("secret.properties")
-val properties = Properties()
 try {
+    val propertiesFile = rootProject.file("secret.properties")
+    val properties = Properties()
     properties.load(FileInputStream(propertiesFile))
 } catch (e: Exception) {
     e.printStackTrace()

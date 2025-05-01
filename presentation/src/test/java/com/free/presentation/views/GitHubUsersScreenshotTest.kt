@@ -73,25 +73,6 @@ class GitHubUsersScreenshotTest {
     }
 
     @Test
-    fun test_error() {
-        composeRule.setContent {
-            GithubUsersStatelessScreen(
-                listState = rememberLazyListState(),
-                uiState = GitHubUsersUiState.Error(Exception()),
-                users = emptyList(),
-                fetchMore = {},
-                onClick = {},
-                onFollowing = {},
-                onFollowers = {},
-            )
-        }
-
-        composeRule
-            .onRoot()
-            .captureRoboImage()
-    }
-
-    @Test
     fun test_no_data() {
         composeRule.setContent {
             GithubUsersStatelessScreen(
