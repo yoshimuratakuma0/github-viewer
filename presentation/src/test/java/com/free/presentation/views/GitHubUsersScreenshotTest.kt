@@ -19,7 +19,7 @@ class GitHubUsersScreenshotTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun test() {
+    fun test_success() {
         composeRule.setContent {
             GithubUsersStatelessScreen(
                 listState = rememberLazyListState(),
@@ -41,6 +41,63 @@ class GitHubUsersScreenshotTest {
                         avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
                     ),
                 ),
+                fetchMore = {},
+                onClick = {},
+                onFollowing = {},
+                onFollowers = {},
+            )
+        }
+
+        composeRule
+            .onRoot()
+            .captureRoboImage()
+    }
+
+    @Test
+    fun test_loading() {
+        composeRule.setContent {
+            GithubUsersStatelessScreen(
+                listState = rememberLazyListState(),
+                uiState = GitHubUsersUiState.Loading,
+                users = emptyList(),
+                fetchMore = {},
+                onClick = {},
+                onFollowing = {},
+                onFollowers = {},
+            )
+        }
+
+        composeRule
+            .onRoot()
+            .captureRoboImage()
+    }
+
+    @Test
+    fun test_error() {
+        composeRule.setContent {
+            GithubUsersStatelessScreen(
+                listState = rememberLazyListState(),
+                uiState = GitHubUsersUiState.Error(Exception()),
+                users = emptyList(),
+                fetchMore = {},
+                onClick = {},
+                onFollowing = {},
+                onFollowers = {},
+            )
+        }
+
+        composeRule
+            .onRoot()
+            .captureRoboImage()
+    }
+
+    @Test
+    fun test_no_data() {
+        composeRule.setContent {
+            GithubUsersStatelessScreen(
+                listState = rememberLazyListState(),
+                uiState = GitHubUsersUiState.NoData,
+                users = emptyList(),
                 fetchMore = {},
                 onClick = {},
                 onFollowing = {},
