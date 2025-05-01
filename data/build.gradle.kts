@@ -17,40 +17,6 @@ try {
 
 android {
     namespace = "com.free.githubviewer"
-    compileSdk = 35
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    defaultConfig {
-        minSdk = 26
-        targetSdk = 35
-
-        buildConfigField(
-            "String",
-            "GITHUB_TOKEN",
-            (properties["GITHUB_TOKEN"] as? String) ?: "\"\""
-        )
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-    kotlinOptions {
-        jvmTarget = "21"
-    }
 }
 
 dependencies {
