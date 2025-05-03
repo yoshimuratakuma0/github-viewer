@@ -13,6 +13,7 @@ class MyColor(
     primary: Color,
     background: Color,
     error: Color,
+    border: Color,
     onPrimary: Color,
     onBackground: Color,
     disabledPrimary: Color,
@@ -26,6 +27,9 @@ class MyColor(
         private set
 
     var error by mutableStateOf(error, structuralEqualityPolicy())
+        private set
+
+    var border by mutableStateOf(border, structuralEqualityPolicy())
         private set
 
     var onPrimary by mutableStateOf(onPrimary, structuralEqualityPolicy())
@@ -48,6 +52,7 @@ fun lightMyColor(
     primary: Color = MyColorLightTokens.Primary,
     background: Color = MyColorLightTokens.Background,
     error: Color = MyColorLightTokens.Error,
+    border: Color = MyColorLightTokens.Border,
     onPrimary: Color = MyColorLightTokens.OnPrimary,
     onBackground: Color = MyColorLightTokens.OnBackground,
     disabledPrimary: Color = MyColorLightTokens.DisabledPrimary,
@@ -57,6 +62,7 @@ fun lightMyColor(
     primary = primary,
     background = background,
     error = error,
+    border = border,
     onPrimary = onPrimary,
     onBackground = onBackground,
     disabledPrimary = disabledPrimary,
@@ -68,6 +74,7 @@ fun darkMyColor(
     primary: Color = MyColorDarkTokens.Primary,
     background: Color = MyColorDarkTokens.Background,
     error: Color = MyColorDarkTokens.Error,
+    border: Color = MyColorDarkTokens.Border,
     onPrimary: Color = MyColorDarkTokens.OnPrimary,
     onBackground: Color = MyColorDarkTokens.OnBackground,
     disabledPrimary: Color = MyColorDarkTokens.DisabledPrimary,
@@ -77,6 +84,7 @@ fun darkMyColor(
     primary = primary,
     background = background,
     error = error,
+    border = border,
     onPrimary = onPrimary,
     onBackground = onBackground,
     disabledPrimary = disabledPrimary,
