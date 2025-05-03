@@ -13,16 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,14 +22,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.design_system.annotations.NightModePreviewAnnotation
+import com.design_system.components.AsyncRoundedImage
+import com.design_system.components.Button
+import com.design_system.components.CircularProgressIndicator
+import com.design_system.components.Icon
+import com.design_system.components.IconButton
+import com.design_system.components.Icons
+import com.design_system.components.Scaffold
+import com.design_system.components.Text
+import com.design_system.components.TopAppBar
+import com.design_system.design_token.MyTheme
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
 import com.free.presentation.GithubUserDetailPreviewParameterProvider
-import com.design_system.annotations.NightModePreviewAnnotation
-import com.design_system.components.AsyncRoundedImage
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
-import com.free.presentation.views.theme.GithubViewerTheme
 
 @Composable
 fun GithubUserDetailScreen(
@@ -57,7 +55,6 @@ fun GithubUserDetailScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GithubUserDetailStatelessScreen(
     uiState: GithubUserDetailUiState,
@@ -143,7 +140,7 @@ private fun ProfileSummary(
         modifier = modifier.fillMaxWidth()
     ) {
         AsyncRoundedImage(
-            size = (iconRadius*2).dp,
+            size = (iconRadius * 2).dp,
             url = userDetail.user.avatarUrl,
             placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
         )
@@ -181,12 +178,12 @@ private fun ProfileDetail(
         if (userDetail.hasEmail) {
             Text(
                 text = stringResource(id = R.string.about_email).format(userDetail.email),
-                )
+            )
         }
         if (userDetail.hasCompany) {
             Text(
                 text = stringResource(id = R.string.about_company).format(userDetail.company),
-             )
+            )
         }
         if (userDetail.hasBio) {
             Text(
@@ -206,7 +203,7 @@ private fun ProfileDetail(
                 userDetail.createdAt.monthValue,
                 userDetail.createdAt.dayOfMonth
             ),
-       )
+        )
     }
 }
 
@@ -216,7 +213,7 @@ fun PreviewGithubUserDetail(
     @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
     uiState: GithubUserDetailUiState,
 ) {
-    GithubViewerTheme {
+    MyTheme {
         GithubUserDetailStatelessScreen(
             uiState = uiState,
             onRetry = {},

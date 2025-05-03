@@ -2,10 +2,10 @@ package com.free.presentation.views
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
+import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import com.free.presentation.viewmodels.GithubUserDetailUiState
-import com.free.presentation.views.theme.GithubViewerTheme
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +23,7 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_success() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUserDetailStatelessScreen(
                     uiState = GithubUserDetailUiState.Success(
                         userDetail = UserDetail(
@@ -56,7 +56,7 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_loading() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUserDetailStatelessScreen(
                     uiState = GithubUserDetailUiState.Loading,
                     onRetry = {},
@@ -73,7 +73,7 @@ class GitHubUserDetailScreenshotTest {
     @Test
     fun test_error() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUserDetailStatelessScreen(
                     uiState = GithubUserDetailUiState.Error(Exception()),
                     onRetry = {},

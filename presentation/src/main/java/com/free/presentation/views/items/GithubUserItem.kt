@@ -10,25 +10,22 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.design_system.annotations.NightModePreviewAnnotation
 import com.design_system.components.AsyncRoundedImage
+import com.design_system.components.Card
+import com.design_system.components.Text
+import com.design_system.components.TextButton
 import com.free.domain.entities.User
 import com.free.githubviewer.R
-import com.design_system.annotations.NightModePreviewAnnotation
 
 
 @Composable
@@ -39,10 +36,6 @@ fun GithubUserItem(
     onFollowers: () -> Unit,
 ) {
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.card_background),
-            contentColor = colorResource(id = R.color.card_background),
-        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
@@ -79,17 +72,14 @@ fun GithubUserItem(
             Column {
                 Text(
                     modifier = Modifier.padding(8.dp),
-                    text = "${user.id}: ${user.username}",
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        color = MaterialTheme.colorScheme.onSurface,
-                    ),
+                    text = stringResource(id = R.string.about_id).format(user.id),
                 )
+
                 Row {
                     TextButton(
                         content = {
                             Text(
                                 text = stringResource(id = R.string.following),
-                                style = MaterialTheme.typography.bodySmall,
                             )
                         },
                         onClick = onFollowing,
@@ -98,7 +88,6 @@ fun GithubUserItem(
                         content = {
                             Text(
                                 text = stringResource(id = R.string.followers),
-                                style = MaterialTheme.typography.bodySmall,
                             )
                         },
                         onClick = onFollowers,

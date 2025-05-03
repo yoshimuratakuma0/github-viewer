@@ -10,6 +10,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.compose.material3)
     implementation(libs.core.ktx)
     testImplementation(libs.junit)
 }

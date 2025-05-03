@@ -1,13 +1,10 @@
-package com.free.presentation.utils
+package com.design_system.components
 
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
-import com.free.githubviewer.R
+
 
 @Composable
 fun OkAlertDialog(title: String, body: String) {
@@ -27,7 +24,7 @@ fun OkAlertDialog(title: String, body: String) {
                         isShowing.value = false
                     }
                 ) {
-                    Text(stringResource(id = R.string.ok))
+                    Text("OK")
                 }
             },
             dismissButton = null

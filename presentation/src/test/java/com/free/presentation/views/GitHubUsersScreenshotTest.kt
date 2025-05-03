@@ -3,9 +3,9 @@ package com.free.presentation.views
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
+import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.presentation.viewmodels.GitHubUsersUiState
-import com.free.presentation.views.theme.GithubViewerTheme
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +22,7 @@ class GitHubUsersScreenshotTest {
     @Test
     fun test_success() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.Success,
@@ -59,7 +59,7 @@ class GitHubUsersScreenshotTest {
     @Test
     fun test_loading() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.Loading,
@@ -80,7 +80,7 @@ class GitHubUsersScreenshotTest {
     @Test
     fun test_no_data() {
         composeRule.setContent {
-            GithubViewerTheme {
+            MyTheme {
                 GithubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.NoData,
