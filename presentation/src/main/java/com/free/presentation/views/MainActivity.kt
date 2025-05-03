@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.design_system.design_token.MyTheme
 import com.free.domain.KEY_USERNAME
-import com.free.presentation.views.theme.GithubViewerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            GithubViewerTheme {
+            MyTheme {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
