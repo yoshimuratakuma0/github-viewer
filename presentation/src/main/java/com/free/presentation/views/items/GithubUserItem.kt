@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.design_system.components.AsyncRoundedImage
 import com.free.domain.entities.User
 import com.free.githubviewer.R
-import com.free.presentation.previews.NightModePreviewAnnotation
+import com.design_system.annotations.NightModePreviewAnnotation
 
 
 @Composable

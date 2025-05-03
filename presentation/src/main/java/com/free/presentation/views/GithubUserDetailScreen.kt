@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
 import com.free.presentation.GithubUserDetailPreviewParameterProvider
-import com.free.presentation.previews.NightModePreviewAnnotation
+import com.design_system.annotations.NightModePreviewAnnotation
 import com.design_system.components.AsyncRoundedImage
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel

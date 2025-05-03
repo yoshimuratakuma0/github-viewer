@@ -1,4 +1,4 @@
-package com.free.presentation.previews
+package com.design_system.annotations
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

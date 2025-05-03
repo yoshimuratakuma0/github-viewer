@@ -15,6 +15,9 @@ class MyColor(
     error: Color,
     onPrimary: Color,
     onBackground: Color,
+    disabledPrimary: Color,
+    disabledBackground: Color,
+    onDisabledBackground: Color,
 ) {
     var primary by mutableStateOf(primary, structuralEqualityPolicy())
         private set
@@ -30,6 +33,15 @@ class MyColor(
 
     var onBackground by mutableStateOf(onBackground, structuralEqualityPolicy())
         private set
+
+    var disabledPrimary by mutableStateOf(disabledPrimary, structuralEqualityPolicy())
+        private set
+    
+    var disabledBackground by mutableStateOf(disabledBackground, structuralEqualityPolicy())
+        private set
+
+    var onDisabledBackground by mutableStateOf(onDisabledBackground, structuralEqualityPolicy())
+        private set
 }
 
 fun lightMyColor(
@@ -38,12 +50,18 @@ fun lightMyColor(
     error: Color = MyColorLightTokens.Error,
     onPrimary: Color = MyColorLightTokens.OnPrimary,
     onBackground: Color = MyColorLightTokens.OnBackground,
+    disabledPrimary: Color = MyColorLightTokens.DisabledPrimary,
+    disabledBackground: Color = MyColorLightTokens.DisabledBackground,
+    onDisabledBackground: Color = MyColorLightTokens.OnDisabledBackground,
 ): MyColor = MyColor(
     primary = primary,
     background = background,
     error = error,
     onPrimary = onPrimary,
     onBackground = onBackground,
+    disabledPrimary = disabledPrimary,
+    disabledBackground = disabledBackground,
+    onDisabledBackground = onDisabledBackground,
 )
 
 fun darkMyColor(
@@ -52,12 +70,18 @@ fun darkMyColor(
     error: Color = MyColorDarkTokens.Error,
     onPrimary: Color = MyColorDarkTokens.OnPrimary,
     onBackground: Color = MyColorDarkTokens.OnBackground,
+    disabledPrimary: Color = MyColorDarkTokens.DisabledPrimary,
+    disabledBackground: Color = MyColorDarkTokens.DisabledBackground,
+    onDisabledBackground: Color = MyColorDarkTokens.OnDisabledBackground,
 ): MyColor = MyColor(
     primary = primary,
     background = background,
     error = error,
     onPrimary = onPrimary,
     onBackground = onBackground,
+    disabledPrimary = disabledPrimary,
+    disabledBackground = disabledBackground,
+    onDisabledBackground = onDisabledBackground,
 )
 
 internal val LocalMyColor = staticCompositionLocalOf {

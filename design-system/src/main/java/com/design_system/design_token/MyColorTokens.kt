@@ -8,6 +8,10 @@ internal object MyColorLightTokens {
     val Error = Color(0xFFB00020)
     val OnPrimary = Color(0xFFFFFFFF)
     val OnBackground = Color(0xFF333333)
+
+    val DisabledPrimary = Color(0xAABB86FC)
+    val DisabledBackground = Color(0xAAF5F5F5)
+    val OnDisabledBackground = Color(0xAA333333)
 }
 
 internal object MyColorDarkTokens {
@@ -16,4 +20,8 @@ internal object MyColorDarkTokens {
     val Error = Color(0xFFB42242)
     val OnPrimary = Color(0xFF000000)
     val OnBackground = Color(0xFFFFFFFF)
+
+    val DisabledPrimary = Color(0xAA6200EE)
+    val DisabledBackground = Color(0xAA121212)
+    val OnDisabledBackground = Color(0xAAFFFFFF)
 }

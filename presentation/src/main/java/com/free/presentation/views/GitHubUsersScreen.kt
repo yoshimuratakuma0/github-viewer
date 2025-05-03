@@ -1,13 +1,7 @@
 package com.free.presentation.views
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,7 +19,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.free.domain.entities.User
 import com.free.githubviewer.R
 import com.free.presentation.GitHubUsersPreviewParameterProvider
-import com.free.presentation.previews.NightModePreviewAnnotation
+import com.design_system.annotations.NightModePreviewAnnotation
 import com.free.presentation.utils.OkAlertDialog
 import com.free.presentation.utils.errorBodyBy
 import com.free.presentation.utils.errorTitleBy
