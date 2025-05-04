@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -33,6 +33,7 @@ import com.design_system.components.Icons
 import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
+import com.design_system.components.VerticalDivider
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
@@ -124,6 +125,9 @@ private fun GithubUserDetailScreen(
             modifier = Modifier.padding(8.dp),
             userDetail = userDetail,
         )
+
+        VerticalDivider()
+
         ProfileDetail(
             modifier = Modifier.padding(8.dp),
             userDetail = userDetail,
@@ -142,22 +146,26 @@ private fun ProfileSummary(
     ) {
         AsyncRoundedImage(
             modifier = Modifier
-                .size((iconRadius*2).dp),
+                .size((iconRadius * 2).dp),
             url = userDetail.user.avatarUrl,
             placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(
-            modifier = Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = stringResource(id = R.string.about_id).format(userDetail.id),
+                text = userDetail.displayName,
+                style = MyTheme.typography.titleMedium,
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
+            Spacer(modifier = Modifier.weight(1f))
+
             Text(
                 text = stringResource(id = R.string.about_followers).format(userDetail.followers),
             )
-            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = stringResource(id = R.string.about_following).format(userDetail.following),
             )
@@ -174,9 +182,6 @@ private fun ProfileDetail(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(
-            text = stringResource(id = R.string.about_username).format(userDetail.displayName),
-        )
         if (userDetail.hasEmail) {
             Text(
                 text = stringResource(id = R.string.about_email).format(userDetail.email),

@@ -5,7 +5,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-internal object MyTypographyTokens{
+internal object MyTypographyTokens {
+    val TitleMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
+    )
+
     val BodyLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontSize = 16.sp,
