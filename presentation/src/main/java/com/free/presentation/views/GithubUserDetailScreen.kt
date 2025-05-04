@@ -37,7 +37,7 @@ import com.design_system.components.VerticalDivider
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.UserDetail
 import com.free.githubviewer.R
-import com.free.presentation.GithubUserDetailPreviewParameterProvider
+import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.free.presentation.viewmodels.GithubUserDetailViewModel
 
