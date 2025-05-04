@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.design_system.annotations.NightModePreviewAnnotation
 import com.design_system.components.AsyncRoundedImage
@@ -49,7 +51,7 @@ fun GithubUserItem(
             AsyncRoundedImage(
                 modifier = Modifier
                     .padding(4.dp)
-                    .fillMaxHeight()
+                    .size(92.dp)
                     .aspectRatio(1f),
                 url = user.avatarUrl,
                 placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
@@ -58,13 +60,17 @@ fun GithubUserItem(
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(
-                modifier = Modifier.height(IntrinsicSize.Min),
+                modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
                     text = user.username,
                     style = MyTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
 
                 Row(
                     modifier = Modifier
