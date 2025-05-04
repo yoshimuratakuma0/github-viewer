@@ -31,6 +31,19 @@ android {
             )
         }
     }
+
+    flavorDimensions += "mode"
+    productFlavors {
+        create("fake") {
+            dimension = "mode"
+            applicationIdSuffix = ".fake"
+            versionNameSuffix = "-fake"
+        }
+        create("prod") {
+            dimension = "mode"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21

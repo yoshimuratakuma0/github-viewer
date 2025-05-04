@@ -1,4 +1,4 @@
-package com.free.presentation.views
+package com.free.data.di
 
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail

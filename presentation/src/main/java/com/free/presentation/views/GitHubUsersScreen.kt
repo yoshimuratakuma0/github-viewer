@@ -3,7 +3,6 @@ package com.free.presentation.views
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -24,7 +23,7 @@ import com.design_system.components.TopAppBar
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.githubviewer.R
-import com.free.presentation.GitHubUsersPreviewParameterProvider
+import com.free.presentation.previews.GitHubUsersPreviewParameterProvider
 import com.free.presentation.utils.errorBodyBy
 import com.free.presentation.utils.errorTitleBy
 import com.free.presentation.viewmodels.GitHubUsersUiState
