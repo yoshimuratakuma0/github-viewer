@@ -22,6 +22,7 @@ import com.design_system.components.AsyncRoundedImage
 import com.design_system.components.Card
 import com.design_system.components.Text
 import com.design_system.components.TextButton
+import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.githubviewer.R
 
@@ -61,11 +62,8 @@ fun GithubUserItem(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
-                    text = stringResource(id = R.string.about_id).format(user.id),
-                )
-
-                Text(
-                    text = stringResource(id = R.string.about_username).format(user.username),
+                    text = user.username,
+                    style = MyTheme.typography.titleMedium,
                 )
 
                 Row(
