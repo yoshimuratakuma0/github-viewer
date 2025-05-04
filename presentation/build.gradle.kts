@@ -7,6 +7,16 @@ plugins {
 
 android {
     namespace = "com.free.githubviewer"
+
+    flavorDimensions += "mode"
+    productFlavors {
+        create("fake") {
+            dimension = "mode"
+        }
+        create("prod") {
+            dimension = "mode"
+        }
+    }
 }
 
 dependencies {
