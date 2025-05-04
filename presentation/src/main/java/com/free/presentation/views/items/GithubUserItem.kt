@@ -1,21 +1,19 @@
 package com.free.presentation.views.items
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -38,7 +36,6 @@ fun GithubUserItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp)
             .clickable {
                 onClick()
             }
@@ -48,39 +45,35 @@ fun GithubUserItem(
                 .padding(8.dp)
                 .height(IntrinsicSize.Min),
         ) {
-            val iconRadius = remember {
-                mutableIntStateOf(0)
-            }
-            val density = LocalDensity.current.density
-            Box(
+            AsyncRoundedImage(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(4.dp)
                     .fillMaxHeight()
-                    .aspectRatio(1.0f)
-                    .onGloballyPositioned { coordinates ->
-                        iconRadius.intValue = (coordinates.size.height / density).toInt()
-                    },
-                content = {
-                    AsyncRoundedImage(
-                        size = iconRadius.intValue.dp,
-                        url = user.avatarUrl,
-                        placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
-                    )
-                },
+                    .aspectRatio(1f),
+                url = user.avatarUrl,
+                placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
             )
 
-            Column {
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.height(IntrinsicSize.Min),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 Text(
-                    modifier = Modifier.padding(8.dp),
                     text = stringResource(id = R.string.about_id).format(user.id),
                 )
 
                 Text(
-                    modifier = Modifier.padding(8.dp),
                     text = stringResource(id = R.string.about_username).format(user.username),
                 )
 
-                Row {
+                Row(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                ) {
                     TextButton(
                         content = {
                             Text(
