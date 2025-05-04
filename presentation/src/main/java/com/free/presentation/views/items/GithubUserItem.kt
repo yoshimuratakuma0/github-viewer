@@ -75,6 +75,11 @@ fun GithubUserItem(
                     text = stringResource(id = R.string.about_id).format(user.id),
                 )
 
+                Text(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(id = R.string.about_username).format(user.username),
+                )
+
                 Row {
                     TextButton(
                         content = {
