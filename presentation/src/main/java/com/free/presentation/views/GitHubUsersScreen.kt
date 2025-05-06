@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 import com.design_system.annotations.NightModePreviewAnnotation
 import com.design_system.combinePadding
 import com.design_system.components.CircularProgressIndicator
-import com.design_system.components.OkAlertDialog
 import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
+import com.free.feature_core.components.OkAlertDialog
 import com.free.githubviewer.R
 import com.free.presentation.previews.GitHubUsersPreviewParameterProvider
 import com.free.presentation.utils.errorBodyBy

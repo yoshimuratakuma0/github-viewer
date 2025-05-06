@@ -22,8 +22,9 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":design-system"))
-    implementation(libs.core.ktx)
+    implementation(project(":feature-core"))
 
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)

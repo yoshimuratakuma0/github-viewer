@@ -20,12 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.design_system.annotations.NightModePreviewAnnotation
-import com.design_system.components.AsyncRoundedImage
 import com.design_system.components.Card
 import com.design_system.components.Text
 import com.design_system.components.TextButton
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
+import com.free.feature_core.components.AsyncRoundedImage
 import com.free.githubviewer.R
 
 
