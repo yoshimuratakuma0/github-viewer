@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.feature_core.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize

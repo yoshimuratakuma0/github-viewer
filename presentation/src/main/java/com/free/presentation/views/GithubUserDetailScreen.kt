@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.design_system.annotations.NightModePreviewAnnotation
-import com.design_system.components.AsyncRoundedImage
 import com.design_system.components.Button
 import com.design_system.components.CircularProgressIndicator
 import com.design_system.components.Icon
@@ -36,6 +35,8 @@ import com.design_system.components.TopAppBar
 import com.design_system.components.VerticalDivider
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.UserDetail
+import com.free.feature_core.components.AsyncRoundedImage
+import com.free.feature_core.components.ExceptionMappers
 import com.free.githubviewer.R
 import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
 import com.free.presentation.viewmodels.GithubUserDetailUiState
@@ -100,7 +101,7 @@ fun GithubUserDetailStatelessScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Text(text = stringResource(id = R.string.error_unexpected))
+                        Text(text = ExceptionMappers.errorTitleBy(uiState.exception))
                         Button(onClick = onRetry) {
                             Text(text = stringResource(id = R.string.retry))
                         }

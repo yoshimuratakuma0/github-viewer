@@ -3,7 +3,6 @@ package com.free.presentation.views
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -18,14 +17,12 @@ import com.design_system.components.CircularProgressIndicator
 import com.design_system.components.Icon
 import com.design_system.components.IconButton
 import com.design_system.components.Icons
-import com.design_system.components.OkAlertDialog
 import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
+import com.free.feature_core.components.ErrorAlertDialog
 import com.free.githubviewer.R
-import com.free.presentation.utils.errorBodyBy
-import com.free.presentation.utils.errorTitleBy
 import com.free.presentation.viewmodels.GitHubFollowingUiState
 import com.free.presentation.viewmodels.GitHubFollowingViewModel
 import com.free.presentation.views.items.GitHubUserList
@@ -99,9 +96,7 @@ private fun GitHubFollowingScreenStatelessScreen(
                 }
 
                 is GitHubFollowingUiState.Error -> {
-                    val title = errorTitleBy(exception = uiState.exception)
-                    val body = errorBodyBy(exception = uiState.exception)
-                    OkAlertDialog(title = title, body = body)
+                    ErrorAlertDialog(exception = uiState.exception)
                 }
 
                 GitHubFollowingUiState.Loading -> {
