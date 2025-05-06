@@ -21,10 +21,8 @@ import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
-import com.free.feature_core.components.OkAlertDialog
+import com.free.feature_core.components.ErrorAlertDialog
 import com.free.githubviewer.R
-import com.free.presentation.utils.errorBodyBy
-import com.free.presentation.utils.errorTitleBy
 import com.free.presentation.viewmodels.GitHubFollowingUiState
 import com.free.presentation.viewmodels.GitHubFollowingViewModel
 import com.free.presentation.views.items.GitHubUserList
@@ -98,9 +96,7 @@ private fun GitHubFollowingScreenStatelessScreen(
                 }
 
                 is GitHubFollowingUiState.Error -> {
-                    val title = errorTitleBy(exception = uiState.exception)
-                    val body = errorBodyBy(exception = uiState.exception)
-                    OkAlertDialog(title = title, body = body)
+                    ErrorAlertDialog(exception = uiState.exception)
                 }
 
                 GitHubFollowingUiState.Loading -> {
