@@ -52,7 +52,7 @@ jobs:
       - uses: dawidd6/action-download-artifact@v2
         continue-on-error: false
         with:
-          name: screenshot
+          name: screenshot-${{ matrix.module }}
           workflow: StoreScreenshot.yml
           commit: ${{ steps.get_base_branch_head.outputs.sha }}
           if_no_artifact_found: fail
