@@ -1,4 +1,4 @@
-package com.free.presentation.views.items
+package com.free.feature_user.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import com.design_system.components.TextButton
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.feature_core.components.AsyncRoundedImage
-import com.free.githubviewer.R
+import com.free.feature_core.R
 
 
 @Composable

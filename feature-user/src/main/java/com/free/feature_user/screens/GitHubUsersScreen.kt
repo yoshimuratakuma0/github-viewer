@@ -1,4 +1,4 @@
-package com.free.presentation.views
+package com.free.feature_user.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,12 +21,12 @@ import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
+import com.free.feature_core.R
 import com.free.feature_core.components.ErrorAlertDialog
-import com.free.githubviewer.R
-import com.free.presentation.previews.GitHubUsersPreviewParameterProvider
-import com.free.presentation.viewmodels.GitHubUsersUiState
-import com.free.presentation.viewmodels.GithubUsersViewModel
-import com.free.presentation.views.items.GitHubUserList
+import com.free.feature_user.items.GitHubUserList
+import com.free.feature_user.previews.GitHubUsersPreviewParameterProvider
+import com.free.feature_user.viewmodels.GitHubUsersUiState
+import com.free.feature_user.viewmodels.GithubUsersViewModel
 
 @Composable
 fun GitHubUsersScreen(

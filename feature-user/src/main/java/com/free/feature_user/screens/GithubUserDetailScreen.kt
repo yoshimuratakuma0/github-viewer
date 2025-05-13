@@ -1,4 +1,4 @@
-package com.free.presentation.views
+package com.free.feature_user.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,12 +35,12 @@ import com.design_system.components.TopAppBar
 import com.design_system.components.VerticalDivider
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.UserDetail
+import com.free.feature_core.R
 import com.free.feature_core.components.AsyncRoundedImage
 import com.free.feature_core.components.ExceptionMappers
-import com.free.githubviewer.R
+import com.free.feature_user.viewmodels.GithubUserDetailUiState
+import com.free.feature_user.viewmodels.GithubUserDetailViewModel
 import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
-import com.free.presentation.viewmodels.GithubUserDetailUiState
-import com.free.presentation.viewmodels.GithubUserDetailViewModel
 
 @Composable
 fun GithubUserDetailScreen(

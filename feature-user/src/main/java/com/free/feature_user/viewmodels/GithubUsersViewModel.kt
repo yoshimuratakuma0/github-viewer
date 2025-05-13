@@ -1,4 +1,4 @@
-package com.free.presentation.viewmodels
+package com.free.feature_user.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

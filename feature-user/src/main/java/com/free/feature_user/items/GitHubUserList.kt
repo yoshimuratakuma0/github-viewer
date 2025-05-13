@@ -1,4 +1,4 @@
-package com.free.presentation.views.items
+package com.free.feature_user.items
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

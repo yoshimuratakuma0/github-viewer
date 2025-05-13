@@ -22,10 +22,10 @@ import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
 import com.free.feature_core.components.ErrorAlertDialog
+import com.free.feature_user.items.GitHubUserList
 import com.free.githubviewer.R
 import com.free.presentation.viewmodels.GitHubFollowingUiState
 import com.free.presentation.viewmodels.GitHubFollowingViewModel
-import com.free.presentation.views.items.GitHubUserList
 
 @Composable
 fun GitHubFollowingScreen(

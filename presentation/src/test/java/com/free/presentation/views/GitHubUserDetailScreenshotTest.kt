@@ -5,6 +5,7 @@ import androidx.compose.ui.test.onRoot
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
+import com.free.feature_user.screens.GithubUserDetailStatelessScreen
 import com.free.presentation.viewmodels.GithubUserDetailUiState
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule

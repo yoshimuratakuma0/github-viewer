@@ -1,7 +1,7 @@
-package com.free.presentation.previews
+package com.free.feature_user.previews
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.free.presentation.viewmodels.GitHubUsersUiState
+import com.free.feature_user.viewmodels.GitHubUsersUiState
 
 class GitHubUsersPreviewParameterProvider : PreviewParameterProvider<GitHubUsersUiState> {
     override val values: Sequence<GitHubUsersUiState>

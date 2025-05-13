@@ -3,7 +3,7 @@ package com.free.presentation.previews
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.presentation.viewmodels.GithubUserDetailUiState
+import com.free.feature_user.viewmodels.GithubUserDetailUiState
 import java.time.LocalDateTime
 
 class GithubUserDetailPreviewParameterProvider : PreviewParameterProvider<GithubUserDetailUiState> {

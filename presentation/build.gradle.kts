@@ -23,6 +23,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":design-system"))
     implementation(project(":feature-core"))
+    implementation(project(":feature-user"))
 
     implementation(libs.core.ktx)
     testImplementation(libs.junit)
