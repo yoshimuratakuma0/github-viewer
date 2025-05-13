@@ -8,6 +8,7 @@ import com.free.domain.entities.User
 import com.free.domain.usecases.FetchFollowersInputParams
 import com.free.domain.usecases.FetchFollowersUseCase
 import com.free.domain.usecases.Result
+import com.free.feature_user.viewmodels.GitHubUsersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,13 +16,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-sealed interface GitHubFollowersUiState {
-    data object Success : GitHubFollowersUiState
-    data class Error(val exception: Exception) : GitHubFollowersUiState
-    data object Loading : GitHubFollowersUiState
-    data object NoData : GitHubFollowersUiState
-}
 
 class FollowersListingData(
     val children: List<User>,
@@ -33,7 +27,7 @@ class GitHubFollowersViewModel @Inject constructor(
     private val fetchFollowersUseCase: FetchFollowersUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<GitHubFollowersUiState>(GitHubFollowersUiState.Loading)
+    private val _uiState = MutableStateFlow<GitHubUsersUiState>(GitHubUsersUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
@@ -58,7 +52,7 @@ class GitHubFollowersViewModel @Inject constructor(
 
                 when (val result = fetchFollowersUseCase(nextParams)) {
                     is Result.Error -> {
-                        _uiState.value = GitHubFollowersUiState.Error(result.exception)
+                        _uiState.value = GitHubUsersUiState.Error(result.exception)
                         currentListing
                     }
 
@@ -67,9 +61,9 @@ class GitHubFollowersViewModel @Inject constructor(
                         // Initial fetch
                         if (currentList == null) {
                             if (result.data.isEmpty()) {
-                                _uiState.value = GitHubFollowersUiState.NoData
+                                _uiState.value = GitHubUsersUiState.NoData
                             } else {
-                                _uiState.value = GitHubFollowersUiState.Success
+                                _uiState.value = GitHubUsersUiState.Success
                             }
                             return@update FollowersListingData(result.data, nextParams)
                         }

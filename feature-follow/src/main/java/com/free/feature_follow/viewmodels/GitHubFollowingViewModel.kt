@@ -8,6 +8,7 @@ import com.free.domain.entities.User
 import com.free.domain.usecases.FetchFollowingInputParams
 import com.free.domain.usecases.FetchFollowingUseCase
 import com.free.domain.usecases.Result
+import com.free.feature_user.viewmodels.GitHubUsersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,13 +16,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-sealed interface GitHubFollowingUiState {
-    data object Success : GitHubFollowingUiState
-    data class Error(val exception: Exception) : GitHubFollowingUiState
-    data object Loading : GitHubFollowingUiState
-    data object NoData : GitHubFollowingUiState
-}
 
 class FollowingListingData(
     val children: List<User>,
@@ -33,7 +27,7 @@ class GitHubFollowingViewModel @Inject constructor(
     private val fetchFollowingUseCase: FetchFollowingUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<GitHubFollowingUiState>(GitHubFollowingUiState.Loading)
+    private val _uiState = MutableStateFlow<GitHubUsersUiState>(GitHubUsersUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
@@ -58,7 +52,7 @@ class GitHubFollowingViewModel @Inject constructor(
 
                 when (val result = fetchFollowingUseCase(nextParams)) {
                     is Result.Error -> {
-                        _uiState.value = GitHubFollowingUiState.Error(result.exception)
+                        _uiState.value = GitHubUsersUiState.Error(result.exception)
                         currentListing
                     }
 
@@ -67,9 +61,9 @@ class GitHubFollowingViewModel @Inject constructor(
                         // Initial fetch
                         if (currentList == null) {
                             if (result.data.isEmpty()) {
-                                _uiState.value = GitHubFollowingUiState.NoData
+                                _uiState.value = GitHubUsersUiState.NoData
                             } else {
-                                _uiState.value = GitHubFollowingUiState.Success
+                                _uiState.value = GitHubUsersUiState.Success
                             }
                             return@update FollowingListingData(result.data, nextParams)
                         }
@@ -81,7 +75,7 @@ class GitHubFollowingViewModel @Inject constructor(
                             return@update currentListing
                         }
 
-                        _uiState.value = GitHubFollowingUiState.Success
+                        _uiState.value = GitHubUsersUiState.Success
                         FollowingListingData(
                             currentList + result.data,
                             nextParams,

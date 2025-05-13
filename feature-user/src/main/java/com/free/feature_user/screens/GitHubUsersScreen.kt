@@ -69,50 +69,73 @@ fun GithubUsersStatelessScreen(
             )
         },
         content = { padding ->
-            when (uiState) {
-                is GitHubUsersUiState.Success -> {
-                    if (!listState.canScrollForward) {
-                        fetchMore()
-                    }
-
-                    GitHubUserList(
-                        modifier = Modifier,
-                        contentPadding = combinePadding(
-                            padding,
-                            PaddingValues(8.dp),
-                        ),
-                        listState = listState,
-                        users = users,
-                        onClick = onClick,
-                        onFollowers = onFollowers,
-                        onFollowing = onFollowing,
-                    )
-                }
-
-                is GitHubUsersUiState.Error -> {
-                    ErrorAlertDialog(exception = uiState.exception)
-                }
-
-                GitHubUsersUiState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                GitHubUsersUiState.NoData -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(stringResource(R.string.no_data))
-                    }
-                }
-            }
+            GitHubUsersContent(
+                listState = listState,
+                uiState = uiState,
+                users = users,
+                fetchMore = fetchMore,
+                onClick = onClick,
+                onFollowing = onFollowing,
+                onFollowers = onFollowers,
+                padding = padding
+            )
         }
     )
+}
+
+@Composable
+fun GitHubUsersContent(
+    listState: LazyListState,
+    uiState: GitHubUsersUiState,
+    users: List<User>,
+    fetchMore: () -> Unit,
+    onClick: ((username: String) -> Unit),
+    onFollowing: (username: String) -> Unit,
+    onFollowers: (username: String) -> Unit,
+    padding: PaddingValues,
+) {
+    when (uiState) {
+        is GitHubUsersUiState.Success -> {
+            if (!listState.canScrollForward) {
+                fetchMore()
+            }
+
+            GitHubUserList(
+                modifier = Modifier,
+                contentPadding = combinePadding(
+                    padding,
+                    PaddingValues(8.dp),
+                ),
+                listState = listState,
+                users = users,
+                onClick = onClick,
+                onFollowers = onFollowers,
+                onFollowing = onFollowing,
+            )
+        }
+
+        is GitHubUsersUiState.Error -> {
+            ErrorAlertDialog(exception = uiState.exception)
+        }
+
+        GitHubUsersUiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        GitHubUsersUiState.NoData -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(stringResource(R.string.no_data))
+            }
+        }
+    }
 }
 
 @NightModePreviewAnnotation

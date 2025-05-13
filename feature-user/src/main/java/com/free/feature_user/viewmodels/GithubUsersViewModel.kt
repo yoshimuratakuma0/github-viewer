@@ -14,13 +14,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-sealed interface GitHubUsersUiState {
-    data object Success : GitHubUsersUiState
-    data class Error(val exception: Exception) : GitHubUsersUiState
-    data object NoData : GitHubUsersUiState
-    data object Loading : GitHubUsersUiState
-}
-
 class UserListingData(
     val children: List<User>,
     val params: FetchUsersInputParams,
