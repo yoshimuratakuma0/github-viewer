@@ -14,6 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - feature-user
+          - feature-follow
+
     permissions:
       contents: read # for clone
       actions: write # for upload-artifact
@@ -43,7 +50,7 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: dawidd6/action-download-artifact@v2
-        continue-on-error: true
+        continue-on-error: false
         with:
           name: screenshot
           workflow: StoreScreenshot.yml
@@ -53,12 +60,12 @@ jobs:
       - name: compare screenshot test
         id: compare-screenshot-test
         run: |
-          ./gradlew compareRoborazziFakeDebug --stacktrace --info
+          ./gradlew :${{ matrix.module }}:compareRoborazziFakeDebug --parallel
 
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: screenshot-diff
+          name: screenshot-diff-${{ matrix.module }}
           path: |
             **/build/outputs/roborazzi
           retention-days: 30
@@ -70,5 +77,5 @@ jobs:
           echo ${{ github.event.number }} > ./pr/NR
       - uses: actions/upload-artifact@v4
         with:
-          name: pr
+          name: pr-${{ matrix.module }}
           path: pr/
