@@ -27,8 +27,16 @@ jobs:
       checks: read # for wait-on-check-action
 
     steps:
+      - name: Check if PR artifact already exists
+        id: check-artifact
+        run: |
+          if [ -d "./pr" ]; then
+            echo "artifact_exists=true" >> $GITHUB_ENV
+          else
+            echo "artifact_exists=false" >> $GITHUB_ENV
+
       - name: Save PR number
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ env.artifact_exists == 'false' }}
         run: |
           mkdir -p ./pr
           echo ${{ github.event.number }} > ./pr/NR
