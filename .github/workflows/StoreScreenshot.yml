@@ -5,9 +5,6 @@ on:
     branches:
       - main
       - develop
-    paths-ignore:
-      - docs/**
-      - README.md
 
 jobs:
   store-screenshot-test:
