@@ -1,7 +1,7 @@
 package com.free.data.di
 
 import com.free.data.datasources.AuthenticationInterceptor
-import com.free.data.datasources.GithubApi
+import com.free.data.datasources.GitHubApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,10 +47,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGithubApi(
+    fun provideGitHubApi(
         retrofit: Retrofit,
-    ): GithubApi {
+    ): GitHubApi {
         return retrofit
-            .create(GithubApi::class.java)
+            .create(GitHubApi::class.java)
     }
 }

@@ -23,7 +23,7 @@ class GitHubUsersScreenshotTest {
     fun test_success() {
         composeRule.setContent {
             MyTheme {
-                GithubUsersStatelessScreen(
+                GitHubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.Success,
                     users = listOf(
@@ -65,7 +65,7 @@ class GitHubUsersScreenshotTest {
     fun test_loading() {
         composeRule.setContent {
             MyTheme {
-                GithubUsersStatelessScreen(
+                GitHubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.Loading,
                     users = emptyList(),
@@ -86,7 +86,7 @@ class GitHubUsersScreenshotTest {
     fun test_no_data() {
         composeRule.setContent {
             MyTheme {
-                GithubUsersStatelessScreen(
+                GitHubUsersStatelessScreen(
                     listState = rememberLazyListState(),
                     uiState = GitHubUsersUiState.NoData,
                     users = emptyList(),

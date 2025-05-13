@@ -1,6 +1,6 @@
 package com.free.data.repositories
 
-import com.free.data.datasources.GithubApi
+import com.free.data.datasources.GitHubApi
 import com.free.data.exceptions.from
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
@@ -13,7 +13,7 @@ import com.free.domain.usecases.GetUserDetailInputParams
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
-    private val api: GithubApi
+    private val api: GitHubApi
 ) : UsersRepository {
     /**
      * max value of pageSize and initialLoadSize is 100

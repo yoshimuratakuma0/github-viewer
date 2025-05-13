@@ -30,7 +30,7 @@ import com.free.feature_core.R
 
 
 @Composable
-fun GithubUserItem(
+fun GitHubUserItem(
     user: User,
     onClick: () -> Unit,
     onFollowing: () -> Unit,
@@ -103,11 +103,11 @@ fun GithubUserItem(
 
 @NightModePreviewAnnotation
 @Composable
-fun PreviewGithubUserItem() {
+fun PreviewGitHubUserItem() {
     val user = User(
         id = 6,
         avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
         username = "ivey"
     )
-    GithubUserItem(user = user, onClick = {}, onFollowing = {}, onFollowers = {})
+    GitHubUserItem(user = user, onClick = {}, onFollowing = {}, onFollowers = {})
 }

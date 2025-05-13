@@ -5,7 +5,7 @@ import androidx.compose.ui.test.onRoot
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.feature_user.viewmodels.GithubUserDetailUiState
+import com.free.feature_user.viewmodels.GitHubUserDetailUiState
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -24,8 +24,8 @@ class GitHubUserDetailScreenshotTest {
     fun test_success() {
         composeRule.setContent {
             MyTheme {
-                GithubUserDetailStatelessScreen(
-                    uiState = GithubUserDetailUiState.Success(
+                GitHubUserDetailStatelessScreen(
+                    uiState = GitHubUserDetailUiState.Success(
                         userDetail = UserDetail(
                             user = User(
                                 id = 1,
@@ -57,8 +57,8 @@ class GitHubUserDetailScreenshotTest {
     fun test_loading() {
         composeRule.setContent {
             MyTheme {
-                GithubUserDetailStatelessScreen(
-                    uiState = GithubUserDetailUiState.Loading,
+                GitHubUserDetailStatelessScreen(
+                    uiState = GitHubUserDetailUiState.Loading,
                     onRetry = {},
                     onBack = {},
                 )
@@ -74,8 +74,8 @@ class GitHubUserDetailScreenshotTest {
     fun test_error() {
         composeRule.setContent {
             MyTheme {
-                GithubUserDetailStatelessScreen(
-                    uiState = GithubUserDetailUiState.Error(Exception()),
+                GitHubUserDetailStatelessScreen(
+                    uiState = GitHubUserDetailUiState.Error(Exception()),
                     onRetry = {},
                     onBack = {},
                 )

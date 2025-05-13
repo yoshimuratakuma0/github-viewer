@@ -38,18 +38,18 @@ import com.free.domain.entities.UserDetail
 import com.free.feature_core.R
 import com.free.feature_core.components.AsyncRoundedImage
 import com.free.feature_core.components.ExceptionMappers
-import com.free.feature_user.viewmodels.GithubUserDetailUiState
-import com.free.feature_user.viewmodels.GithubUserDetailViewModel
-import com.free.feature_user.previews.GithubUserDetailPreviewParameterProvider
+import com.free.feature_user.previews.GitHubUserDetailPreviewParameterProvider
+import com.free.feature_user.viewmodels.GitHubUserDetailUiState
+import com.free.feature_user.viewmodels.GitHubUserDetailViewModel
 
 @Composable
-fun GithubUserDetailScreen(
-    viewModel: GithubUserDetailViewModel,
+fun GitHubUserDetailScreen(
+    viewModel: GitHubUserDetailViewModel,
     onBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    GithubUserDetailStatelessScreen(
+    GitHubUserDetailStatelessScreen(
         uiState = uiState,
         onRetry = {
             viewModel.fetchUserDetail()
@@ -59,8 +59,8 @@ fun GithubUserDetailScreen(
 }
 
 @Composable
-fun GithubUserDetailStatelessScreen(
-    uiState: GithubUserDetailUiState,
+fun GitHubUserDetailStatelessScreen(
+    uiState: GitHubUserDetailUiState,
     onRetry: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -79,14 +79,14 @@ fun GithubUserDetailStatelessScreen(
         },
         content = { contentPadding ->
             when (uiState) {
-                is GithubUserDetailUiState.Success -> {
-                    GithubUserDetailScreen(
+                is GitHubUserDetailUiState.Success -> {
+                    GitHubUserDetailScreen(
                         userDetail = uiState.userDetail,
                         contentPaddingValues = contentPadding,
                     )
                 }
 
-                is GithubUserDetailUiState.Loading -> {
+                is GitHubUserDetailUiState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
@@ -95,7 +95,7 @@ fun GithubUserDetailStatelessScreen(
                     }
                 }
 
-                is GithubUserDetailUiState.Error -> {
+                is GitHubUserDetailUiState.Error -> {
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,7 +113,7 @@ fun GithubUserDetailStatelessScreen(
 }
 
 @Composable
-private fun GithubUserDetailScreen(
+private fun GitHubUserDetailScreen(
     userDetail: UserDetail,
     contentPaddingValues: PaddingValues,
 ) {
@@ -217,12 +217,12 @@ private fun ProfileDetail(
 
 @NightModePreviewAnnotation
 @Composable
-fun PreviewGithubUserDetail(
-    @PreviewParameter(GithubUserDetailPreviewParameterProvider::class)
-    uiState: GithubUserDetailUiState,
+fun PreviewGitHubUserDetail(
+    @PreviewParameter(GitHubUserDetailPreviewParameterProvider::class)
+    uiState: GitHubUserDetailUiState,
 ) {
     MyTheme {
-        GithubUserDetailStatelessScreen(
+        GitHubUserDetailStatelessScreen(
             uiState = uiState,
             onRetry = {},
             onBack = {},

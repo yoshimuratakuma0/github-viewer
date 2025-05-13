@@ -20,7 +20,7 @@ class UserListingData(
 )
 
 @HiltViewModel
-class GithubUsersViewModel @Inject constructor(
+class GitHubUsersViewModel @Inject constructor(
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<GitHubUsersUiState>(GitHubUsersUiState.Loading)

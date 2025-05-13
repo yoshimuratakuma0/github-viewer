@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GithubApi {
+interface GitHubApi {
 
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("users")

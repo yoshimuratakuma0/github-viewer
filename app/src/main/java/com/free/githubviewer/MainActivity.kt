@@ -14,8 +14,8 @@ import com.design_system.design_token.MyTheme
 import com.free.domain.KEY_USERNAME
 import com.free.feature_follow.screens.GitHubFollowersScreen
 import com.free.feature_follow.screens.GitHubFollowingScreen
+import com.free.feature_user.screens.GitHubUserDetailScreen
 import com.free.feature_user.screens.GitHubUsersScreen
-import com.free.feature_user.screens.GithubUserDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                         )
                     ) { backStackEntry ->
                         backStackEntry.arguments?.getString(KEY_USERNAME)?.let {
-                            GithubUserDetailScreen(
+                            GitHubUserDetailScreen(
                                 hiltViewModel(),
                             ) {
                                 navController.navigateUp()

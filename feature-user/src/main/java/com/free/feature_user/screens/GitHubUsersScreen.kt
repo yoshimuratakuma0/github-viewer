@@ -26,11 +26,11 @@ import com.free.feature_core.components.ErrorAlertDialog
 import com.free.feature_user.items.GitHubUserList
 import com.free.feature_user.previews.GitHubUsersPreviewParameterProvider
 import com.free.feature_user.viewmodels.GitHubUsersUiState
-import com.free.feature_user.viewmodels.GithubUsersViewModel
+import com.free.feature_user.viewmodels.GitHubUsersViewModel
 
 @Composable
 fun GitHubUsersScreen(
-    viewModel: GithubUsersViewModel,
+    viewModel: GitHubUsersViewModel,
     onClickUser: (username: String) -> Unit,
     onFollowing: (username: String) -> Unit,
     onFollowers: (username: String) -> Unit,
@@ -39,7 +39,7 @@ fun GitHubUsersScreen(
     val listing by viewModel.listing.collectAsState()
     val listState = rememberLazyListState()
 
-    GithubUsersStatelessScreen(
+    GitHubUsersStatelessScreen(
         listState = listState,
         uiState = uiState,
         users = listing?.children ?: emptyList(),
@@ -51,7 +51,7 @@ fun GitHubUsersScreen(
 }
 
 @Composable
-fun GithubUsersStatelessScreen(
+fun GitHubUsersStatelessScreen(
     listState: LazyListState,
     uiState: GitHubUsersUiState,
     users: List<User>,
@@ -145,7 +145,7 @@ private fun GitHubUsersStatelessScreenPreview(
     uiState: GitHubUsersUiState,
 ) {
     MyTheme {
-        GithubUsersStatelessScreen(
+        GitHubUsersStatelessScreen(
             listState = rememberLazyListState(),
             uiState = uiState,
             users = listOf(

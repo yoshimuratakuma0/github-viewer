@@ -28,7 +28,7 @@ fun GitHubUserList(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(users) { user ->
-            GithubUserItem(
+            GitHubUserItem(
                 user = user,
                 onClick = {
                     onClick(user.username)

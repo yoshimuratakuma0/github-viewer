@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Github Viewer"
+rootProject.name = "GitHub Viewer"
 include(":app")
 include(":data")
 include(":presentation")

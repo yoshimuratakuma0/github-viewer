@@ -3,15 +3,15 @@ package com.free.feature_user.previews
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
-import com.free.feature_user.viewmodels.GithubUserDetailUiState
+import com.free.feature_user.viewmodels.GitHubUserDetailUiState
 import java.time.LocalDateTime
 
-class GithubUserDetailPreviewParameterProvider : PreviewParameterProvider<GithubUserDetailUiState> {
-    override val values: Sequence<GithubUserDetailUiState>
+class GitHubUserDetailPreviewParameterProvider : PreviewParameterProvider<GitHubUserDetailUiState> {
+    override val values: Sequence<GitHubUserDetailUiState>
         get() = sequenceOf(
-            GithubUserDetailUiState.Error(Exception()),
-            GithubUserDetailUiState.Loading,
-            GithubUserDetailUiState.Success(
+            GitHubUserDetailUiState.Error(Exception()),
+            GitHubUserDetailUiState.Loading,
+            GitHubUserDetailUiState.Success(
                 UserDetail(
                     user = User(
                         id = 1,
@@ -28,7 +28,7 @@ class GithubUserDetailPreviewParameterProvider : PreviewParameterProvider<Github
                     name = null,
                 )
             ),
-            GithubUserDetailUiState.Success(
+            GitHubUserDetailUiState.Success(
                 UserDetail(
                     user = User(
                         id = 1,
