@@ -45,7 +45,7 @@ fun GithubUserItem(
     ) {
         Row(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(6.dp)
                 .height(IntrinsicSize.Min),
         ) {
             AsyncRoundedImage(
