@@ -10,6 +10,22 @@ on:
       - README.md
 
 jobs:
+  save-pr-number:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    timeout-minutes: 2
+    steps:
+      - name: Save PR number
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr
+          path: pr/
+
   compare-screenshot-test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -27,25 +43,6 @@ jobs:
       checks: read # for wait-on-check-action
 
     steps:
-      - name: Check if PR artifact already exists
-        id: check-artifact
-        run: |
-          if [ -d "./pr" ]; then
-            echo "artifact_exists=true" >> $GITHUB_ENV
-          else
-            echo "artifact_exists=false" >> $GITHUB_ENV
-          fi
-
-      - name: Save PR number
-        if: ${{ env.artifact_exists == 'false' }}
-        run: |
-          mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/NR
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pr
-          path: pr/
-
       - name: Checkout base branch
         uses: actions/checkout@v4
         with:
