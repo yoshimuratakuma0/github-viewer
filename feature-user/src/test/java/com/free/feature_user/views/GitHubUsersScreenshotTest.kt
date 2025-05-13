@@ -43,6 +43,11 @@ class GitHubUsersScreenshotTest {
                             username = "preview name 3",
                             avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
                         ),
+                        User(
+                            id = 4,
+                            username = "preview name 4",
+                            avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                        ),
                     ),
                     fetchMore = {},
                     onClick = {},
