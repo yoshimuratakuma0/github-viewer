@@ -1,11 +1,10 @@
-package com.free.feature_user.views
+package com.free.feature_user.screens
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
-import com.free.feature_user.screens.GithubUsersStatelessScreen
 import com.free.feature_user.viewmodels.GitHubUsersUiState
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule

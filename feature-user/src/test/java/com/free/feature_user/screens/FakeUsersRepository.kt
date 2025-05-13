@@ -1,4 +1,4 @@
-package com.free.feature_user.views
+package com.free.feature_user.screens
 
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
