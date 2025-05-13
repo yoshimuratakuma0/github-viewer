@@ -43,7 +43,7 @@ fun GitHubFollowersScreen(
 }
 
 @Composable
-private fun GitHubFollowersScreenStatelessScreen(
+fun GitHubFollowersScreenStatelessScreen(
     listState: LazyListState,
     uiState: GitHubUsersUiState,
     users: List<User>,
