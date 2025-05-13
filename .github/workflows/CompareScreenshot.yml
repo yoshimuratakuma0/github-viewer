@@ -27,6 +27,16 @@ jobs:
       checks: read # for wait-on-check-action
 
     steps:
+      - name: Save PR number
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr
+          path: pr/
+
       - name: Checkout base branch
         uses: actions/checkout@v4
         with:
@@ -69,13 +79,3 @@ jobs:
           path: |
             **/build/outputs/roborazzi
           retention-days: 30
-
-      - name: Save PR number
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/NR
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pr-${{ matrix.module }}
-          path: pr/
