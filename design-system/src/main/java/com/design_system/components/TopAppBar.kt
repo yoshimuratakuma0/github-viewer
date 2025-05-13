@@ -27,9 +27,10 @@ fun TopAppBar(
     )
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun InternalTopAppBar(
+internal fun InternalTopAppBar(
     title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable () -> Unit = {},

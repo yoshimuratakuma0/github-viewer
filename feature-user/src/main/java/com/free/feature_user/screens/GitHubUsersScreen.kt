@@ -16,9 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.design_system.annotations.NightModePreviewAnnotation
 import com.design_system.combinePadding
 import com.design_system.components.CircularProgressIndicator
-import com.design_system.components.Scaffold
+import com.design_system.components.ScaffoldHidingTopAppBar
 import com.design_system.components.Text
-import com.design_system.components.TopAppBar
 import com.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.feature_core.R
@@ -60,13 +59,9 @@ fun GitHubUsersStatelessScreen(
     onFollowing: (username: String) -> Unit,
     onFollowers: (username: String) -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.title_github_users_screen))
-                }
-            )
+    ScaffoldHidingTopAppBar(
+        title = {
+            Text(text = stringResource(id = R.string.title_github_users_screen))
         },
         content = { padding ->
             GitHubUsersContent(

@@ -9,9 +9,8 @@ import androidx.compose.ui.res.stringResource
 import com.design_system.components.Icon
 import com.design_system.components.IconButton
 import com.design_system.components.Icons
-import com.design_system.components.Scaffold
+import com.design_system.components.ScaffoldHidingTopAppBar
 import com.design_system.components.Text
-import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
 import com.free.feature_core.R
 import com.free.feature_follow.viewmodels.GitHubFollowingViewModel
@@ -53,18 +52,14 @@ private fun GitHubFollowingScreenStatelessScreen(
     onFollowers: (username: String) -> Unit,
     onBackPressed: () -> Unit,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.following))
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackPressed) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                    }
-                },
-            )
+    ScaffoldHidingTopAppBar(
+        title = {
+            Text(text = stringResource(id = R.string.following))
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackPressed) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+            }
         },
         content = { padding ->
             GitHubUsersContent(
