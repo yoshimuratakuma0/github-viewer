@@ -1,12 +1,12 @@
-package com.free.presentation.viewmodels
+package com.free.feature_follow.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.domain.KEY_USERNAME
 import com.free.domain.entities.User
-import com.free.domain.usecases.FetchFollowersInputParams
-import com.free.domain.usecases.FetchFollowersUseCase
+import com.free.domain.usecases.FetchFollowingInputParams
+import com.free.domain.usecases.FetchFollowingUseCase
 import com.free.domain.usecases.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,29 +16,29 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-sealed interface GitHubFollowersUiState {
-    data object Success : GitHubFollowersUiState
-    data class Error(val exception: Exception) : GitHubFollowersUiState
-    data object Loading : GitHubFollowersUiState
-    data object NoData : GitHubFollowersUiState
+sealed interface GitHubFollowingUiState {
+    data object Success : GitHubFollowingUiState
+    data class Error(val exception: Exception) : GitHubFollowingUiState
+    data object Loading : GitHubFollowingUiState
+    data object NoData : GitHubFollowingUiState
 }
 
-class FollowersListingData(
+class FollowingListingData(
     val children: List<User>,
-    val params: FetchFollowersInputParams,
+    val params: FetchFollowingInputParams,
 )
 
 @HiltViewModel
-class GitHubFollowersViewModel @Inject constructor(
-    private val fetchFollowersUseCase: FetchFollowersUseCase,
+class GitHubFollowingViewModel @Inject constructor(
+    private val fetchFollowingUseCase: FetchFollowingUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<GitHubFollowersUiState>(GitHubFollowersUiState.Loading)
+    private val _uiState = MutableStateFlow<GitHubFollowingUiState>(GitHubFollowingUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     private val username = checkNotNull(savedStateHandle.get<String>(KEY_USERNAME))
 
-    private val _listing = MutableStateFlow<FollowersListingData?>(null)
+    private val _listing = MutableStateFlow<FollowingListingData?>(null)
     val listing = _listing.asStateFlow()
 
     init {
@@ -50,15 +50,15 @@ class GitHubFollowersViewModel @Inject constructor(
             _listing.update { currentListing ->
                 val nextParams = currentListing?.params?.copy(
                     since = currentListing.children.lastOrNull()?.id
-                ) ?: FetchFollowersInputParams(
+                ) ?: FetchFollowingInputParams(
                     username = username,
                     perPage = 50,
                     since = null,
                 )
 
-                when (val result = fetchFollowersUseCase(nextParams)) {
+                when (val result = fetchFollowingUseCase(nextParams)) {
                     is Result.Error -> {
-                        _uiState.value = GitHubFollowersUiState.Error(result.exception)
+                        _uiState.value = GitHubFollowingUiState.Error(result.exception)
                         currentListing
                     }
 
@@ -67,11 +67,11 @@ class GitHubFollowersViewModel @Inject constructor(
                         // Initial fetch
                         if (currentList == null) {
                             if (result.data.isEmpty()) {
-                                _uiState.value = GitHubFollowersUiState.NoData
+                                _uiState.value = GitHubFollowingUiState.NoData
                             } else {
-                                _uiState.value = GitHubFollowersUiState.Success
+                                _uiState.value = GitHubFollowingUiState.Success
                             }
-                            return@update FollowersListingData(result.data, nextParams)
+                            return@update FollowingListingData(result.data, nextParams)
                         }
 
                         // Don't add the same list.
@@ -80,7 +80,9 @@ class GitHubFollowersViewModel @Inject constructor(
                         if (currentList.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
-                        FollowersListingData(
+
+                        _uiState.value = GitHubFollowingUiState.Success
+                        FollowingListingData(
                             currentList + result.data,
                             nextParams,
                         )

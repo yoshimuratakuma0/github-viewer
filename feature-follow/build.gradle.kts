@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.free.githubviewer"
+    namespace = "com.free.feature_follow"
 
     flavorDimensions += "mode"
     productFlavors {
@@ -24,21 +24,11 @@ dependencies {
     implementation(project(":design-system"))
     implementation(project(":feature-core"))
     implementation(project(":feature-user"))
-    implementation(project(":feature-follow"))
 
     implementation(libs.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    testImplementation(libs.espresso.core)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.androidx.core)
-    testImplementation(project(":data"))
-    testImplementation(project(":app"))
-    testImplementation(libs.mock.okhttp)
-
     androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.espresso.core)
 }

@@ -12,6 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.design_system.design_token.MyTheme
 import com.free.domain.KEY_USERNAME
+import com.free.feature_follow.screens.GitHubFollowersScreen
+import com.free.feature_follow.screens.GitHubFollowingScreen
 import com.free.feature_user.screens.GitHubUsersScreen
 import com.free.feature_user.screens.GithubUserDetailScreen
 import dagger.hilt.android.AndroidEntryPoint

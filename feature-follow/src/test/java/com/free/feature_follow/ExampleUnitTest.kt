@@ -1,4 +1,4 @@
-package com.free.feature_user
+package com.free.feature_follow
 
 import org.junit.Test
 

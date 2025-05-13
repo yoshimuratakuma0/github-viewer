@@ -29,6 +29,7 @@
             <option value="$PROJECT_DIR$/design-system" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature-core" />
+            <option value="$PROJECT_DIR$/feature-follow" />
             <option value="$PROJECT_DIR$/feature-user" />
             <option value="$PROJECT_DIR$/presentation" />
           </set>

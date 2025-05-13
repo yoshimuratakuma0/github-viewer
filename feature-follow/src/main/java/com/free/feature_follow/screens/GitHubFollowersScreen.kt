@@ -1,4 +1,4 @@
-package com.free.presentation.views
+package com.free.feature_follow.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,11 +21,11 @@ import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
+import com.free.feature_core.R
 import com.free.feature_core.components.ErrorAlertDialog
+import com.free.feature_follow.viewmodels.GitHubFollowersUiState
+import com.free.feature_follow.viewmodels.GitHubFollowersViewModel
 import com.free.feature_user.items.GitHubUserList
-import com.free.githubviewer.R
-import com.free.presentation.viewmodels.GitHubFollowersUiState
-import com.free.presentation.viewmodels.GitHubFollowersViewModel
 
 @Composable
 fun GitHubFollowersScreen(
