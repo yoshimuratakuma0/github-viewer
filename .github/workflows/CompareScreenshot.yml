@@ -34,6 +34,7 @@ jobs:
             echo "artifact_exists=true" >> $GITHUB_ENV
           else
             echo "artifact_exists=false" >> $GITHUB_ENV
+          fi
 
       - name: Save PR number
         if: ${{ env.artifact_exists == 'false' }}
