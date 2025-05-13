@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.free.android.application)
     alias(libs.plugins.free.hilt)
+    alias(libs.plugins.free.compose)
 }
 
 android {
@@ -62,8 +63,11 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":design-system"))
     implementation(project(":data"))
-    implementation(project(":presentation"))
+    implementation(project(":feature-core"))
+    implementation(project(":feature-user"))
+    implementation(project(":feature-follow"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
