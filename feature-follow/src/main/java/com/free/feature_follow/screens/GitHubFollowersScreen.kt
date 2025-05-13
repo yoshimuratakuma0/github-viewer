@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.stringResource
 import com.design_system.components.Icon
 import com.design_system.components.IconButton
 import com.design_system.components.Icons
@@ -13,7 +12,6 @@ import com.design_system.components.Scaffold
 import com.design_system.components.Text
 import com.design_system.components.TopAppBar
 import com.free.domain.entities.User
-import com.free.feature_core.R
 import com.free.feature_follow.viewmodels.GitHubFollowersViewModel
 import com.free.feature_user.screens.GitHubUsersContent
 import com.free.feature_user.viewmodels.GitHubUsersUiState
@@ -57,7 +55,7 @@ fun GitHubFollowersScreenStatelessScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.followers))
+                    Text(text = "test")
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
