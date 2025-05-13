@@ -1,4 +1,4 @@
-package com.free.presentation.views
+package com.free.githubviewer
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

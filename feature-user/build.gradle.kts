@@ -29,7 +29,6 @@ dependencies {
 
     testImplementation(project(":app"))
     testImplementation(project(":data"))
-    testImplementation(project(":presentation"))
     testImplementation(libs.junit)
     testImplementation(libs.espresso.core)
     testImplementation(libs.robolectric)

@@ -40,7 +40,7 @@ import com.free.feature_core.components.AsyncRoundedImage
 import com.free.feature_core.components.ExceptionMappers
 import com.free.feature_user.viewmodels.GithubUserDetailUiState
 import com.free.feature_user.viewmodels.GithubUserDetailViewModel
-import com.free.presentation.previews.GithubUserDetailPreviewParameterProvider
+import com.free.feature_user.previews.GithubUserDetailPreviewParameterProvider
 
 @Composable
 fun GithubUserDetailScreen(

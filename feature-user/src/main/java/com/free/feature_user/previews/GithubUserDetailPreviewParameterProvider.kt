@@ -1,4 +1,4 @@
-package com.free.presentation.previews
+package com.free.feature_user.previews
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.free.domain.entities.User
