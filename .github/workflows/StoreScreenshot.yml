@@ -15,6 +15,13 @@ jobs:
       contents: read # for clone
       actions: write # for upload-artifact
 
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - feature-user
+          - feature-follow
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,7 +41,7 @@ jobs:
       - name: record screenshot
         id: record-test
         run: |
-          ./gradlew recordRoborazziFakeDebug --stacktrace
+          ./gradlew : ${{ matrix.module }}:recordRoborazziFakeDebug --stacktrace
 
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
