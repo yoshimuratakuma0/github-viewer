@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Button(
@@ -30,4 +31,12 @@ fun Button(
         interactionSource = interactionSource,
         content = content
     )
+}
+
+@Preview
+@Composable
+fun ButtonPreview() {
+    Button(onClick = { }) {
+        Text(text = "Button")
+    }
 }

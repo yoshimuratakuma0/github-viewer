@@ -6,6 +6,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Card(
@@ -20,4 +21,12 @@ fun Card(
         border = border,
         content = content,
     )
+}
+
+@Preview
+@Composable
+fun CardPreview() {
+    Card {
+        Text(text = "Card")
+    }
 }
