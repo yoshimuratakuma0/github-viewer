@@ -21,7 +21,10 @@ retrofit = "2.11.0"
 ui = "1.8.1"
 androidGradlePlugin = "8.10.0"
 ksp = "2.1.21-2.0.1"
+
 roborazzi = "1.43.1"
+composablePreviewScanner = "0.6.1"
+
 appcompat = "1.7.0"
 material = "1.12.0"
 
@@ -54,6 +57,8 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-rule = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
+roborazzi-composable-preview-scanner = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose-preview-scanner-support", version.ref = "roborazzi" }
+compose-preview-scanner = { group = "io.github.sergio-sastre.ComposablePreviewScanner", name = "android", version.ref = "composablePreviewScanner" }
 
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 junit = { module = "junit:junit", version.ref = "junit" }

@@ -10,7 +10,7 @@ class GitHubUserDetailPreviewParameterProvider : PreviewParameterProvider<GitHub
     override val values: Sequence<GitHubUserDetailUiState>
         get() = sequenceOf(
             GitHubUserDetailUiState.Error(Exception()),
-            GitHubUserDetailUiState.Loading,
+//            GitHubUserDetailUiState.Loading,
             GitHubUserDetailUiState.Success(
                 UserDetail(
                     user = User(
