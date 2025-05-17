@@ -2,9 +2,10 @@ import com.android.build.gradle.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
@@ -13,6 +14,12 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
+            }
+
+            tasks.withType<KotlinJvmCompile>().configureEach {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_21)
+                }
             }
 
             extensions.configure<LibraryExtension> {
@@ -51,10 +58,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     unitTests {
                         isIncludeAndroidResources = true
                     }
-                }
-
-                (this as ExtensionAware).extensions.configure<KotlinJvmOptions>("kotlinOptions") {
-                    jvmTarget = "21"
                 }
             }
         }
