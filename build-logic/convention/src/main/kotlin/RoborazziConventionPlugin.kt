@@ -31,6 +31,8 @@ class RoborazziConventionPlugin : Plugin<Project> {
                 "testImplementation"(libs.findLibrary("roborazzi.rule").get())
                 "testImplementation"(libs.findLibrary("roborazzi.composable.preview.scanner").get())
                 "testImplementation"(libs.findLibrary("compose.preview.scanner").get())
+                "testImplementation"(libs.findLibrary("junit").get())
+                "testImplementation"(libs.findLibrary("robolectric").get())
             }
         }
     }
