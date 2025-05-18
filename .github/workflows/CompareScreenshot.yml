@@ -34,6 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         module:
+          - design-system
           - feature-user
           - feature-follow
 
