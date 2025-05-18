@@ -39,7 +39,7 @@ jobs:
       - name: Checkout base branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.base_ref }}
+          ref: ${{ github.event.workflow_run.head_branch }}
       - id: switch-companion-branch
         env:
           BRANCH_NAME: companion_${{ github.event.workflow_run.head_branch }}
