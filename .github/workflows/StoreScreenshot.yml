@@ -42,7 +42,6 @@ jobs:
       - name: record screenshot
         id: record-test
         run: |
-          ./gradlew :${{ matrix.module }}:clean
           ./gradlew :${{ matrix.module }}:recordRoborazziFakeDebug --parallel
 
       - uses: actions/upload-artifact@v4
