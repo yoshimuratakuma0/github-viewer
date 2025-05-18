@@ -17,7 +17,7 @@ internal object MyColorLightTokens {
 
 internal object MyColorDarkTokens {
     val Primary = Color(0xFF6200EE)
-    val Background = Color(0xFF121212)
+    val Background = Color(0xFF232323)
     val Error = Color(0xFFB42242)
     val Border = Color(0xFFAAAAAA)
 
