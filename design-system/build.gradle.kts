@@ -5,7 +5,17 @@ plugins {
 }
 
 android {
-    namespace = "com.design_system"
+    namespace = "com.free.design_system"
+
+    flavorDimensions += "mode"
+    productFlavors {
+        create("fake") {
+            dimension = "mode"
+        }
+        create("prod") {
+            dimension = "mode"
+        }
+    }
 }
 
 dependencies {
@@ -16,18 +26,9 @@ dependencies {
 roborazzi {
     generateComposePreviewRobolectricTests {
         enable = true
-
+        includePrivatePreviews = true
         packages = listOf(
-            "com.design_system"
+            "com.free.design_system"
         )
-
-//        // ComposePreviewTesterの実装クラスの名前(これから実装する)
-//        testerQualifiedClassName = "com.google.samples.apps.nowinandroid.MyComposePreviewTester"
-
-        // プレビュー関数を集めるパッケージ名。ここではfeature.interestsとfeature.foryouだけにしている
-//        packages = listOf(
-//            "com.google.samples.apps.nowinandroid.feature.interests",
-//            "com.google.samples.apps.nowinandroid.feature.foryou"
-//        )
     }
 }

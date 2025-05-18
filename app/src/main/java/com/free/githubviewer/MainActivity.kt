@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.design_system.design_token.MyTheme
+import com.free.design_system.design_token.MyTheme
 import com.free.domain.KEY_USERNAME
 import com.free.feature_follow.screens.GitHubFollowersScreen
 import com.free.feature_follow.screens.GitHubFollowingScreen

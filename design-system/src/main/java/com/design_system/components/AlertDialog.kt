@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.design_system.components
 
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
@@ -25,7 +25,7 @@ fun AlertDialog(
     tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties()
 ) {
-   androidx.compose.material3.AlertDialog(
+    androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = confirmButton,
         modifier = modifier,
@@ -40,5 +40,5 @@ fun AlertDialog(
         textContentColor = textContentColor,
         tonalElevation = tonalElevation,
         properties = properties
-   )
+    )
 }

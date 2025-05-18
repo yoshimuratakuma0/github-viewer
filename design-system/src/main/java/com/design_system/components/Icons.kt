@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.design_system.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack

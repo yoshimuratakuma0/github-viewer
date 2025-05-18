@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.design_system.components
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable

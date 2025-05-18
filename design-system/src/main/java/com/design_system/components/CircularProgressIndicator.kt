@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.design_system.components
 
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable

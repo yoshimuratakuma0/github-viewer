@@ -1,4 +1,4 @@
-package com.design_system.design_token
+package com.free.design_system.design_token
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -40,7 +40,7 @@ class MyColor(
 
     var disabledPrimary by mutableStateOf(disabledPrimary, structuralEqualityPolicy())
         private set
-    
+
     var disabledBackground by mutableStateOf(disabledBackground, structuralEqualityPolicy())
         private set
 

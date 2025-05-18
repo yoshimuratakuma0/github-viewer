@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.design_system.annotations.NightModePreviewAnnotation
+import com.free.design_system.annotations.NightModePreviewAnnotation
 import com.free.domain.entities.User
 
 @Composable

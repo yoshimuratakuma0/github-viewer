@@ -1,4 +1,4 @@
-package com.design_system.design_token
+package com.free.design_system.design_token
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

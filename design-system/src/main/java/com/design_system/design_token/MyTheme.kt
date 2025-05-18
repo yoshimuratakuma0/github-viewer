@@ -1,4 +1,4 @@
-package com.design_system.design_token
+package com.free.design_system.design_token
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
