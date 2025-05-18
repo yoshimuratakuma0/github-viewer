@@ -81,7 +81,6 @@ jobs:
       - name: compare screenshot test
         id: compare-screenshot-test
         run: |
-          ./gradlew :${{ matrix.module }}:clean
           ./gradlew :${{ matrix.module }}:compareRoborazziFakeDebug --parallel
 
       - uses: actions/upload-artifact@v4
