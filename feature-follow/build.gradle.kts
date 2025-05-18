@@ -33,3 +33,13 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+roborazzi {
+    generateComposePreviewRobolectricTests {
+        enable = true
+        includePrivatePreviews = true
+        packages = listOf(
+            "com.free.feature_follow",
+        )
+    }
+}

@@ -7,7 +7,7 @@ class GitHubUsersPreviewParameterProvider : PreviewParameterProvider<GitHubUsers
     override val values: Sequence<GitHubUsersUiState>
         get() = sequenceOf(
             GitHubUsersUiState.Error(Exception()),
-            GitHubUsersUiState.Loading,
+//            GitHubUsersUiState.Loading,
             GitHubUsersUiState.Success,
         )
 

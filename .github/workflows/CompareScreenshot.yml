@@ -9,6 +9,10 @@ on:
       - docs/**
       - README.md
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
 jobs:
   save-pr-number:
     runs-on: ubuntu-latest
@@ -34,6 +38,7 @@ jobs:
       fail-fast: false
       matrix:
         module:
+          - design-system
           - feature-user
           - feature-follow
 
@@ -76,6 +81,7 @@ jobs:
       - name: compare screenshot test
         id: compare-screenshot-test
         run: |
+          ./gradlew :${{ matrix.module }}:clean
           ./gradlew :${{ matrix.module }}:compareRoborazziFakeDebug --parallel
 
       - uses: actions/upload-artifact@v4

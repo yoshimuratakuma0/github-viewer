@@ -5,6 +5,15 @@ plugins {
 
 android {
     namespace = "com.free.feature_core"
+    flavorDimensions += "mode"
+    productFlavors {
+        create("fake") {
+            dimension = "mode"
+        }
+        create("prod") {
+            dimension = "mode"
+        }
+    }
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package com.design_system.components
+package com.free.design_system.components
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material3.CheckboxDefaults
@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.design_system.annotations.NightModePreviewAnnotation
-import com.design_system.design_token.MyTheme
+import com.free.design_system.annotations.NightModePreviewAnnotation
+import com.free.design_system.design_token.MyTheme
 
 @Composable
 fun CheckBox(
