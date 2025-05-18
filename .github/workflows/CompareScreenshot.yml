@@ -9,6 +9,10 @@ on:
       - docs/**
       - README.md
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
 jobs:
   save-pr-number:
     runs-on: ubuntu-latest
