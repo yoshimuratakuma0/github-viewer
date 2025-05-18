@@ -36,11 +36,10 @@ jobs:
         shell: bash
         run: |
           echo "pull_request_number=$(cat NR)" >> "$GITHUB_OUTPUT"
-      - name: main checkout
-        id: checkout-main
+      - name: Checkout base branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.base_ref }}
       - id: switch-companion-branch
         env:
           BRANCH_NAME: companion_${{ github.event.workflow_run.head_branch }}
