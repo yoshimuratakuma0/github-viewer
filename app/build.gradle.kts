@@ -65,7 +65,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":design-system"))
     implementation(project(":data"))
-    implementation(project(":feature-core"))
     implementation(project(":feature-user"))
     implementation(project(":feature-follow"))
 

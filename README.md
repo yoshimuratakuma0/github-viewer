@@ -1,6 +1,6 @@
 # github-viewer
 
-GitHubのユーザー一覧を取得したり、ユーザーの詳細を表示するアプリ
+GitHub ユーザーを閲覧できるアプリ
 
 # 環境構築
 
@@ -9,31 +9,75 @@ API Limit の上限を上げたい場合は `secret.properties` をプロジェ�
 
 # 使用技術
 
-- Dagger Hilt
+- Hilt
 - OkHttp
-- Retrofit2
+- Retrofit
 - Kotlin Serialization
 - Coroutines
-- Flow
-- StateFlow
 - Jetpack Compose
-- MockK
+- Roborazzi
+- Composable Preview Scanner
 
-# モジュールの関連図
+# 各モジュールの依存関係
 
 ## 概要
 
-このアプリはCore, Domain, Data, Presentaion, Appの五つのモジュールに分けられていて、Appは残りの四つの全てのモジュールに依存していて、Domain,
-Data,
-Presentationの三つのモジュールはCoreモジュールに依存しています。 また、Domain, Data,
-Presentationの三つのモジュールの依存関係は Data ->
-Domain <- Presentation となっています。
-
-![modules](https://user-images.githubusercontent.com/88303689/166624713-7adeb862-7b73-4948-b4dd-c03424d1b380.png)
+```mermaid
+graph TD
+    app --> design-system
+    app --> features
+    app --> data
+    app --> domain
+    data --> domain
+    features --> design-system
+    features --> domain
+```
 
 ## 詳細
 
-![directories](https://user-images.githubusercontent.com/88303689/166625871-7b482844-44d2-4f29-bf77-37be6e265a0a.png)
+```mermaid
+graph TD
 
-※coreモジュールやEntityは全てのモジュールから依存されているため矢印を省略しています。また、appモジュールは全てのモジュールに依存しているため省略しています。
+subgraph domain
+  Entities[Entities]
+  IRepositories[Repositories]
+  UseCases[UseCases]
+end
 
+subgraph data
+  Repositories[Repositories]
+  Datasources[Datasources]
+  DataModels[Data models]
+end
+
+subgraph features
+  ViewModels[ViewModels]
+  Screens[Screens]
+end
+
+subgraph design-system
+  Components[Components]
+  DesignTokens[Design Tokens]
+end
+
+UseCases --> Entities
+IRepositories --> Entities
+
+Repositories --> Datasources
+Repositories --> DataModels
+Datasources --> DataModels
+
+Screens --> ViewModels
+
+Components --> DesignTokens
+
+Repositories --> IRepositories
+Repositories --> Entities
+
+ViewModels --> UseCases
+ViewModels --> Entities
+
+Screens --> Components
+Screens --> DesignTokens
+
+```
