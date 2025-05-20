@@ -24,14 +24,13 @@ import com.free.design_system.components.Card
 import com.free.design_system.components.Text
 import com.free.design_system.components.TextButton
 import com.free.design_system.design_token.MyTheme
-import com.free.domain.entities.User
 import com.free.feature_core.R
 import com.free.feature_core.components.AsyncRoundedImage
 
-
 @Composable
-fun GitHubUserItem(
-    user: User,
+fun UserItem(
+    name: String,
+    iconUrl: String,
     onClick: () -> Unit,
     onFollowing: () -> Unit,
     onFollowers: () -> Unit,
@@ -53,7 +52,7 @@ fun GitHubUserItem(
                     .padding(4.dp)
                     .size(92.dp)
                     .aspectRatio(1f),
-                url = user.avatarUrl,
+                url = iconUrl,
                 placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
             )
 
@@ -64,7 +63,7 @@ fun GitHubUserItem(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
-                    text = user.username,
+                    text = name,
                     style = MyTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -103,11 +102,12 @@ fun GitHubUserItem(
 
 @NightModePreviewAnnotation
 @Composable
-fun PreviewGitHubUserItem() {
-    val user = User(
-        id = 6,
-        avatarUrl = "https://avatars.githubusercontent.com/u/6?v=4",
-        username = "ivey"
+fun PreviewUserItem() {
+    UserItem(
+        name = "ivey",
+        iconUrl = "https://avatars.githubusercontent.com/u/6?v=4",
+        onClick = {},
+        onFollowing = {},
+        onFollowers = {},
     )
-    GitHubUserItem(user = user, onClick = {}, onFollowing = {}, onFollowers = {})
 }

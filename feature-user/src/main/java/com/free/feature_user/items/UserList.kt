@@ -12,7 +12,7 @@ import com.free.design_system.annotations.NightModePreviewAnnotation
 import com.free.domain.entities.User
 
 @Composable
-fun GitHubUserList(
+fun UserList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     listState: LazyListState,
@@ -28,8 +28,9 @@ fun GitHubUserList(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(users) { user ->
-            GitHubUserItem(
-                user = user,
+            UserItem(
+                name = user.username,
+                iconUrl = user.avatarUrl,
                 onClick = {
                     onClick(user.username)
                 },
@@ -46,8 +47,8 @@ fun GitHubUserList(
 
 @NightModePreviewAnnotation
 @Composable
-private fun GitHubUserListPreview() {
-    GitHubUserList(
+private fun UserListPreview() {
+    UserList(
         contentPadding = PaddingValues(),
         listState = LazyListState(),
         users = listOf(

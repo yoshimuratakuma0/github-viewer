@@ -2,6 +2,7 @@ package com.free.data.di
 
 import com.free.data.datasources.AuthenticationInterceptor
 import com.free.data.datasources.GitHubApi
+import com.free.data.datasources.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,10 +26,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideHeaderInterceptor(): HeaderInterceptor {
+        return HeaderInterceptor()
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
-        interceptor: AuthenticationInterceptor,
+        authenticationInterceptor: AuthenticationInterceptor,
+        headerInterceptor: HeaderInterceptor,
     ): OkHttpClient {
-        return OkHttpClient().newBuilder().addInterceptor(interceptor).build()
+        return OkHttpClient().newBuilder()
+            .addInterceptor(authenticationInterceptor)
+            .addInterceptor(headerInterceptor)
+            .build()
     }
 
     @Provides
