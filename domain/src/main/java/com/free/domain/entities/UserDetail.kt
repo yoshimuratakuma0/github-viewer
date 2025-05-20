@@ -12,10 +12,4 @@ data class UserDetail(
     val following: Int,
     val updatedAt: LocalDateTime,
     val createdAt: LocalDateTime
-) {
-    val id = user.id
-    val displayName = name ?: user.username
-    val hasCompany = company != null
-    val hasEmail = email != null
-    val hasBio = bio != null
-}
+)

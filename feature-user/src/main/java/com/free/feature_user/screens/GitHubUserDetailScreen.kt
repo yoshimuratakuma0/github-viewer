@@ -34,13 +34,14 @@ import com.free.design_system.components.Text
 import com.free.design_system.components.TopAppBar
 import com.free.design_system.components.VerticalDivider
 import com.free.design_system.design_token.MyTheme
-import com.free.domain.entities.UserDetail
 import com.free.feature_core.R
 import com.free.feature_core.components.AsyncRoundedImage
 import com.free.feature_core.components.ExceptionMappers
+import com.free.feature_user.models.UserDetailUiModel
 import com.free.feature_user.previews.GitHubUserDetailPreviewParameterProvider
 import com.free.feature_user.viewmodels.GitHubUserDetailUiState
 import com.free.feature_user.viewmodels.GitHubUserDetailViewModel
+import java.time.LocalDateTime
 
 @Composable
 fun GitHubUserDetailScreen(
@@ -81,7 +82,7 @@ fun GitHubUserDetailStatelessScreen(
             when (uiState) {
                 is GitHubUserDetailUiState.Success -> {
                     GitHubUserDetailScreen(
-                        userDetail = uiState.userDetail,
+                        uiModel = uiState.userDetailUiModel,
                         contentPaddingValues = contentPadding,
                     )
                 }
@@ -114,7 +115,7 @@ fun GitHubUserDetailStatelessScreen(
 
 @Composable
 private fun GitHubUserDetailScreen(
-    userDetail: UserDetail,
+    uiModel: UserDetailUiModel,
     contentPaddingValues: PaddingValues,
 ) {
     Column(
@@ -124,14 +125,21 @@ private fun GitHubUserDetailScreen(
     ) {
         ProfileSummary(
             modifier = Modifier.padding(8.dp),
-            userDetail = userDetail,
+            displayName = uiModel.displayName,
+            followers = uiModel.followers,
+            following = uiModel.following,
+            avatarUrl = uiModel.avatarUrl,
         )
 
         VerticalDivider()
 
         ProfileDetail(
             modifier = Modifier.padding(8.dp),
-            userDetail = userDetail,
+            emailText = uiModel.emailText,
+            companyText = uiModel.companyText,
+            bioText = uiModel.bioText,
+            lastActivityAt = uiModel.lastActivityAt,
+            accountCreationAt = uiModel.accountCreationAt,
         )
     }
 }
@@ -139,7 +147,10 @@ private fun GitHubUserDetailScreen(
 @Composable
 private fun ProfileSummary(
     modifier: Modifier = Modifier,
-    userDetail: UserDetail,
+    displayName: String,
+    followers: Int,
+    following: Int,
+    avatarUrl: String,
 ) {
     val iconRadius = 64
     Row(
@@ -148,7 +159,7 @@ private fun ProfileSummary(
         AsyncRoundedImage(
             modifier = Modifier
                 .size((iconRadius * 2).dp),
-            url = userDetail.user.avatarUrl,
+            url = avatarUrl,
             placeholderPainter = painterResource(id = R.drawable.ic_account_circle),
         )
         Spacer(modifier = Modifier.width(16.dp))
@@ -157,18 +168,18 @@ private fun ProfileSummary(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = userDetail.displayName,
+                text = displayName,
                 style = MyTheme.typography.titleMedium,
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
-                text = stringResource(id = R.string.about_followers).format(userDetail.followers),
+                text = stringResource(id = R.string.about_followers).format(followers),
             )
 
             Text(
-                text = stringResource(id = R.string.about_following).format(userDetail.following),
+                text = stringResource(id = R.string.about_following).format(following),
             )
         }
     }
@@ -177,39 +188,47 @@ private fun ProfileSummary(
 @Composable
 private fun ProfileDetail(
     modifier: Modifier = Modifier,
-    userDetail: UserDetail
+    emailText: String?,
+    companyText: String?,
+    bioText: String?,
+    lastActivityAt: LocalDateTime,
+    accountCreationAt: LocalDateTime,
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        if (userDetail.hasEmail) {
+        emailText?.let {
             Text(
-                text = stringResource(id = R.string.about_email).format(userDetail.email),
+                text = stringResource(id = R.string.about_email).format(it),
             )
         }
-        if (userDetail.hasCompany) {
+
+        companyText?.let {
             Text(
-                text = stringResource(id = R.string.about_company).format(userDetail.company),
+                text = stringResource(id = R.string.about_company).format(it),
             )
         }
-        if (userDetail.hasBio) {
+
+        bioText?.let {
             Text(
-                text = stringResource(id = R.string.about_bio).format(userDetail.bio),
+                text = stringResource(id = R.string.about_bio).format(it),
             )
         }
+
+
         Text(
             text = stringResource(id = R.string.about_updated_at).format(
-                userDetail.updatedAt.year,
-                userDetail.updatedAt.monthValue,
-                userDetail.updatedAt.dayOfMonth
+                lastActivityAt.year,
+                lastActivityAt.monthValue,
+                lastActivityAt.dayOfMonth
             ),
         )
         Text(
             text = stringResource(id = R.string.about_created_at).format(
-                userDetail.createdAt.year,
-                userDetail.createdAt.monthValue,
-                userDetail.createdAt.dayOfMonth
+                accountCreationAt.year,
+                accountCreationAt.monthValue,
+                accountCreationAt.dayOfMonth
             ),
         )
     }
