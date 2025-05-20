@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.free.design_system.annotations.NightModePreviewAnnotation
 import com.free.design_system.components.Button
 import com.free.design_system.components.CircularProgressIndicator
+import com.free.design_system.components.HorizontalDivider
 import com.free.design_system.components.Icon
 import com.free.design_system.components.IconButton
 import com.free.design_system.components.Icons
 import com.free.design_system.components.Scaffold
 import com.free.design_system.components.Text
 import com.free.design_system.components.TopAppBar
-import com.free.design_system.components.VerticalDivider
 import com.free.design_system.design_token.MyTheme
 import com.free.feature_core.R
 import com.free.feature_core.components.AsyncRoundedImage
@@ -131,7 +131,7 @@ private fun GitHubUserDetailScreen(
             avatarUrl = uiModel.avatarUrl,
         )
 
-        VerticalDivider()
+        HorizontalDivider()
 
         ProfileDetail(
             modifier = Modifier.padding(8.dp),

@@ -11,5 +11,5 @@ data class UserDetail(
     val followers: Int,
     val following: Int,
     val updatedAt: LocalDateTime,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime,
 )
