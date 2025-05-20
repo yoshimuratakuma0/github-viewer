@@ -2,6 +2,7 @@ package com.free.data.repositories
 
 import com.free.data.datasources.GitHubApi
 import com.free.data.exceptions.from
+import com.free.data.models.toEntity
 import com.free.domain.entities.User
 import com.free.domain.entities.UserDetail
 import com.free.domain.exceptions.FetchUsersException
@@ -27,7 +28,7 @@ class UsersRepositoryImpl @Inject constructor(
             throw FetchUsersException.from(response.code())
         }
         return response.body()!!.map { dataModel ->
-            dataModel.entity
+            dataModel.toEntity()
         }
     }
 
@@ -41,7 +42,7 @@ class UsersRepositoryImpl @Inject constructor(
             throw FetchUsersException.from(response.code())
         }
         return response.body()!!.map { dataModel ->
-            dataModel.entity
+            dataModel.toEntity()
         }
     }
 
@@ -55,7 +56,7 @@ class UsersRepositoryImpl @Inject constructor(
             throw FetchUsersException.from(response.code())
         }
         return response.body()!!.map { dataModel ->
-            dataModel.entity
+            dataModel.toEntity()
         }
     }
 
@@ -66,6 +67,6 @@ class UsersRepositoryImpl @Inject constructor(
         if (!response.isSuccessful) {
             throw FetchUsersException.from(response.code())
         }
-        return response.body()!!.entity
+        return response.body()!!.toEntity()
     }
 }

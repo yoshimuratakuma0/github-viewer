@@ -13,9 +13,9 @@ data class UserDetail(
     val updatedAt: LocalDateTime,
     val createdAt: LocalDateTime
 ) {
-    val id get(): Int = user.id
-    val displayName get() : String = name ?: user.username
-    val hasCompany get(): Boolean = company != null
-    val hasEmail get(): Boolean = email != null
-    val hasBio get(): Boolean = bio != null
+    val id = user.id
+    val displayName = name ?: user.username
+    val hasCompany = company != null
+    val hasEmail = email != null
+    val hasBio = bio != null
 }
