@@ -22,7 +22,7 @@ import com.free.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.feature_core.R
 import com.free.feature_core.components.ErrorAlertDialog
-import com.free.feature_user.items.GitHubUserList
+import com.free.feature_user.items.UserList
 import com.free.feature_user.previews.GitHubUsersPreviewParameterProvider
 import com.free.feature_user.viewmodels.GitHubUsersUiState
 import com.free.feature_user.viewmodels.GitHubUsersViewModel
@@ -95,7 +95,7 @@ fun GitHubUsersContent(
                 fetchMore()
             }
 
-            GitHubUserList(
+            UserList(
                 modifier = Modifier,
                 contentPadding = combinePadding(
                     padding,
