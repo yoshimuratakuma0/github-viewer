@@ -11,11 +11,11 @@ import com.free.design_system.components.IconButton
 import com.free.design_system.components.Icons
 import com.free.design_system.components.ScaffoldHidingTopAppBar
 import com.free.design_system.components.Text
-import com.free.domain.entities.User
 import com.free.feature_core.R
 import com.free.feature_follow.viewmodels.GitHubFollowingViewModel
-import com.free.feature_user.screens.GitHubUsersContent
-import com.free.feature_user.viewmodels.GitHubUsersUiState
+import com.free.feature_user.models.UserUiModel
+import com.free.feature_user.viewmodels.UsersContent
+import com.free.feature_user.viewmodels.UsersUiState
 
 @Composable
 fun GitHubFollowingScreen(
@@ -44,8 +44,8 @@ fun GitHubFollowingScreen(
 @Composable
 private fun GitHubFollowingScreenStatelessScreen(
     listState: LazyListState,
-    uiState: GitHubUsersUiState,
-    users: List<User>,
+    uiState: UsersUiState,
+    users: List<UserUiModel>,
     fetchMore: () -> Unit,
     onClick: ((username: String) -> Unit),
     onFollowing: (username: String) -> Unit,
@@ -62,7 +62,7 @@ private fun GitHubFollowingScreenStatelessScreen(
             }
         },
         content = { padding ->
-            GitHubUsersContent(
+            UsersContent(
                 listState = listState,
                 uiState = uiState,
                 users = users,

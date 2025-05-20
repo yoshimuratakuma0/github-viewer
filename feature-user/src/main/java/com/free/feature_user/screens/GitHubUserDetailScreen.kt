@@ -131,7 +131,9 @@ private fun GitHubUserDetailScreen(
             avatarUrl = uiModel.avatarUrl,
         )
 
-        HorizontalDivider()
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = 8.dp),
+        )
 
         ProfileDetail(
             modifier = Modifier.padding(8.dp),

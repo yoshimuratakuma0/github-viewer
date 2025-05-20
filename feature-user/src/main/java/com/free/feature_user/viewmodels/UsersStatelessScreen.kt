@@ -1,4 +1,4 @@
-package com.free.feature_user.screens
+package com.free.feature_user.viewmodels
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,41 +17,17 @@ import com.free.design_system.components.CircularProgressIndicator
 import com.free.design_system.components.ScaffoldHidingTopAppBar
 import com.free.design_system.components.Text
 import com.free.design_system.design_token.MyTheme
-import com.free.domain.entities.User
 import com.free.feature_core.R
 import com.free.feature_core.components.ErrorAlertDialog
 import com.free.feature_user.items.UserList
-import com.free.feature_user.previews.GitHubUsersPreviewParameterProvider
-import com.free.feature_user.viewmodels.GitHubUsersUiState
-import com.free.feature_user.viewmodels.GitHubUsersViewModel
+import com.free.feature_user.models.UserUiModel
+import com.free.feature_user.previews.UsersPreviewParameterProvider
 
 @Composable
-fun GitHubUsersScreen(
-    viewModel: GitHubUsersViewModel,
-    onClickUser: (username: String) -> Unit,
-    onFollowing: (username: String) -> Unit,
-    onFollowers: (username: String) -> Unit,
-) {
-    val uiState by viewModel.uiState.collectAsState()
-    val listing by viewModel.listing.collectAsState()
-    val listState = rememberLazyListState()
-
-    GitHubUsersStatelessScreen(
-        listState = listState,
-        uiState = uiState,
-        users = listing?.children ?: emptyList(),
-        fetchMore = viewModel::fetchMore,
-        onClick = onClickUser,
-        onFollowing = onFollowing,
-        onFollowers = onFollowers,
-    )
-}
-
-@Composable
-fun GitHubUsersStatelessScreen(
+internal fun UsersStatelessScreen(
     listState: LazyListState,
-    uiState: GitHubUsersUiState,
-    users: List<User>,
+    uiState: UsersUiState,
+    users: List<UserUiModel>,
     fetchMore: () -> Unit,
     onClick: ((username: String) -> Unit),
     onFollowing: (username: String) -> Unit,
@@ -64,7 +38,7 @@ fun GitHubUsersStatelessScreen(
             Text(text = stringResource(id = R.string.title_github_users_screen))
         },
         content = { padding ->
-            GitHubUsersContent(
+            UsersContent(
                 listState = listState,
                 uiState = uiState,
                 users = users,
@@ -79,10 +53,10 @@ fun GitHubUsersStatelessScreen(
 }
 
 @Composable
-fun GitHubUsersContent(
+fun UsersContent(
     listState: LazyListState,
-    uiState: GitHubUsersUiState,
-    users: List<User>,
+    uiState: UsersUiState,
+    users: List<UserUiModel>,
     fetchMore: () -> Unit,
     onClick: ((username: String) -> Unit),
     onFollowing: (username: String) -> Unit,
@@ -90,7 +64,7 @@ fun GitHubUsersContent(
     padding: PaddingValues,
 ) {
     when (uiState) {
-        is GitHubUsersUiState.Success -> {
+        is UsersUiState.Success -> {
             if (!listState.canScrollForward) {
                 fetchMore()
             }
@@ -109,11 +83,11 @@ fun GitHubUsersContent(
             )
         }
 
-        is GitHubUsersUiState.Error -> {
+        is UsersUiState.Error -> {
             ErrorAlertDialog(exception = uiState.exception)
         }
 
-        GitHubUsersUiState.Loading -> {
+        UsersUiState.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -122,7 +96,7 @@ fun GitHubUsersContent(
             }
         }
 
-        GitHubUsersUiState.NoData -> {
+        UsersUiState.NoData -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -135,26 +109,26 @@ fun GitHubUsersContent(
 
 @NightModePreviewAnnotation
 @Composable
-private fun GitHubUsersStatelessScreenPreview(
-    @PreviewParameter(GitHubUsersPreviewParameterProvider::class)
-    uiState: GitHubUsersUiState,
+fun UsersStatelessScreenPreview(
+    @PreviewParameter(UsersPreviewParameterProvider::class)
+    uiState: UsersUiState,
 ) {
     MyTheme {
-        GitHubUsersStatelessScreen(
+        UsersStatelessScreen(
             listState = rememberLazyListState(),
             uiState = uiState,
             users = listOf(
-                User(
+                UserUiModel(
                     id = 1,
                     username = "preview name",
                     avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
                 ),
-                User(
+                UserUiModel(
                     id = 2,
                     username = "preview name 2",
                     avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
                 ),
-                User(
+                UserUiModel(
                     id = 3,
                     username = "preview name 3",
                     avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"

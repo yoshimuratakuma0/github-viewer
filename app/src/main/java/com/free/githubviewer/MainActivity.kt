@@ -15,7 +15,7 @@ import com.free.domain.KEY_USERNAME
 import com.free.feature_follow.screens.GitHubFollowersScreen
 import com.free.feature_follow.screens.GitHubFollowingScreen
 import com.free.feature_user.screens.GitHubUserDetailScreen
-import com.free.feature_user.screens.GitHubUsersScreen
+import com.free.feature_user.screens.UsersScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = ScreenRoutes.GITHUB_USERS
                 ) {
                     composable(route = ScreenRoutes.GITHUB_USERS) {
-                        GitHubUsersScreen(
+                        UsersScreen(
                             hiltViewModel(),
                             onClickUser = { username ->
                                 navController.navigate("${ScreenRoutes.GITHUB_USER_DETAIL}$username")

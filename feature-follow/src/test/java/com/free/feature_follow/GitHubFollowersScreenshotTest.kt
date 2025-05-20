@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onRoot
 import com.free.design_system.design_token.MyTheme
 import com.free.domain.entities.User
 import com.free.feature_follow.screens.GitHubFollowersScreenStatelessScreen
-import com.free.feature_user.viewmodels.GitHubUsersUiState
+import com.free.feature_user.viewmodels.UsersUiState
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +26,7 @@ class GitHubFollowersScreenshotTest {
             MyTheme {
                 GitHubFollowersScreenStatelessScreen(
                     listState = rememberLazyListState(),
-                    uiState = GitHubUsersUiState.Success,
+                    uiState = UsersUiState.Success,
                     users = listOf(
                         User(
                             id = 1,
@@ -69,7 +69,7 @@ class GitHubFollowersScreenshotTest {
             MyTheme {
                 GitHubFollowersScreenStatelessScreen(
                     listState = rememberLazyListState(),
-                    uiState = GitHubUsersUiState.Loading,
+                    uiState = UsersUiState.Loading,
                     users = emptyList(),
                     fetchMore = {},
                     onClick = {},
@@ -91,7 +91,7 @@ class GitHubFollowersScreenshotTest {
             MyTheme {
                 GitHubFollowersScreenStatelessScreen(
                     listState = rememberLazyListState(),
-                    uiState = GitHubUsersUiState.NoData,
+                    uiState = UsersUiState.NoData,
                     users = emptyList(),
                     fetchMore = {},
                     onClick = {},
