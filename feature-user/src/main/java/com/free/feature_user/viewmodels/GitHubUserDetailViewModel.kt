@@ -7,6 +7,7 @@ import com.free.domain.KEY_USERNAME
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase
 import com.free.domain.usecases.Result
+import com.free.feature_user.models.UserDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +40,8 @@ class GitHubUserDetailViewModel @Inject constructor(
                 }
 
                 is Result.Success -> {
-                    _uiState.value = GitHubUserDetailUiState.Success(result.data)
+                    val uiModel = UserDetailUiModel.fromDomain(result.data)
+                    _uiState.value = GitHubUserDetailUiState.Success(userDetailUiModel = uiModel)
                 }
             }
         }

@@ -10,13 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.free.design_system.annotations.NightModePreviewAnnotation
 import com.free.domain.entities.User
+import com.free.feature_user.models.UserUiModel
 
 @Composable
 fun UserList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     listState: LazyListState,
-    users: List<User>,
+    users: List<UserUiModel>,
     onClick: (String) -> Unit,
     onFollowers: (String) -> Unit,
     onFollowing: (String) -> Unit,
@@ -52,17 +53,17 @@ private fun UserListPreview() {
         contentPadding = PaddingValues(),
         listState = LazyListState(),
         users = listOf(
-            User(
+            UserUiModel(
                 id = 1,
                 username = "octocat",
                 avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
             ),
-            User(
+            UserUiModel(
                 id = 2,
                 username = "octocatoctocatoctocatoctocatoctocat",
                 avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
             ),
-            User(
+            UserUiModel(
                 id = 1,
                 username = "octocat",
                 avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",

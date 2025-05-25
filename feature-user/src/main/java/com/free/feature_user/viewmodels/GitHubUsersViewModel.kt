@@ -2,10 +2,10 @@ package com.free.feature_user.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.free.domain.entities.User
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
 import com.free.domain.usecases.Result
+import com.free.feature_user.models.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 class UserListingData(
-    val children: List<User>,
+    val children: List<UserUiModel>,
     val params: FetchUsersInputParams,
 )
 
@@ -23,7 +23,7 @@ class UserListingData(
 class GitHubUsersViewModel @Inject constructor(
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<GitHubUsersUiState>(GitHubUsersUiState.Loading)
+    private val _uiState = MutableStateFlow<UsersUiState>(UsersUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     private val _listing = MutableStateFlow<UserListingData?>(null)
@@ -45,7 +45,7 @@ class GitHubUsersViewModel @Inject constructor(
 
                 when (val result = fetchUsersUseCase(nextParams)) {
                     is Result.Error -> {
-                        _uiState.value = GitHubUsersUiState.Error(result.exception)
+                        _uiState.value = UsersUiState.Error(result.exception)
                         currentListing
                     }
 
@@ -54,11 +54,14 @@ class GitHubUsersViewModel @Inject constructor(
                         // Initial fetch
                         if (currentList == null) {
                             if (result.data.isEmpty()) {
-                                _uiState.value = GitHubUsersUiState.NoData
+                                _uiState.value = UsersUiState.NoData
                             } else {
-                                _uiState.value = GitHubUsersUiState.Success
+                                _uiState.value = UsersUiState.Success
                             }
-                            return@update UserListingData(result.data, nextParams)
+                            val uiModels = result.data.map { user ->
+                                UserUiModel.fromDomain(user)
+                            }
+                            return@update UserListingData(uiModels, nextParams)
                         }
 
                         // Don't add the same list.
@@ -67,8 +70,12 @@ class GitHubUsersViewModel @Inject constructor(
                         if (currentList.lastOrNull() == result.data.lastOrNull()) {
                             return@update currentListing
                         }
+
+                        val uiModels = result.data.map { user ->
+                            UserUiModel.fromDomain(user)
+                        }
                         UserListingData(
-                            currentList + result.data,
+                            currentList + uiModels,
                             nextParams,
                         )
                     }
