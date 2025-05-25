@@ -21,7 +21,6 @@ jobs:
         module:
           - design-system
           - feature-user
-          - feature-follow
 
     steps:
       - name: Checkout
