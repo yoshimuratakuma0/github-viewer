@@ -76,7 +76,7 @@ fun UsersContent(
                 modifier = Modifier,
                 contentPadding = combinePadding(
                     padding,
-                    PaddingValues(8.dp),
+                    PaddingValues(12.dp),
                 ),
                 listState = listState,
                 users = users,
