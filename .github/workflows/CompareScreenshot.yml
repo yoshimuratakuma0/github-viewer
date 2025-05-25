@@ -65,7 +65,6 @@ jobs:
         module:
           - design-system
           - feature-user
-          - feature-follow
 
     permissions:
       contents: read # for clone
