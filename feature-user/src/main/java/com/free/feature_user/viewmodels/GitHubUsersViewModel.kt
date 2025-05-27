@@ -2,11 +2,13 @@ package com.free.feature_user.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.free.domain.annotations.IoDispatcher
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.FetchUsersUseCase
 import com.free.domain.usecases.Result
 import com.free.feature_user.models.UserUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,6 +23,7 @@ class UserListingData(
 
 @HiltViewModel
 class GitHubUsersViewModel @Inject constructor(
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val fetchUsersUseCase: FetchUsersUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UsersUiState>(UsersUiState.Loading)
@@ -34,7 +37,7 @@ class GitHubUsersViewModel @Inject constructor(
     }
 
     fun fetchMore() = synchronized(this) {
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             _listing.update { currentListing ->
                 val nextParams = currentListing?.params?.copy(
                     since = currentListing.children.lastOrNull()?.id

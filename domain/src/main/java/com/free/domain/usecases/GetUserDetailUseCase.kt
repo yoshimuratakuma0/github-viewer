@@ -1,5 +1,6 @@
 package com.free.domain.usecases
 
+import com.free.domain.annotations.IoDispatcher
 import com.free.domain.entities.UserDetail
 import com.free.domain.repositories.UsersRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -7,7 +8,7 @@ import javax.inject.Inject
 
 class GetUserDetailUseCase @Inject constructor(
     private val repository: UsersRepository,
-    dispatcher: CoroutineDispatcher,
+    @IoDispatcher dispatcher: CoroutineDispatcher,
 ) : CoroutineUseCase<GetUserDetailInputParams, UserDetail>(dispatcher) {
     override suspend fun execute(params: GetUserDetailInputParams): UserDetail {
         return repository.userDetail(params)
