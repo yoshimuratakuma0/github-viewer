@@ -104,7 +104,7 @@ fun UserItem(
 @Composable
 fun PreviewUserItem() {
     UserItem(
-        name = "ivey",
+        name = "iey",
         iconUrl = "https://avatars.githubusercontent.com/u/6?v=4",
         onClick = {},
         onFollowing = {},
