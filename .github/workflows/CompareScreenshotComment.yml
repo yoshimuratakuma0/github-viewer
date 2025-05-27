@@ -70,7 +70,6 @@ jobs:
           echo "exist_valid_files=$exist_valid_files" >> "$GITHUB_OUTPUT"
       - id: push-screenshot-diff
         shell: bash
-        if: steps.check-if-there-are-valid-files.outputs.exist_valid_files == 'true'
         env:
           BRANCH_NAME: companion_${{ github.event.workflow_run.head_branch }}
         run: |
@@ -85,7 +84,7 @@ jobs:
           done
           git config --global user.name ScreenshotBot
           git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git commit -m "Add screenshot diff"
+          git commit -m "Add screenshot diff" --allow-empty
           git push origin HEAD:"$BRANCH_NAME" -f
       - id: generate-diff-reports
         name: Generate diff reports
@@ -114,22 +113,37 @@ jobs:
             echo "| [$fileName](https://github.com/${{ github.repository }}/blob/$urlPart) | ![](https://github.com/${{ github.repository }}/blob/$urlPart?raw=true) |" >> "$GITHUB_OUTPUT"
           done
           echo "${delimiter}" >> "$GITHUB_OUTPUT"
+
+      - id: generate-empty-reports
+        name: Generate empty reports
+        if: steps.check-if-there-are-valid-files.outputs.exist_valid_files == 'false'
+        run: |
+          echo "reports=No screenshot diffs found." >> "$GITHUB_OUTPUT"
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
-        if: steps.generate-diff-reports.outputs.reports != ''
         with:
           issue-number: ${{ steps.get-pull-request-number.outputs.pull_request_number }}
           comment-author: 'github-actions[bot]'
           body-includes: Snapshot diff report
 
-      - name: Add or update comment on PR
+      - name: Add or update diff reports on PR
         uses: peter-evans/create-or-update-comment@v3
         if: steps.generate-diff-reports.outputs.reports != ''
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ steps.get-pull-request-number.outputs.pull_request_number }}
           body: ${{ steps.generate-diff-reports.outputs.reports }}
+          edit-mode: replace
+
+      - name: Add empty reports on PR
+        if: steps.generate-empty-reports.outputs.reports != ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ steps.get-pull-request-number.outputs.pull_request_number }}
+          body: ${{ steps.generate-empty-reports.outputs.reports }}
           edit-mode: replace
 
       - name: Cleanup outdated companion branches
