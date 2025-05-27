@@ -1,5 +1,6 @@
 package com.free.domain.usecases
 
+import com.free.domain.annotations.IoDispatcher
 import com.free.domain.entities.User
 import com.free.domain.exceptions.FetchUsersException
 import com.free.domain.repositories.UsersRepository
@@ -8,7 +9,7 @@ import javax.inject.Inject
 
 class FetchFollowingUseCase @Inject constructor(
     private val repository: UsersRepository,
-    ioDispatcher: CoroutineDispatcher,
+    @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : CoroutineUseCase<FetchFollowingInputParams, List<User>>(ioDispatcher) {
     override suspend fun execute(params: FetchFollowingInputParams): List<User> {
         require(params.perPage <= 100) {

@@ -4,12 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.domain.KEY_USERNAME
+import com.free.domain.annotations.IoDispatcher
 import com.free.domain.usecases.FetchFollowingInputParams
 import com.free.domain.usecases.FetchFollowingUseCase
 import com.free.domain.usecases.Result
 import com.free.feature_user.models.UserUiModel
 import com.free.feature_user.viewmodels.UsersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,6 +26,7 @@ class FollowingListingData(
 
 @HiltViewModel
 class GitHubFollowingViewModel @Inject constructor(
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val fetchFollowingUseCase: FetchFollowingUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -40,7 +43,7 @@ class GitHubFollowingViewModel @Inject constructor(
     }
 
     fun fetchMore() = synchronized(this) {
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             _listing.update { currentListing ->
                 val nextParams = currentListing?.params?.copy(
                     since = currentListing.children.lastOrNull()?.id

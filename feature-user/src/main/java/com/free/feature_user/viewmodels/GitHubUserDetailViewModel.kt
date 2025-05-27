@@ -4,11 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.domain.KEY_USERNAME
+import com.free.domain.annotations.IoDispatcher
 import com.free.domain.usecases.GetUserDetailInputParams
 import com.free.domain.usecases.GetUserDetailUseCase
 import com.free.domain.usecases.Result
 import com.free.feature_user.models.UserDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GitHubUserDetailViewModel @Inject constructor(
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val getUserDetailUseCase: GetUserDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -32,7 +35,7 @@ class GitHubUserDetailViewModel @Inject constructor(
     }
 
     fun fetchUserDetail() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             _uiState.value = GitHubUserDetailUiState.Loading
             when (val result = getUserDetailUseCase(GetUserDetailInputParams(username))) {
                 is Result.Error -> {
