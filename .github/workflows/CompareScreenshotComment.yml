@@ -77,7 +77,7 @@ jobs:
         shell: bash
         run: |
           # Find all the files ending with _compare.png in roborazzi folder
-          files=$(find . -type f -name "*_compare.*" | grep "roborazzi/" | grep -E "^[a-zA-Z0-9_./-]+$")
+          files=$(find . -type f -name "*_compare.*" | grep "roborazzi/" | grep -E "^[a-zA-Z0-9_./-]+$" || true)
           delimiter="$(openssl rand -hex 8)"
           {
             echo "reports<<${delimiter}"
@@ -94,7 +94,7 @@ jobs:
                 # Get the file name and insert newlines every 20 characters
                 fileName=$(basename "$file" | sed -r 's/(.{20})/\1<br>/g')
                 urlPart="${BRANCH_NAME//#/%23}/${file//#/%23}"
-                echo "| [$fileName](https://github.com/${{ github.repository }}/blob/$urlPart) | ![](https://github.com/${{ github.repository }}/blob/$urlPart?raw=true) |" >> "$GITHUB_OUTPUT"
+                echo "| [$fileName](https://github.com/${{ github.repository }}/blob/$urlPart) | ![](https://github.com/${{ github.repository }}/blob/$urlPart?raw=true) |"
               done
             fi
 
