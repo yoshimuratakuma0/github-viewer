@@ -105,7 +105,7 @@ fun UserItem(
 fun PreviewUserItem() {
     UserItem(
         name = "ivey",
-        iconUrl = "https://avatars.githubusercontent.com/u/6?v=4",
+        iconUrl = "https://localhost/u/6?v=4",
         onClick = {},
         onFollowing = {},
         onFollowers = {},

@@ -8,8 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.free.design_system.annotations.NightModePreviewAnnotation
-import com.free.domain.entities.User
 import com.free.feature_user.models.UserUiModel
 
 @Composable
@@ -44,33 +42,4 @@ fun UserList(
             )
         }
     }
-}
-
-@NightModePreviewAnnotation
-@Composable
-private fun UserListPreview() {
-    UserList(
-        contentPadding = PaddingValues(),
-        listState = LazyListState(),
-        users = listOf(
-            UserUiModel(
-                id = 1,
-                username = "octocat",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
-            ),
-            UserUiModel(
-                id = 2,
-                username = "octocatoctocatoctocatoctocatoctocat",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
-            ),
-            UserUiModel(
-                id = 1,
-                username = "octocat",
-                avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
-            ),
-        ),
-        onClick = {},
-        onFollowers = {},
-        onFollowing = {},
-    )
 }

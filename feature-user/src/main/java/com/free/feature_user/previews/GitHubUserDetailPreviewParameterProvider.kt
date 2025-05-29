@@ -12,7 +12,7 @@ class GitHubUserDetailPreviewParameterProvider : PreviewParameterProvider<GitHub
 //            GitHubUserDetailUiState.Loading,
             GitHubUserDetailUiState.Success(
                 userDetailUiModel = UserDetailUiModel(
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
+                    avatarUrl = "https://localhost/u/1?v=4",
                     displayName = "preview name",
                     followers = 12345,
                     following = 23456,
@@ -25,7 +25,7 @@ class GitHubUserDetailPreviewParameterProvider : PreviewParameterProvider<GitHub
             ),
             GitHubUserDetailUiState.Success(
                 userDetailUiModel = UserDetailUiModel(
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
+                    avatarUrl = "https://localhost/u/1?v=4",
                     displayName = "long name long name long name long name",
                     followers = 12345,
                     following = 23456,
@@ -38,7 +38,7 @@ class GitHubUserDetailPreviewParameterProvider : PreviewParameterProvider<GitHub
             ),
             GitHubUserDetailUiState.Success(
                 userDetailUiModel = UserDetailUiModel(
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4",
+                    avatarUrl = "https://localhost/u/1?v=4",
                     displayName = "preview name",
                     followers = 0,
                     following = 0,
