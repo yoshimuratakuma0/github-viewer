@@ -124,17 +124,17 @@ fun UsersStatelessScreenPreview(
                 UserUiModel(
                     id = 1,
                     username = "preview name",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                    avatarUrl = "https://localhost/u/1?v=4"
                 ),
                 UserUiModel(
                     id = 2,
                     username = "preview name 2",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                    avatarUrl = "https://localhost/u/1?v=4"
                 ),
                 UserUiModel(
                     id = 3,
                     username = "preview name 3",
-                    avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
+                    avatarUrl = "https://localhost/u/1?v=4"
                 ),
             ),
             fetchMore = { /*TODO*/ },
