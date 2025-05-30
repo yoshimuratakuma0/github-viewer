@@ -7,10 +7,11 @@ import com.free.domain.usecases.FetchFollowersInputParams
 import com.free.domain.usecases.FetchFollowingInputParams
 import com.free.domain.usecases.FetchUsersInputParams
 import com.free.domain.usecases.GetUserDetailInputParams
+import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import javax.inject.Inject
 
-private val dummyUsers = listOf(
+val dummyUsers = listOf(
     User(
         id = 1,
         username = "preview name 1",
@@ -107,5 +108,34 @@ class FakeUsersRepositoryWithError @Inject constructor() : UsersRepository {
 
     override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
         throw Exception("Failed to fetch user detail")
+    }
+}
+
+
+class FakeUsersRepositoryForPaging @Inject constructor() : UsersRepository {
+    override suspend fun users(params: FetchUsersInputParams): List<User> {
+        val startIndex = params.since ?: 0
+        delay(500)
+        val endIndex = startIndex + params.perPage
+        val users = List(endIndex - startIndex) { index ->
+            User(
+                id = startIndex + index + 1,
+                username = "preview name ${startIndex + index + 1}",
+                avatarUrl = "https://localhost/u/${startIndex + index + 1}?v=4"
+            )
+        }
+        return users
+    }
+
+    override suspend fun following(params: FetchFollowingInputParams): List<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun followers(params: FetchFollowersInputParams): List<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
+        TODO("Not yet implemented")
     }
 }
