@@ -29,9 +29,9 @@ dependencies {
 
     testImplementation(project(":app"))
     testImplementation(project(":data"))
-    testImplementation(libs.junit)
+
+    testImplementation(libs.mockk)
     testImplementation(libs.espresso.core)
-    testImplementation(libs.robolectric)
     testImplementation(libs.androidx.core)
     testImplementation(libs.mock.okhttp)
 

@@ -11,8 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 
@@ -32,13 +33,16 @@ class GitHubUsersViewModel @Inject constructor(
     private val _listing = MutableStateFlow<UserListingData?>(null)
     val listing = _listing.asStateFlow()
 
+    val fetchMutex = Mutex()
+
     init {
         fetchMore()
     }
 
-    fun fetchMore() = synchronized(this) {
+    fun fetchMore() {
         viewModelScope.launch(ioDispatcher) {
-            _listing.update { currentListing ->
+            fetchMutex.withLock {
+                val currentListing = _listing.value
                 val nextParams = currentListing?.params?.copy(
                     since = currentListing.children.lastOrNull()?.id
                 ) ?: FetchUsersInputParams(
@@ -64,21 +68,22 @@ class GitHubUsersViewModel @Inject constructor(
                             val uiModels = result.data.map { user ->
                                 UserUiModel.fromDomain(user)
                             }
-                            return@update UserListingData(uiModels, nextParams)
+                            val listingData = UserListingData(uiModels, nextParams)
+                            _listing.value = listingData
                         }
 
                         // Don't add the same list.
                         // since param doesn't seem to work well.
                         // So, sometimes we get the same list even if since param is different
-                        if (currentList.lastOrNull() == result.data.lastOrNull()) {
-                            return@update currentListing
+                        if (currentList?.lastOrNull() == result.data.lastOrNull()) {
+                            return@launch
                         }
 
                         val uiModels = result.data.map { user ->
                             UserUiModel.fromDomain(user)
                         }
-                        UserListingData(
-                            currentList + uiModels,
+                        _listing.value = UserListingData(
+                            (currentList ?: emptyList()) + uiModels,
                             nextParams,
                         )
                     }
