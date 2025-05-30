@@ -59,3 +59,53 @@ class FakeUsersRepository @Inject constructor() : UsersRepository {
         )
     }
 }
+
+class FakeUsersRepositoryWithEmptyUsers @Inject constructor() : UsersRepository {
+    override suspend fun users(params: FetchUsersInputParams): List<User> {
+        return emptyList()
+    }
+
+    override suspend fun following(params: FetchFollowingInputParams): List<User> {
+        return emptyList()
+    }
+
+    override suspend fun followers(params: FetchFollowersInputParams): List<User> {
+        return emptyList()
+    }
+
+    override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
+        return UserDetail(
+            user = User(
+                id = 1,
+                username = "Tom Preston-Werner",
+                avatarUrl = "https://api.github.com/u/1?v=4"
+            ),
+            email = "sample@gmail.com",
+            bio = "this is bio. \n\n\n\n\n長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio長いbio\n\n\n\n\n\n\n\n\n長いbio",
+            company = "preview company",
+            createdAt = LocalDateTime.MIN,
+            updatedAt = LocalDateTime.MAX,
+            followers = 12345,
+            following = 23456,
+            name = "preview name"
+        )
+    }
+}
+
+class FakeUsersRepositoryWithError @Inject constructor() : UsersRepository {
+    override suspend fun users(params: FetchUsersInputParams): List<User> {
+        throw Exception("Failed to fetch users")
+    }
+
+    override suspend fun following(params: FetchFollowingInputParams): List<User> {
+        throw Exception("Failed to fetch following")
+    }
+
+    override suspend fun followers(params: FetchFollowersInputParams): List<User> {
+        throw Exception("Failed to fetch followers")
+    }
+
+    override suspend fun userDetail(params: GetUserDetailInputParams): UserDetail {
+        throw Exception("Failed to fetch user detail")
+    }
+}
